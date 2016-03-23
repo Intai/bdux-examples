@@ -1,0 +1,7 @@
+.challenge {
+  composes: sans bold from "./typography.scss";
+  composes: text-grey from "./colors.scss";
+  text-align: center;
+  font-size: 7vw;
+  line-height: 25vw;
+}

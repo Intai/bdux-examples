@@ -1,0 +1,31 @@
+.form {
+  composes: border-grey from "./colors.scss";
+  display: inline-block;
+  margin-left: 5px;
+  line-height: 1em;
+  padding-right: 0.3em;
+  border-bottom-width: 2px;
+  border-bottom-style: dashed;
+}
+
+.pristine,
+.pass {
+  composes: form;
+  composes: text-grey from "./colors.scss";
+}
+
+.fail {
+  composes: form;
+  composes: text-alert from "./colors.scss";
+}
+
+.input {
+  composes: sans bold from "./typography.scss";
+  background: transparent;
+  font-size: 1em;
+  margin-right: -1em;
+  color: inherit;
+  width: 2em;
+  border: none;
+  outline: none;
+}

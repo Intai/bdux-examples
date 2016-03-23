@@ -1,0 +1,13 @@
+.time {
+  composes: sans bold from "./typography.scss";
+  composes: text-offwhite from "./colors.scss";
+  text-align: center;
+  font-size: 25vw;
+  line-height: 25vw;
+  z-index: -1;
+  width: 100%;
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
