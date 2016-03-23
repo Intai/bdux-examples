@@ -1,6 +1,7 @@
 import R from 'ramda';
 import Bacon from 'baconjs';
 import ActionTypes from '../actions/action-types';
+import StoreNames from '../stores/store-names';
 import { createStore } from 'bdux';
 
 const isAction = R.pathEq(
@@ -164,4 +165,6 @@ const getReducer = () => {
   };
 };
 
-export default createStore('CHALLENGE', getReducer);
+export default createStore(
+  StoreNames.CHALLENGE, getReducer
+);

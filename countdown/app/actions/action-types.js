@@ -1,15 +1,6 @@
-import R from 'ramda';
+import Common from '../utils/common-util';
 
-const mapToKeyValue = (obj, key) => {
-  obj[key] = key;
-  return obj
-};
-
-const mapToKeys = R.reduce(
-  mapToKeyValue, {}
-);
-
-export default mapToKeys([
+export default Common.createObjOfConsts([
   'COUNTDOWN_START',
   'COUNTDOWN_TICK',
   'COUNTDOWN_STOP',
