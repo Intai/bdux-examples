@@ -16,7 +16,7 @@
     "baconjs": "^0.7.83",
     "bdux": "^0.1.9",
     "bdux-logger": "^0.1.1",
-    "bdux-react-router": "^0.1.0",
+    "bdux-react-router": "^0.1.1",
     "bdux-timetravel": "^0.1.10",
     "classnames": "^2.2.3",
     "history": "^2.0.1",

@@ -1,4 +1,3 @@
-import R from 'ramda';
 import React from 'react';
 import Routes from '../routes';
 import { Router, createLocationHistory } from 'bdux-react-router';
@@ -11,15 +10,9 @@ const renderRouter = (location) => (
     routes={ Routes } />
 );
 
-const render = R.ifElse(
-  R.is(Object),
-  renderRouter,
-  R.always(<noscript />)
-);
-
 export const App = ({ location }) => (
   <div>
-    { render(location) }
+    { renderRouter(location) }
     <TimeTravel />
   </div>
 );
