@@ -10,7 +10,7 @@ const getPagePath = (page) => (
 );
 
 const isCurrent = (page, id) => (
-  page === (id || 1)
+  page === (id || '1')
 );
 
 const renderPage = (page, id) => (
