@@ -1,1 +1,1 @@
-# [Bdux Examples]
+# Bdux Examples
