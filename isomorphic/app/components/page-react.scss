@@ -1,0 +1,16 @@
+.page-numbers {
+  composes: sans bold from "./typography.scss";
+  font-size: 25vw;
+  line-height: 25vw;
+  text-align: center;
+}
+
+.page-number {
+  composes: text-offwhite from "./colors.scss";
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.current {
+  composes: text-grey from "./colors.scss";
+}
