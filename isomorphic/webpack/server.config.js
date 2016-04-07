@@ -27,7 +27,8 @@ var getExternals = function() {
 module.exports = {
   target: 'node',
   externals: getExternals(),
-  context: path.join(__dirname, '../app') ,
+  context: path.join(__dirname, '../app'),
+  stats: { children: false },
   entry: [
     './server'
   ],
