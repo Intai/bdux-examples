@@ -41,14 +41,21 @@ gulp.task('build-server', function() {
     .pipe(gulp.dest('dist'));
 });
 
+gulp.task('prod-server', function() {
+  return server.run(['dist/server.js'], {
+    env: process.env
+  }, false);
+});
+
 gulp.task('build', [
   'build-client',
   'build-server'
 ]);
 
-gulp.task('server', function() {
-  return server.run(['dist/server.js']);
-});
+gulp.task('server', $.sequence(
+  'build',
+  'prod-server'
+));
 
 gulp.task('default', [
   'dev-server'

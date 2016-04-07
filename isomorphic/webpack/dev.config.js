@@ -1,6 +1,7 @@
 var path = require('path'),
     webpack = require('webpack'),
-    autoprefixer = require('autoprefixer');
+    autoprefixer = require('autoprefixer'),
+    HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   context: path.join(__dirname, '../app'),
@@ -11,7 +12,16 @@ module.exports = {
   ],
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: '../app/index.ejs',
+      inject: false,
+      files: {
+        css: [],
+        js: ['/dev.js']
+      }
+    })
   ],
   module: {
     preLoaders: [{

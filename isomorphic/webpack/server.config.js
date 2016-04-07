@@ -2,6 +2,7 @@ var R = require('ramda'),
     path = require('path'),
     webpack = require('webpack'),
     autoprefixer = require('autoprefixer'),
+    HtmlWebpackPlugin = require('html-webpack-plugin'),
     fs = require('fs');
 
 var isNotSystem = function(name) {
@@ -32,6 +33,19 @@ module.exports = {
   ],
   plugins: [
     new webpack.NoErrorsPlugin(),
+    new HtmlWebpackPlugin({
+      filename: 'server.ejs',
+      template: '../app/index.ejs',
+      app: '<%- app %>',
+      inject: false,
+      minify: {
+        collapseWhitespace: true
+      },
+      files: {
+        css: ['/static/client.css'],
+        js: ['/static/client.js']
+      }
+    }),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: false,
       compress: {
