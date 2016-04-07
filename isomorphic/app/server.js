@@ -1,6 +1,7 @@
 import Express from 'express';
 import React from 'react';
 import App from './components/app-react.js';
+import { LocationAction } from 'bdux-react-router';
 import { renderToString } from 'react-dom/server';
 
 const app = Express();
@@ -11,8 +12,11 @@ app.set('views', 'dist');
 
 app.use('/static', Express.static('dist'));
 app.get('*', (req, res) => {
+  const app = (<App />);
+  LocationAction.push(req.path);
+
   res.render('server', {
-    app: renderToString(<App />)
+    app: renderToString(app)
   });
 });
 
