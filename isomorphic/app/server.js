@@ -1,7 +1,6 @@
+import R from 'ramda';
 import Express from 'express';
-import React from 'react';
-import App from './components/app-react.js';
-import { createLocationHistory } from 'bdux-react-router';
+import { createDefaultApp } from './roots/server-default';
 import { renderToString } from 'react-dom/server';
 
 const app = Express();
@@ -10,14 +9,14 @@ const port = 8080;
 app.set('view engine', 'ejs');
 app.set('views', 'dist');
 
-app.use('/static', Express.static('dist'));
-app.get('*', (req, res) => {
-  createLocationHistory(req.path);
-  const app = (<App />);
-
+const renderApp = R.curry((createElement, req, res) => {
   res.render('server', {
-    app: renderToString(app)
+    app: renderToString(
+      createElement(req, res))
   });
 });
+
+app.use('/static', Express.static('dist'));
+app.get('*', renderApp(createDefaultApp));
 
 app.listen(port)
