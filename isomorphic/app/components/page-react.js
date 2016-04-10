@@ -1,4 +1,5 @@
 import React from 'react';
+import Message from './message-react';
 import classNames from 'classnames/bind';
 import styles from './page-react.scss';
 import { Link } from 'bdux-react-router';
@@ -23,11 +24,14 @@ const renderPage = (page, id) => (
 );
 
 export const Page = ({ params }) => (
-  <div className={ cssModule({
-      'page-numbers': true }) }>
-    { renderPage('1', params.id) }
-    { renderPage('2', params.id) }
-    { renderPage('3', params.id) }
+  <div>
+    <div className={ cssModule({
+        'page-numbers': true }) }>
+      { renderPage('1', params.id) }
+      { renderPage('2', params.id) }
+      { renderPage('3', params.id) }
+    </div>
+    <Message />
   </div>
 );
 

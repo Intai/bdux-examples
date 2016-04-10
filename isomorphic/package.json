@@ -15,8 +15,9 @@
   "dependencies": {
     "baconjs": "^0.7.83",
     "bdux": "^0.1.9",
-    "bdux-logger": "^0.1.1",
-    "bdux-react-router": "^0.1.1",
+    "bdux-isomorphic": "file:../../bdux-isomorphic",
+    "bdux-logger": "^0.1.2",
+    "bdux-react-router": "file:../../bdux-react-router",
     "bdux-timetravel": "^0.1.11",
     "classnames": "^2.2.3",
     "ejs": "^2.4.1",

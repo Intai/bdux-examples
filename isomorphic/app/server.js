@@ -1,7 +1,7 @@
+import './settings/server';
 import R from 'ramda';
 import Express from 'express';
-import { createDefaultApp } from './roots/server-default';
-import { renderToString } from 'react-dom/server';
+import DefaultRoot from './roots/default-root';
 
 const app = Express();
 const port = 8080;
@@ -9,14 +9,13 @@ const port = 8080;
 app.set('view engine', 'ejs');
 app.set('views', 'dist');
 
-const renderApp = R.curry((createElement, req, res) => {
+const renderApp = R.curry((root, req, res) => {
   res.render('server', {
-    app: renderToString(
-      createElement(req, res))
+    app: root.renderToString(req, res)
   });
 });
 
 app.use('/static', Express.static('dist'));
-app.get('*', renderApp(createDefaultApp));
+app.get('*', renderApp(DefaultRoot));
 
 app.listen(port)
