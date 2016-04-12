@@ -7,7 +7,7 @@ import { createRoot } from 'bdux-isomorphic';
 
 export const createElement = (req) => {
   resetLocationHistory(req.path);
-  MessageAction.message('Server');
+  MessageAction.message('Message from Server');
   return (<App />);
 };
 
