@@ -4,7 +4,7 @@ import * as Timetravel from 'bdux-timetravel';
 import { applyMiddleware } from 'bdux';
 
 applyMiddleware(
-  Timetravel,
   Isomorphic,
+  Timetravel,
   Logger
 );
