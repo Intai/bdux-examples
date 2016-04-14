@@ -41,10 +41,12 @@ gulp.task('build-server', function() {
     .pipe(gulp.dest('dist'));
 });
 
-gulp.task('prod-server', function() {
-  return server.run(['dist/server.js'], {
+gulp.task('prod-server', function(cb) {
+  server.run(['dist/server.js'], {
     env: process.env
   }, false);
+
+  $.util.log('[express] http://localhost:8080');
 });
 
 gulp.task('build', [
@@ -57,6 +59,10 @@ gulp.task('server', $.sequence(
   'prod-server'
 ));
 
-gulp.task('default', [
+gulp.task('dev', [
   'dev-server'
+]);
+
+gulp.task('default', [
+  'server'
 ]);

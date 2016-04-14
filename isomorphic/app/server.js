@@ -1,4 +1,4 @@
-import './settings/server';
+import './settings';
 import R from 'ramda';
 import Express from 'express';
 import DefaultRoot from './roots/default-root';
@@ -18,4 +18,4 @@ const renderApp = R.curry((root, req, res) => {
 app.use('/static', Express.static('dist'));
 app.get('*', renderApp(DefaultRoot));
 
-app.listen(port)
+app.listen(port);
