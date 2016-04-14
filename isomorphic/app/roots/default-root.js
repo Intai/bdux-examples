@@ -3,7 +3,7 @@ import App from '../components/app-react';
 import MessageAction from '../actions/message-action';
 import MessageStore from '../stores/message-store';
 import { resetLocationHistory, LocationStore } from 'bdux-react-router';
-import { createRoot } from 'bdux-isomorphic';
+import { createRoot } from 'bdux-universal';
 
 export const createElement = (req) => {
   resetLocationHistory(req.path);
