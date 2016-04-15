@@ -15,10 +15,10 @@
   "dependencies": {
     "baconjs": "^0.7.83",
     "bdux": "^0.1.13",
-    "bdux-universal": "file:../../bdux-universal",
     "bdux-logger": "^0.1.3",
     "bdux-react-router": "^0.1.8",
     "bdux-timetravel": "^0.1.13",
+    "bdux-universal": "^0.1.0",
     "classnames": "^2.2.3",
     "ejs": "^2.4.1",
     "express": "^4.13.4",
