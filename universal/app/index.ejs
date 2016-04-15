@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <% htmlWebpackPlugin.options.files.css.forEach(function(href) { %>
+      <link href="<%= href %>" rel="stylesheet">
+    <% }) %>
+  </head>
+  <body>
+    <div id="app"><%= htmlWebpackPlugin.options.app %></div>
+    <% htmlWebpackPlugin.options.files.js.forEach(function(src) { %>
+      <script src="<%= src %>"></script>
+    <% }) %>
+  </body>
+</html>
