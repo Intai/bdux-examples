@@ -12,7 +12,6 @@ const createCodesStream = () => (
   Bacon.fromPromise(
     fetch('http://data.okfn.org/data/core/country-list/r/data.json', {
       method: 'GET',
-      mode: 'cors',
       timeout: 5000
     })
   )
@@ -35,6 +34,11 @@ export const select = (code) => ({
   code: code
 });
 
+const shouldInit = R.pipe(
+  R.path(['country', 'codes']),
+  R.anyPass([R.isNil, R.isEmpty])
+);
+
 const selectDefault = R.partial(
   select, ['NZ']
 );
@@ -49,7 +53,7 @@ const createInitStream = () => (
 );
 
 export const init = R.ifElse(
-  R.pipe(R.path(['country', 'codes']), R.isNil),
+  shouldInit,
   createInitStream,
   selectDefault
 );
