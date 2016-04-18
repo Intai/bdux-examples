@@ -20,7 +20,9 @@ const createCodesStream = () => (
   Bacon.fromPromise(
     fetch('http://data.okfn.org/data/core/country-list/r/data.json', {
       method: 'GET',
-      mode: 'cors' })
+      mode: 'cors',
+      timeout: 1000
+    })
   )
   .flatMap(createJsonStream)
   .mapError(R.always(DEFAULT_COUNTRY_CODES))
