@@ -1,7 +1,7 @@
 'use strict';
 
 var gulp = require('gulp'),
-    server = require('gulp-express'),
+    gls = require('gulp-live-server'),
     webpack = require('webpack'),
     webpackStream = require('webpack-stream'),
     WebpackDevServer = require('webpack-dev-server'),
@@ -42,10 +42,11 @@ gulp.task('build-server', function() {
 });
 
 gulp.task('prod-server', function(cb) {
-  server.run(['dist/server.js'], {
+  var server = gls(['dist/server.js'], {
     env: process.env
   }, false);
 
+  server.start();
   $.util.log('[express] http://localhost:8080');
 });
 
