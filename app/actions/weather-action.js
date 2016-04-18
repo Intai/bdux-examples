@@ -1,11 +1,13 @@
 import R from 'ramda';
 import Bacon from 'baconjs';
 import fetch from 'isomorphic-fetch';
+import uriTemplates from 'uri-templates';
 import ActionTypes from './action-types';
 import { bindToDispatch } from 'bdux';
 
-const APPID = 'b1b15e88fa797225412429c1c50c122a';
 const DEFAULT_CITY = 'Auckland';
+const APPID = '7cbd36bfb4764f5613cf8b8e68bf1665';
+const URI_WEATHER = uriTemplates('http://api.openweathermap.org/data/2.5/weather{?q,appid}');
 
 const createJsonStream = (response) => (
   Bacon.fromPromise(response.json())
@@ -13,11 +15,12 @@ const createJsonStream = (response) => (
 
 const createWeatherStream = (countryCode, cityName) => (
   Bacon.fromPromise(
-    fetch('http://api.openweathermap.org/data/2.5/weather' +
-        `?q=${cityName},${countryCode || ''}` +
-        `&appid=${APPID}`, {
+    fetch(URI_WEATHER.fill({
+      q: `${cityName},${countryCode || ''}`,
+      appid: APPID
+    }), {
       method: 'GET',
-      mode: 'cors'
+      timeout: 5000
     })
   )
   .flatMap(createJsonStream)
@@ -39,6 +42,11 @@ export const setCity = (name) => ({
   name: name
 });
 
+const shouldInit = R.pipe(
+  R.path(['weather', 'current']),
+  R.anyPass([R.isNil, R.isEmpty])
+);
+
 const setDefaultCity = R.partial(
   setCity, [DEFAULT_CITY]
 );
@@ -53,7 +61,7 @@ const createInitStream = ({ country }) => (
 );
 
 export const init = R.ifElse(
-  R.complement(R.path(['weather', 'current'])),
+  shouldInit,
   createInitStream,
   setDefaultCity
 );
