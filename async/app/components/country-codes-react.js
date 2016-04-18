@@ -8,6 +8,15 @@ import { createComponent } from 'bdux'
 
 const cssModule = classNames.bind(styles);
 
+const isNotEmpty = R.allPass([
+  R.is(Object),
+  R.pipe(
+    R.prop('codes'),
+    R.anyPass([R.isNil, R.isEmpty]),
+    R.not
+  )
+]);
+
 const onChange = (event) => {
   CountryCodesAction.select(event.target.value);
 };
@@ -33,7 +42,7 @@ const renderCountryCodes = (country) => (
 );
 
 const render = R.ifElse(
-  R.is(Object),
+  isNotEmpty,
   renderCountryCodes,
   R.always(<noscript />)
 );
