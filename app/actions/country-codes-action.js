@@ -4,14 +4,6 @@ import fetch from 'isomorphic-fetch';
 import ActionTypes from './action-types';
 import { bindToDispatch } from 'bdux';
 
-const DEFAULT_COUNTRY_CODES = [{
-  Name: 'New Zealand',
-  Code: 'NZ'
-}, {
-  Name: 'Australia',
-  Code: 'AU'
-}];
-
 const createJsonStream = (response) => (
   Bacon.fromPromise(response.json())
 );
@@ -21,11 +13,11 @@ const createCodesStream = () => (
     fetch('http://data.okfn.org/data/core/country-list/r/data.json', {
       method: 'GET',
       mode: 'cors',
-      timeout: 1000
+      timeout: 5000
     })
   )
   .flatMap(createJsonStream)
-  .mapError(R.always(DEFAULT_COUNTRY_CODES))
+  .mapError(R.always([]))
 );
 
 const createLoad = (codes) => ({
