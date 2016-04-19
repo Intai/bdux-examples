@@ -1,4 +1,5 @@
 import React from 'react';
+import Weather from './weather-react';
 import CityName from './city-name-react';
 import CountryCodes from './country-codes-react';
 import { UniversalStates } from 'bdux-universal';
@@ -9,6 +10,7 @@ export const App = () => (
   <div>
     <CountryCodes />
     <CityName />
+    <Weather />
     <UniversalStates />
     <TimeTravel />
   </div>
