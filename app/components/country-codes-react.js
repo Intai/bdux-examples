@@ -33,12 +33,20 @@ const renderOptions = (codes) => (
 );
 
 const renderCountryCodes = (country) => (
-  <select value={ country.selected }
-    onChange={ onChange }
-    className={ cssModule({
-      'select': true }) }>
-    { renderOptions(country.codes) }
-  </select>
+  <div className={ cssModule({
+    'wrap': true }) }>
+
+    <label className={ cssModule({
+      'label': true }) }>Country
+    </label>
+
+    <select value={ country.selected }
+      onChange={ onChange }
+      className={ cssModule({
+        'select': true }) }>
+      { renderOptions(country.codes) }
+    </select>
+  </div>
 );
 
 const render = R.ifElse(
