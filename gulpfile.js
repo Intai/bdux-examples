@@ -55,21 +55,22 @@ gulp.task('prod-server', function(cb) {
   $.util.log('[express] http://localhost:8080');
 });
 
-gulp.task('build', [
-  'font',
-  'build-client',
-  'build-server'
-]);
+gulp.task('build', $.sequence(
+  'font', [
+    'build-client',
+    'build-server'
+  ]
+));
 
 gulp.task('server', $.sequence(
   'build',
   'prod-server'
 ));
 
-gulp.task('dev', [
+gulp.task('dev', $.sequence(
   'font',
   'dev-server'
-]);
+));
 
 gulp.task('default', [
   'server'
