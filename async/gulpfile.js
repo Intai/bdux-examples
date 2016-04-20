@@ -13,6 +13,11 @@ gulp.task('image', function() {
     .pipe(gulp.dest('dist/images'));
 });
 
+gulp.task('font', function() {
+  return gulp.src('./fonts/**/*.{eot,otf,svg,ttf,woff,css}')
+    .pipe(gulp.dest('dist/fonts'));
+});
+
 gulp.task('clean', function () {
   require('del').sync('dist');
 });
@@ -51,6 +56,7 @@ gulp.task('prod-server', function(cb) {
 });
 
 gulp.task('build', [
+  'font',
   'build-client',
   'build-server'
 ]);
@@ -61,6 +67,7 @@ gulp.task('server', $.sequence(
 ));
 
 gulp.task('dev', [
+  'font',
   'dev-server'
 ]);
 

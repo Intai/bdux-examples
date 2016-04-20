@@ -1,7 +1,8 @@
 .wrap {
   margin: 0 auto;
-  max-width: 320px;
+  max-width: 480px;
   padding-left: 10px;
+  width: 100%;
 }
 
 .label {
@@ -21,7 +22,7 @@
   outline: none;
   appearance: none;
   padding: 10px;
-  margin: -0.5rem 0 10px 0;
+  margin: -0.5rem 0 20px 0;
   width: 100%;
   display: block;
 }

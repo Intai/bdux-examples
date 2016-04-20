@@ -7,7 +7,16 @@ import { bindToDispatch } from 'bdux';
 
 const DEFAULT_CITY = 'Auckland';
 const APPID = '7cbd36bfb4764f5613cf8b8e68bf1665';
-const URI_WEATHER = uriTemplates('http://api.openweathermap.org/data/2.5/weather{?q,appid}');
+const URI_WEATHER = uriTemplates('http://api.openweathermap.org/data/2.5/weather{?q,units,appid}');
+
+const units = (() => {
+  let current = 'metric';
+  return (next) => (
+    (next)
+      ? (current = next)
+      : current
+  );
+})();
 
 const createJsonStream = (response) => (
   Bacon.fromPromise(response.json())
@@ -17,6 +26,7 @@ const createWeatherStream = (countryCode, cityName) => (
   Bacon.fromPromise(
     fetch(URI_WEATHER.fill({
       q: `${cityName},${countryCode || ''}`,
+      units: units(),
       appid: APPID
     }), {
       method: 'GET',
@@ -32,6 +42,14 @@ const createWeather = (current) => ({
   current: current
 });
 
+const createMetric = () => ({
+  type: ActionTypes.WEATHER_UNIT_METRIC
+});
+
+const createImperial = () => ({
+  type: ActionTypes.WEATHER_UNIT_IMPERIAL
+});
+
 export const searchWeather = R.pipe(
   createWeatherStream,
   R.invoker(1, 'map')(createWeather)
@@ -41,6 +59,16 @@ export const setCity = (name) => ({
   type: ActionTypes.WEATHER_CITY,
   name: name
 });
+
+export const switchToMetric = R.pipe(
+  R.partial(units, ['metric']),
+  createMetric
+);
+
+export const switchToImperial = R.pipe(
+  R.partial(units, ['imperial']),
+  createImperial
+);
 
 const shouldInit = R.pipe(
   R.path(['weather', 'current']),
@@ -69,5 +97,7 @@ export const init = R.ifElse(
 export default bindToDispatch({
   init,
   setCity,
-  searchWeather
+  searchWeather,
+  switchToMetric,
+  switchToImperial
 });

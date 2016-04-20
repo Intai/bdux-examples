@@ -18,7 +18,7 @@ module.exports = {
       template: '../app/index.ejs',
       inject: false,
       files: {
-        css: [],
+        css: ['/fonts/owfont-regular.css'],
         js: ['/dev.js']
       }
     })
