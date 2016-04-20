@@ -43,16 +43,16 @@ module.exports = {
         collapseWhitespace: true
       },
       files: {
-        css: ['/static/client.css'],
+        css: ['/static/fonts/owfont-regular.css', '/static/client.css'],
         js: ['/static/client.js']
       }
-    })/*,
+    }),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: false,
       compress: {
         warnings: false
       }
-    })*/
+    })
   ],
   module: {
     preLoaders: [{

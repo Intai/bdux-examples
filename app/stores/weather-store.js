@@ -16,6 +16,14 @@ const isSetCity =  isAction(
   ActionTypes.WEATHER_CITY
 );
 
+const isMetric =  isAction(
+  ActionTypes.WEATHER_UNIT_METRIC
+);
+
+const isImperial =  isAction(
+  ActionTypes.WEATHER_UNIT_IMPERIAL
+);
+
 const mergeState = (name, func) => (
   R.converge(R.mergeWith(R.merge), [
     R.identity,
@@ -43,10 +51,17 @@ const setCity = R.when(
     R.path(['action', 'name']))
 );
 
+const setUnits = R.cond([
+  [isMetric, mergeState('units', 'metric')],
+  [isImperial, mergeState('units', 'imperial')],
+  [R.T, R.identity]
+]);
+
 const getOutputStream = (reducerStream) => (
   reducerStream
     .map(setCurrent)
     .map(setCity)
+    .map(setUnits)
     .map(R.prop('state'))
 );
 

@@ -9,6 +9,16 @@ import { createComponent } from 'bdux'
 
 const cssModule = classNames.bind(styles);
 
+const switchToMetric = (event) => {
+  WeatherAction.switchToMetric();
+  event.preventDefault();
+};
+
+const switchToImperial = (event) => {
+  WeatherAction.switchToImperial();
+  event.preventDefault();
+};
+
 const hasCurrent = R.allPass([
   R.is(Object),
   R.propIs(Object, 'current')
@@ -25,12 +35,106 @@ const getTitle = R.ifElse(
   R.always('Weather')
 );
 
+const prependText = R.curry((before, text) => (
+  (R.isNil(text))
+    ? text
+    : (before + text)
+));
+
+const appendText = R.curry((after, text) => (
+  (R.isNil(text))
+    ? text
+    : (text + after)
+));
+
+const getIcon = R.pipe(
+  R.path(['weather', '0', 'id']),
+  prependText('owf owf-')
+);
+
+const convertToKmPerHour = (mps) => (
+  (R.isNil(mps))
+    ? mps
+    : (mps * 3600 / 1000)
+);
+
+const renderWeatherDetail = (text) => (
+  <span className={ cssModule({
+      'detail': true }) }>
+    { text }
+  </span>
+);
+
+const renderWeatherDetailSafely = R.ifElse(
+  R.isNil,
+  R.always(<noscript />),
+  renderWeatherDetail
+);
+
+const renderTemperature = R.pipe(
+  R.path(['main', 'temp']),
+  renderWeatherDetailSafely
+);
+
+const renderunits = (current) => (
+  <span>
+    <a onClick={ switchToMetric }
+      className={ cssModule({
+        'units': true,
+        'selected': true}) }>°C
+    </a>
+
+    <span className={ cssModule(
+      'separator') }>|
+    </span>
+
+    <a onClick={ switchToImperial }
+      className={ cssModule({
+        'units': true,
+        'selected': current.units === 'imperial' }) }>°F
+    </a>
+  </span>
+);
+
+const renderCloudiness = R.pipe(
+  R.path(['clouds', 'all']),
+  prependText('Cloud: '),
+  appendText(' %'),
+  renderWeatherDetailSafely
+);
+
+const renderHumidity = R.pipe(
+  R.path(['main', 'humidity']),
+  prependText('Humidity: '),
+  appendText(' %'),
+  renderWeatherDetailSafely
+);
+
+const renderSpeed = R.pipe(
+  R.path(['wind', 'speed']),
+  convertToKmPerHour,
+  prependText('Wind: '),
+  appendText(' km/h'),
+  renderWeatherDetailSafely
+);
+
 const renderWeather = (current) => (
-  <div>
-    <span>{ current.weather[0].description }</span>
-    <span>{ current.main.temp }</span>
-    <span>{ current.main.humidity }</span>
-    <span>{ current.wind.speed }</span>
+  <div className={ cssModule({
+    'weather': true,
+    [getIcon(current)]: true }) }>
+
+    <div className={ cssModule({
+        'temperature': true }) }>
+      { renderTemperature(current) }
+      { renderunits(current) }
+    </div>
+
+    <div className={ cssModule({
+        'details': true }) }>
+      { renderCloudiness(current) }
+      { renderHumidity(current) }
+      { renderSpeed(current) }
+    </div>
   </div>
 );
 
@@ -41,7 +145,9 @@ const render = R.ifElse(
 );
 
 export const Weather = ({ weather }) => (
-  <div>
+  <div className={ cssModule({
+    'wrap': true }) }>
+
     <span className={ cssModule({
         'city': true }) }>
       { getTitle(weather) }
