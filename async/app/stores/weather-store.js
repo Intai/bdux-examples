@@ -16,6 +16,10 @@ const isSetCity =  isAction(
   ActionTypes.WEATHER_CITY
 );
 
+const isSetFocus =  isAction(
+  ActionTypes.WEATHER_FOCUS
+);
+
 const isMetric =  isAction(
   ActionTypes.WEATHER_UNIT_METRIC
 );
@@ -51,6 +55,21 @@ const setCity = R.when(
     R.path(['action', 'name']))
 );
 
+const setFocus = R.when(
+  // if setting whether to focus.
+  isSetFocus,
+  // merge the focus into state.
+  mergeState('focus',
+    R.path(['action', 'focus']))
+);
+
+const defaultFocus = R.when(
+  // if focus hasn't been set.
+  R.pathEq(['state', 'focus'], undefined),
+  // default to true.
+  mergeState('focus', R.T)
+);
+
 const setUnits = R.cond([
   [isMetric, mergeState('units', 'metric')],
   [isImperial, mergeState('units', 'imperial')],
@@ -61,7 +80,9 @@ const getOutputStream = (reducerStream) => (
   reducerStream
     .map(setCurrent)
     .map(setCity)
+    .map(setFocus)
     .map(setUnits)
+    .map(defaultFocus)
     .map(R.prop('state'))
 );
 

@@ -19,8 +19,10 @@
 .weather {
   composes: sans small from "./typography.scss";
   composes: text-grey from "./colors.scss";
+  transition: opacity 400ms ease-out;
   margin-top: 15px;
   width: 100%;
+  opacity: 0.2;
 
   &::before {
     font-family: owfont;
@@ -29,6 +31,10 @@
     position: absolute;
     top: -5px;
     left: -10px;
+  }
+
+  &.focus {
+    opacity: 1;
   }
 }
 

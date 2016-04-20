@@ -13,6 +13,14 @@ const onChange = (event) => {
   WeatherAction.setCity(event.target.value);
 };
 
+const onFocus = () => {
+  WeatherAction.setFocus(false);
+};
+
+const onBlur = () => {
+  WeatherAction.setFocus(true);
+};
+
 const hasCountryAndWeather = (country, weather) => (
   country && country.selected &&
   weather && weather.city
@@ -55,6 +63,8 @@ export const CityName = ({ country, weather }) => (
 
     <input value={ getCity(weather) }
       onChange={ onChange }
+      onFocus={ onFocus }
+      onBlur={ onBlur }
       className={ cssModule({
         'input': true }) } />
 

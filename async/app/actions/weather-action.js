@@ -60,6 +60,11 @@ export const setCity = (name) => ({
   name: name
 });
 
+export const setFocus = (focus) => ({
+  type: ActionTypes.WEATHER_FOCUS,
+  focus: focus
+});
+
 export const switchToMetric = R.pipe(
   R.partial(units, ['metric']),
   createMetric
@@ -97,6 +102,7 @@ export const init = R.ifElse(
 export default bindToDispatch({
   init,
   setCity,
+  setFocus,
   searchWeather,
   switchToMetric,
   switchToImperial

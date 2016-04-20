@@ -118,9 +118,10 @@ const renderSpeed = R.pipe(
   renderWeatherDetailSafely
 );
 
-const renderWeather = (current) => (
+const renderWeather = (focus, current) => (
   <div className={ cssModule({
     'weather': true,
+    'focus': focus,
     [getIcon(current)]: true }) }>
 
     <div className={ cssModule({
@@ -140,7 +141,12 @@ const renderWeather = (current) => (
 
 const render = R.ifElse(
   hasCurrent,
-  R.pipe(R.prop('current'), renderWeather),
+  R.converge(
+    renderWeather, [
+      R.prop('focus'),
+      R.prop('current')
+    ]
+  ),
   R.always(<noscript />)
 );
 
