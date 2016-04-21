@@ -2,6 +2,7 @@ import R from 'ramda';
 import React from 'react';
 import CountryCodesStore from '../stores/country-codes-store';
 import CountryCodesAction from '../actions/country-codes-action';
+import WeatherAction from '../actions/weather-action';
 import classNames from 'classnames/bind';
 import styles from './country-codes-react.scss';
 import { createComponent } from 'bdux'
@@ -19,6 +20,7 @@ const isNotEmpty = R.allPass([
 
 const onChange = (event) => {
   CountryCodesAction.select(event.target.value);
+  WeatherAction.clear();
 };
 
 const renderOption = (code) => (
