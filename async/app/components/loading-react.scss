@@ -1,0 +1,17 @@
+.wrap {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.loading {
+  composes: text-offgrey from "./colors.scss";
+  font-family: FontAwesome;
+  font-size: 11rem;
+  position: absolute;
+  top: 8rem;
+  left: -4rem;
+  z-index: -1;
+  color: whitesmoke;
+}

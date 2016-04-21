@@ -4,27 +4,30 @@ import ActionTypes from '../actions/action-types';
 import StoreNames from './store-names';
 import { createStore } from 'bdux';
 
-const UNKNOWN = {
-  current: {
-    unknown: true,
-    weather: [{
-      id: 803
-    }],
-    main: {
-      temp: '?',
-      humidity: ''
-    },
-    clouds: {
-      all: ''
-    },
-    wind: {
-      speed: ''
-    }
+const UNKNOWN_WEATHER = {
+  name: '',
+  unknown: true,
+  weather: [{
+    id: 803
+  }],
+  main: {
+    temp: '?',
+    humidity: ''
+  },
+  clouds: {
+    all: ''
+  },
+  wind: {
+    speed: ''
   }
 };
 
 const isAction = R.pathEq(
   ['action', 'type']
+);
+
+const isFetch =  isAction(
+  ActionTypes.WEATHER_FETCH
 );
 
 const isCurrent =  isAction(
@@ -65,9 +68,13 @@ const mergeState = (name, func) => (
 const setCurrent = R.when(
   // if setting the current weather.
   isCurrent,
-  // merge the weather into state.
-  mergeState('current',
-    R.path(['action', 'current']))
+  R.pipe(
+    // focus on the weather.
+    mergeState('focus', R.T),
+    // merge the weather into state.
+    mergeState('current',
+      R.path(['action', 'current']))
+  )
 );
 
 const setCity = R.when(
@@ -100,11 +107,20 @@ const defaultUnits = R.when(
   mergeState('units', R.always('metric'))
 );
 
+const fetchToUnknown = R.when(
+  // if fetching the current weather.
+  isFetch,
+  // merge with unknown.
+  mergeState('current',
+    R.always(UNKNOWN_WEATHER))
+);
+
 const clearToUnknown = R.when(
   // if clearing the current weather.
   isClear,
-  // set it to unknown
-  R.set(R.lensProp('state'), UNKNOWN)
+  // set to unknown
+  R.set(R.lensProp('state'),
+    R.objOf('current', UNKNOWN_WEATHER))
 );
 
 const setUnits = R.cond([
@@ -121,6 +137,7 @@ const getOutputStream = (reducerStream) => (
     .map(setUnits)
     .map(defaultFocus)
     .map(defaultUnits)
+    .map(fetchToUnknown)
     .map(clearToUnknown)
     .map(R.prop('state'))
 );

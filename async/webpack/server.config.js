@@ -43,7 +43,7 @@ module.exports = {
         collapseWhitespace: true
       },
       files: {
-        css: ['/static/fonts/owfont-regular.css', '/static/client.css'],
+        css: ['/static/fonts/font-awesome.css', '/static/fonts/owfont-regular.css', '/static/client.css'],
         js: ['/static/client.js']
       }
     }),
