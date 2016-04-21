@@ -9,8 +9,26 @@ const DEFAULT_CITY = 'Auckland';
 const APPID = '7cbd36bfb4764f5613cf8b8e68bf1665';
 const URI_WEATHER = uriTemplates('http://api.openweathermap.org/data/2.5/weather{?q,units,appid}');
 
-const units = (() => {
+const unitsProp = (() => {
   let current = 'metric';
+  return (next) => (
+    (next)
+      ? (current = next)
+      : current
+  );
+})();
+
+const countryCodeProp = (() => {
+  let current = '';
+  return (next) => (
+    (next)
+      ? (current = next)
+      : current
+  );
+})();
+
+const cityNameProp = (() => {
+  let current = '';
   return (next) => (
     (next)
       ? (current = next)
@@ -22,11 +40,16 @@ const createJsonStream = (response) => (
   Bacon.fromPromise(response.json())
 );
 
-const createWeatherStream = (countryCode, cityName) => (
+const setCountryAndCity = (countryCode = '', cityName = '') => ({
+  countryCode: countryCodeProp(countryCode),
+  cityName: cityNameProp(cityName)
+});
+
+const createWeatherStream = ({ countryCode, cityName }) => (
   Bacon.fromPromise(
     fetch(URI_WEATHER.fill({
       q: `${cityName},${countryCode || ''}`,
-      units: units(),
+      units: unitsProp(),
       appid: APPID
     }), {
       method: 'GET',
@@ -51,6 +74,7 @@ const createImperial = () => ({
 });
 
 export const searchWeather = R.pipe(
+  setCountryAndCity,
   createWeatherStream,
   R.invoker(1, 'map')(createWeather)
 );
@@ -70,12 +94,12 @@ export const clear = () => ({
 });
 
 export const switchToMetric = R.pipe(
-  R.partial(units, ['metric']),
+  R.partial(unitsProp, ['metric']),
   createMetric
 );
 
 export const switchToImperial = R.pipe(
-  R.partial(units, ['imperial']),
+  R.partial(unitsProp, ['imperial']),
   createImperial
 );
 
