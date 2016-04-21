@@ -93,6 +93,13 @@ const defaultFocus = R.when(
   mergeState('focus', R.T)
 );
 
+const defaultUnits = R.when(
+  // if focus hasn't been set.
+  R.pathEq(['state', 'units'], undefined),
+  // default to true.
+  mergeState('units', R.always('metric'))
+);
+
 const clearToUnknown = R.when(
   // if clearing the current weather.
   isClear,
@@ -101,8 +108,8 @@ const clearToUnknown = R.when(
 );
 
 const setUnits = R.cond([
-  [isMetric, mergeState('units', 'metric')],
-  [isImperial, mergeState('units', 'imperial')],
+  [isMetric, mergeState('units', R.always('metric'))],
+  [isImperial, mergeState('units', R.always('imperial'))],
   [R.T, R.identity]
 ]);
 
@@ -113,6 +120,7 @@ const getOutputStream = (reducerStream) => (
     .map(setFocus)
     .map(setUnits)
     .map(defaultFocus)
+    .map(defaultUnits)
     .map(clearToUnknown)
     .map(R.prop('state'))
 );

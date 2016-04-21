@@ -11,11 +11,13 @@ const cssModule = classNames.bind(styles);
 
 const switchToMetric = (event) => {
   WeatherAction.switchToMetric();
+  WeatherAction.searchWeather();
   event.preventDefault();
 };
 
 const switchToImperial = (event) => {
   WeatherAction.switchToImperial();
+  WeatherAction.searchWeather();
   event.preventDefault();
 };
 
@@ -88,12 +90,12 @@ const renderTemperature = R.pipe(
   renderWeatherDetailSafely
 );
 
-const renderunits = (current) => (
+const renderUnits = (units) => (
   <span>
     <a onClick={ switchToMetric }
       className={ cssModule({
         'units': true,
-        'selected': true}) }>°C
+        'selected': units === 'metric' }) }>°C
     </a>
 
     <span className={ cssModule(
@@ -103,7 +105,7 @@ const renderunits = (current) => (
     <a onClick={ switchToImperial }
       className={ cssModule({
         'units': true,
-        'selected': current.units === 'imperial' }) }>°F
+        'selected': units === 'imperial' }) }>°F
     </a>
   </span>
 );
@@ -122,7 +124,7 @@ const renderHumidity = R.pipe(
   renderWeatherDetailSafely
 );
 
-const renderSpeed = R.pipe(
+const renderSpeedMetric = R.pipe(
   R.path(['wind', 'speed']),
   convertToKmPerHour,
   prependText('Wind: '),
@@ -130,7 +132,20 @@ const renderSpeed = R.pipe(
   renderWeatherDetailSafely
 );
 
-const renderWeather = (focus, current) => (
+const renderSpeedImperial = R.pipe(
+  R.path(['wind', 'speed']),
+  prependText('Wind: '),
+  appendText(' mph'),
+  renderWeatherDetailSafely
+);
+
+const renderSpeed = R.ifElse(
+  R.equals('metric'),
+  R.pipe(R.nthArg(1), renderSpeedMetric),
+  R.pipe(R.nthArg(1), renderSpeedImperial)
+);
+
+const renderWeather = (focus, units, current) => (
   <div className={ cssModule({
     'weather': true,
     'focus': focus,
@@ -139,14 +154,14 @@ const renderWeather = (focus, current) => (
     <div className={ cssModule({
         'temperature': true }) }>
       { renderTemperature(current) }
-      { renderunits(current) }
+      { renderUnits(units) }
     </div>
 
     <div className={ cssModule({
         'details': true }) }>
       { renderCloudiness(current) }
       { renderHumidity(current) }
-      { renderSpeed(current) }
+      { renderSpeed(units, current) }
     </div>
   </div>
 );
@@ -156,6 +171,7 @@ const render = R.ifElse(
   R.converge(
     renderWeather, [
       shouldFocus,
+      R.prop('units'),
       R.prop('current')
     ]
   ),
