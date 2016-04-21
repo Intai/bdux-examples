@@ -24,9 +24,17 @@ const hasCurrent = R.allPass([
   R.propIs(Object, 'current')
 ]);
 
+const shouldFocus = R.allPass([
+  R.prop('focus'),
+  R.complement(R.path(['current', 'unknown']))
+]);
+
 const getCity = R.either(
   R.path(['current', 'name']),
-  R.prop('city')
+  R.pipe(
+    R.prop('city'),
+    R.defaultTo('Weather')
+  )
 );
 
 const getTitle = R.ifElse(
@@ -52,10 +60,14 @@ const getIcon = R.pipe(
   prependText('owf owf-')
 );
 
+const round = (number) => (
+  Math.round(number * 100) / 100
+);
+
 const convertToKmPerHour = (mps) => (
-  (R.isNil(mps))
+  (!R.is(Number, mps))
     ? mps
-    : (mps * 3600 / 1000)
+    : round(mps * 3600 / 1000)
 );
 
 const renderWeatherDetail = (text) => (
@@ -143,7 +155,7 @@ const render = R.ifElse(
   hasCurrent,
   R.converge(
     renderWeather, [
-      R.prop('focus'),
+      shouldFocus,
       R.prop('current')
     ]
   ),

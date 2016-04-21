@@ -65,6 +65,10 @@ export const setFocus = (focus) => ({
   focus: focus
 });
 
+export const clear = () => ({
+  type: ActionTypes.WEATHER_CLEAR
+});
+
 export const switchToMetric = R.pipe(
   R.partial(units, ['metric']),
   createMetric
@@ -105,5 +109,6 @@ export default bindToDispatch({
   setFocus,
   searchWeather,
   switchToMetric,
-  switchToImperial
+  switchToImperial,
+  clear
 });

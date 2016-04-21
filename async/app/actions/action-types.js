@@ -7,5 +7,6 @@ export default Common.createObjOfConsts([
   'WEATHER_FOCUS',
   'WEATHER_CURRENT',
   'WEATHER_UNIT_METRIC',
-  'WEATHER_UNIT_IMPERIAL'
+  'WEATHER_UNIT_IMPERIAL',
+  'WEATHER_CLEAR'
 ]);

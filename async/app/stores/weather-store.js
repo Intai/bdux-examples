@@ -4,6 +4,25 @@ import ActionTypes from '../actions/action-types';
 import StoreNames from './store-names';
 import { createStore } from 'bdux';
 
+const UNKNOWN = {
+  current: {
+    unknown: true,
+    weather: [{
+      id: 803
+    }],
+    main: {
+      temp: '?',
+      humidity: ''
+    },
+    clouds: {
+      all: ''
+    },
+    wind: {
+      speed: ''
+    }
+  }
+};
+
 const isAction = R.pathEq(
   ['action', 'type']
 );
@@ -26,6 +45,10 @@ const isMetric =  isAction(
 
 const isImperial =  isAction(
   ActionTypes.WEATHER_UNIT_IMPERIAL
+);
+
+const isClear =  isAction(
+  ActionTypes.WEATHER_CLEAR
 );
 
 const mergeState = (name, func) => (
@@ -70,6 +93,13 @@ const defaultFocus = R.when(
   mergeState('focus', R.T)
 );
 
+const clearToUnknown = R.when(
+  // if clearing the current weather.
+  isClear,
+  // set it to unknown
+  R.set(R.lensProp('state'), UNKNOWN)
+);
+
 const setUnits = R.cond([
   [isMetric, mergeState('units', 'metric')],
   [isImperial, mergeState('units', 'imperial')],
@@ -83,6 +113,7 @@ const getOutputStream = (reducerStream) => (
     .map(setFocus)
     .map(setUnits)
     .map(defaultFocus)
+    .map(clearToUnknown)
     .map(R.prop('state'))
 );
 
