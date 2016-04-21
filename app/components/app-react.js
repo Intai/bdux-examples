@@ -1,4 +1,5 @@
 import React from 'react';
+import Loading from './loading-react';
 import Weather from './weather-react';
 import CityName from './city-name-react';
 import CountryCodes from './country-codes-react';
@@ -8,6 +9,7 @@ import { createComponent } from 'bdux'
 
 export const App = () => (
   <div>
+    <Loading />
     <CountryCodes />
     <CityName />
     <Weather />

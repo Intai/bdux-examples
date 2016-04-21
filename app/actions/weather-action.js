@@ -45,6 +45,19 @@ const setCountryAndCity = (countryCode = '', cityName = '') => ({
   cityName: cityNameProp(cityName)
 });
 
+const createFetchStream = ({ countryCode, cityName }) => (
+  Bacon.once({
+    type: ActionTypes.WEATHER_FETCH,
+    countryCode: countryCode,
+    cityName: cityName
+  })
+);
+
+const createWeather = (current) => ({
+  type: ActionTypes.WEATHER_CURRENT,
+  current: current
+});
+
 const createWeatherStream = ({ countryCode, cityName }) => (
   Bacon.fromPromise(
     fetch(URI_WEATHER.fill({
@@ -58,12 +71,15 @@ const createWeatherStream = ({ countryCode, cityName }) => (
   )
   .flatMap(createJsonStream)
   .mapError(R.always({}))
+  .map(createWeather).delay(10000)
 );
 
-const createWeather = (current) => ({
-  type: ActionTypes.WEATHER_CURRENT,
-  current: current
-});
+const createFetchWeatherStream = R.converge(
+  Bacon.mergeAll, [
+    createFetchStream,
+    createWeatherStream
+  ]
+);
 
 const createMetric = () => ({
   type: ActionTypes.WEATHER_UNIT_METRIC
@@ -75,8 +91,7 @@ const createImperial = () => ({
 
 export const searchWeather = R.pipe(
   setCountryAndCity,
-  createWeatherStream,
-  R.invoker(1, 'map')(createWeather)
+  createFetchWeatherStream
 );
 
 export const setCity = (name) => ({
