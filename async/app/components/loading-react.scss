@@ -5,8 +5,9 @@
   position: relative;
 }
 
-.loading {
+.spinner {
   composes: text-offgrey from "./colors.scss";
+  transition: opacity 500ms ease-out;
   font-family: FontAwesome;
   font-size: 11rem;
   position: absolute;
@@ -14,4 +15,9 @@
   left: -4rem;
   z-index: -1;
   color: whitesmoke;
+  opacity: 0;
+
+  &.loading {
+    opacity: 1;
+  }
 }

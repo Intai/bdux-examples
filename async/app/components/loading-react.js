@@ -11,8 +11,9 @@ export const Loading = ({ loading }) => (
     'wrap': true }) }>
 
     <div className={ cssModule({
-      'loading': true,
-      'fa-spinner fa-spin': loading }) }>
+      'spinner': true,
+      'loading': loading,
+      'fa-spinner fa-spin': true }) }>
     </div>
   </div>
 );
