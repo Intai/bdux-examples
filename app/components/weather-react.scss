@@ -19,7 +19,8 @@
 .weather {
   composes: sans small from "./typography.scss";
   composes: text-grey from "./colors.scss";
-  transition: opacity 400ms ease-out;
+  transition: opacity 500ms ease-out;
+  pointer-events: none;
   margin-top: 15px;
   width: 100%;
   opacity: 0.2;
@@ -34,6 +35,7 @@
   }
 
   &.focus {
+    pointer-events: auto;;
     opacity: 1;
   }
 }
@@ -46,7 +48,9 @@
   padding-left: 10px;
 
   >.detail {
-    display: inline;
+    display: inline-block;
+    text-align: right;
+    min-width: 1.5em;
   }
 }
 
@@ -70,10 +74,16 @@
 }
 
 .details {
-  display: inline-block;
+  display: block;
+  margin-top: 5px;
   position: relative;
   top: -1px;
   left: 0;
+
+  @media (min-width: 480px) {
+    display: inline-block;
+    margin-top: 0;
+  }
 }
 
 .detail {

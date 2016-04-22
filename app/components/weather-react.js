@@ -66,6 +66,11 @@ const round = (number) => (
   Math.round(number * 100) / 100
 );
 
+const roundNumber = R.when(
+  R.is(Number),
+  Math.round
+);
+
 const convertToKmPerHour = (mps) => (
   (!R.is(Number, mps))
     ? mps
@@ -87,6 +92,7 @@ const renderWeatherDetailSafely = R.ifElse(
 
 const renderTemperature = R.pipe(
   R.path(['main', 'temp']),
+  roundNumber,
   renderWeatherDetailSafely
 );
 
