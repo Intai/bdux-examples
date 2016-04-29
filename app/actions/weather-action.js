@@ -2,6 +2,7 @@ import R from 'ramda';
 import Bacon from 'baconjs';
 import fetch from 'isomorphic-fetch';
 import uriTemplates from 'uri-templates';
+import Common from '../utils/common-util';
 import ActionTypes from './action-types';
 import { bindToDispatch } from 'bdux';
 
@@ -9,38 +10,11 @@ const DEFAULT_CITY = 'Auckland';
 const APPID = '7cbd36bfb4764f5613cf8b8e68bf1665';
 const URI_WEATHER = uriTemplates('http://api.openweathermap.org/data/2.5/weather{?q,units,appid}');
 
-const unitsProp = (() => {
-  let current = 'metric';
-  return (next) => (
-    (next)
-      ? (current = next)
-      : current
-  );
-})();
+const unitsProp = Common.createProp('metric');
+const countryCodeProp = Common.createProp('');
+const cityNameProp = Common.createProp(DEFAULT_CITY);
 
-const countryCodeProp = (() => {
-  let current = '';
-  return (next) => (
-    (next)
-      ? (current = next)
-      : current
-  );
-})();
-
-const cityNameProp = (() => {
-  let current = '';
-  return (next) => (
-    (next)
-      ? (current = next)
-      : current
-  );
-})();
-
-const createJsonStream = (response) => (
-  Bacon.fromPromise(response.json())
-);
-
-const setCountryAndCity = (countryCode = '', cityName = '') => ({
+const setCountryAndCity = (countryCode = undefined, cityName = undefined) => ({
   countryCode: countryCodeProp(countryCode),
   cityName: cityNameProp(cityName)
 });
@@ -53,26 +27,33 @@ const createFetchStream = ({ countryCode, cityName }) => (
   })
 );
 
-const createWeather = (current) => ({
+const createWeather = R.curry((params, current) => ({
   type: ActionTypes.WEATHER_CURRENT,
+  params: params,
   current: current
-});
+}));
 
-const createWeatherStream = ({ countryCode, cityName }) => (
-  Bacon.fromPromise(
-    fetch(URI_WEATHER.fill({
-      q: `${cityName},${countryCode || ''}`,
-      units: unitsProp(),
-      appid: APPID
-    }), {
+const createJsonStream = (response) => (
+  Bacon.fromPromise(response.json())
+);
+
+const createWeatherStream = ({ countryCode, cityName }) => {
+  let params = {
+    q: `${cityName},${countryCode || ''}`,
+    units: unitsProp(),
+    appid: APPID
+  };
+
+  return Bacon.fromPromise(
+    fetch(URI_WEATHER.fill(params), {
       method: 'GET',
       timeout: 5000
     })
   )
   .flatMap(createJsonStream)
   .mapError(R.always({}))
-  .map(createWeather).delay(10000)
-);
+  .map(createWeather(params));
+};
 
 const createFetchWeatherStream = R.converge(
   Bacon.mergeAll, [

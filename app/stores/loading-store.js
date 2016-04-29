@@ -1,6 +1,8 @@
 import R from 'ramda';
 import Bacon from 'baconjs';
 import ActionTypes from '../actions/action-types';
+import CountryCodesStore from './country-codes-store';
+import WeatherStore from './weather-store';
 import StoreNames from './store-names';
 import { createStore } from 'bdux';
 
@@ -12,9 +14,14 @@ const isFetch =  isAction(
   ActionTypes.WEATHER_FETCH
 );
 
-const isFetchEnd =  isAction(
-  ActionTypes.WEATHER_CURRENT
+const isCurrentCountryCity = ({ action, country, weather }) => (
+  action.params.q === `${weather.city},${country.selected || ''}`
 );
+
+const isFetchEnd = R.allPass([
+  isAction(ActionTypes.WEATHER_CURRENT),
+  isCurrentCountryCity
+]);
 
 const isLoading = R.cond([
   [isFetch, R.T],
@@ -33,5 +40,8 @@ export const getReducer = () => {
 };
 
 export default createStore(
-  StoreNames.LOADING, getReducer
+  StoreNames.LOADING, getReducer, {
+    country: CountryCodesStore,
+    weather: WeatherStore
+  }
 );

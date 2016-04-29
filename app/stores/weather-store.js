@@ -1,6 +1,7 @@
 import R from 'ramda';
 import Bacon from 'baconjs';
 import ActionTypes from '../actions/action-types';
+import CountryCodesStore from './country-codes-store';
 import StoreNames from './store-names';
 import { createStore } from 'bdux';
 
@@ -65,9 +66,13 @@ const mergeState = (name, func) => (
   ])
 );
 
+const isCurrentCountryCity = ({ action, state, country }) => (
+  action.params.q === `${state.city},${country.selected || ''}`
+);
+
 const setCurrent = R.when(
   // if setting the current weather.
-  isCurrent,
+  R.allPass([isCurrent, isCurrentCountryCity]),
   R.pipe(
     // focus on the weather.
     mergeState('focus', R.T),
@@ -152,5 +157,7 @@ export const getReducer = () => {
 };
 
 export default createStore(
-  StoreNames.WEATHER, getReducer
+  StoreNames.WEATHER, getReducer, {
+    country: CountryCodesStore
+  }
 );
