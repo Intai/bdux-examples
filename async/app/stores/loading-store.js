@@ -4,6 +4,7 @@ import ActionTypes from '../actions/action-types';
 import CountryCodesStore from './country-codes-store';
 import WeatherStore from './weather-store';
 import StoreNames from './store-names';
+import { createWeatherQuery } from '../actions/weather-action';
 import { createStore } from 'bdux';
 
 const isAction = R.pathEq(
@@ -15,7 +16,7 @@ const isFetch =  isAction(
 );
 
 const isCurrentCountryCity = ({ action, country, weather }) => (
-  action.params.q === `${weather.city},${country.selected || ''}`
+  action.params.q === createWeatherQuery(country.selected, weather.city)
 );
 
 const isFetchEnd = R.allPass([

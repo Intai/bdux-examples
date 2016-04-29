@@ -36,7 +36,8 @@ const renderOptions = (codes) => (
 
 const renderCountryCodes = (country) => (
   <div className={ cssModule({
-    'wrap': true }) }>
+    'wrap': true,
+    'empty': !country.selected }) }>
 
     <label className={ cssModule({
       'label': true }) }>Country
@@ -51,10 +52,15 @@ const renderCountryCodes = (country) => (
   </div>
 );
 
+const renderEmptyCountryCodes = R.pipe(
+  R.always({}),
+  renderCountryCodes
+);
+
 const render = R.ifElse(
   isNotEmpty,
   renderCountryCodes,
-  R.always(<noscript />)
+  renderEmptyCountryCodes
 );
 
 export const CountryCodes = ({ country }) => (

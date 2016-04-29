@@ -3,6 +3,7 @@ import Bacon from 'baconjs';
 import ActionTypes from '../actions/action-types';
 import CountryCodesStore from './country-codes-store';
 import StoreNames from './store-names';
+import { createWeatherQuery } from '../actions/weather-action';
 import { createStore } from 'bdux';
 
 const UNKNOWN_WEATHER = {
@@ -31,7 +32,7 @@ const isFetch =  isAction(
   ActionTypes.WEATHER_FETCH
 );
 
-const isCurrent =  isAction(
+const isSetCurrent =  isAction(
   ActionTypes.WEATHER_CURRENT
 );
 
@@ -67,14 +68,14 @@ const mergeState = (name, func) => (
 );
 
 const isCurrentCountryCity = ({ action, state, country }) => (
-  action.params.q === `${state.city},${country.selected || ''}`
+  action.params.q === createWeatherQuery(country.selected, state.city)
 );
 
 const setCurrent = R.when(
   // if setting the current weather.
-  R.allPass([isCurrent, isCurrentCountryCity]),
+  R.allPass([isSetCurrent, isCurrentCountryCity]),
   R.pipe(
-    // focus on the weather.
+    // focus the weather.
     mergeState('focus', R.T),
     // merge the weather into state.
     mergeState('current',
@@ -106,14 +107,14 @@ const defaultFocus = R.when(
 );
 
 const defaultUnits = R.when(
-  // if focus hasn't been set.
+  // if units hasn't been set.
   R.pathEq(['state', 'units'], undefined),
-  // default to true.
+  // default to metric.
   mergeState('units', R.always('metric'))
 );
 
 const fetchToUnknown = R.when(
-  // if fetching the current weather.
+  // while fetching the current weather.
   isFetch,
   // merge with unknown.
   mergeState('current',

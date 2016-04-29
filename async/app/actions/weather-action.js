@@ -6,13 +6,14 @@ import Common from '../utils/common-util';
 import ActionTypes from './action-types';
 import { bindToDispatch } from 'bdux';
 
+const DEFAULT_COUNTRY = 'NZ';
 const DEFAULT_CITY = 'Auckland';
 const APPID = '7cbd36bfb4764f5613cf8b8e68bf1665';
 const URI_WEATHER = uriTemplates('http://api.openweathermap.org/data/2.5/weather{?q,units,appid}');
 
-const unitsProp = Common.createProp('metric');
-const countryCodeProp = Common.createProp('');
+const countryCodeProp = Common.createProp(DEFAULT_COUNTRY);
 const cityNameProp = Common.createProp(DEFAULT_CITY);
+const unitsProp = Common.createProp('metric');
 
 const setCountryAndCity = (countryCode = undefined, cityName = undefined) => ({
   countryCode: countryCodeProp(countryCode),
@@ -27,6 +28,10 @@ const createFetchStream = ({ countryCode, cityName }) => (
   })
 );
 
+export const createWeatherQuery = (countryCode, cityName) => (
+  `${cityName},${countryCode || ''}`
+);
+
 const createWeather = R.curry((params, current) => ({
   type: ActionTypes.WEATHER_CURRENT,
   params: params,
@@ -39,7 +44,7 @@ const createJsonStream = (response) => (
 
 const createWeatherStream = ({ countryCode, cityName }) => {
   let params = {
-    q: `${cityName},${countryCode || ''}`,
+    q: createWeatherQuery(countryCode, cityName),
     units: unitsProp(),
     appid: APPID
   };
@@ -99,10 +104,30 @@ export const switchToImperial = R.pipe(
   createImperial
 );
 
-const shouldInit = R.pipe(
-  R.path(['weather', 'current']),
-  R.anyPass([R.isNil, R.isEmpty, R.prop('unknown')])
+const isDefaultCountry = R.pipe(
+  R.path(['country', 'selected']),
+  R.equals(DEFAULT_COUNTRY)
 );
+
+const isDefaultCity = R.pipe(
+  R.path(['weather', 'city']),
+  R.equals(DEFAULT_CITY)
+);
+
+const hasCurrent = R.pipe(
+  R.path(['weather', 'current']),
+  R.complement(R.anyPass([
+    R.isNil,
+    R.isEmpty,
+    R.prop('unknown')
+  ]))
+);
+
+const shouldInit = R.complement(R.allPass([
+  isDefaultCountry,
+  isDefaultCity,
+  hasCurrent
+]));
 
 const setDefaultCity = R.partial(
   setCity, [DEFAULT_CITY]

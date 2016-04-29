@@ -1,8 +1,14 @@
 .wrap {
+  transition: opacity 500ms ease-out;
   margin: 0 auto;
   max-width: 480px;
   padding-left: 10px;
   width: 100%;
+  opacity: 1;
+
+  &.empty {
+    opacity: 0;
+  }
 }
 
 .label {

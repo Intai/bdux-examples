@@ -4,13 +4,16 @@ import fetch from 'isomorphic-fetch';
 import ActionTypes from './action-types';
 import { bindToDispatch } from 'bdux';
 
+const DEFAULT_COUNTRY = 'NZ';
+const URI_COUNTRIES = 'http://data.okfn.org/data/core/country-list/r/data.json';
+
 const createJsonStream = (response) => (
   Bacon.fromPromise(response.json())
 );
 
 const createCodesStream = () => (
   Bacon.fromPromise(
-    fetch('http://data.okfn.org/data/core/country-list/r/data.json', {
+    fetch(URI_COUNTRIES, {
       method: 'GET',
       timeout: 5000
     })
@@ -40,7 +43,7 @@ const shouldInit = R.pipe(
 );
 
 const selectDefault = R.partial(
-  select, ['NZ']
+  select, [DEFAULT_COUNTRY]
 );
 
 const createInitStream = () => (
