@@ -62,7 +62,7 @@ const getIcon = R.pipe(
   prependText('owf owf-')
 );
 
-const round = (number) => (
+const roundTwoDecimal = (number) => (
   Math.round(number * 100) / 100
 );
 
@@ -72,9 +72,9 @@ const roundNumber = R.when(
 );
 
 const convertToKmPerHour = (mps) => (
-  (!R.is(Number, mps))
-    ? mps
-    : round(mps * 3600 / 1000)
+  (R.is(Number, mps))
+    ? roundTwoDecimal(mps * 3600 / 1000)
+    : mps
 );
 
 const renderWeatherDetail = (text) => (
@@ -96,7 +96,7 @@ const renderTemperature = R.pipe(
   renderWeatherDetailSafely
 );
 
-const renderUnits = (units) => (
+const renderTemperatureUnit = (units) => (
   <span>
     <a onClick={ switchToMetric }
       className={ cssModule({
@@ -160,7 +160,7 @@ const renderWeather = (focus, units, current) => (
     <div className={ cssModule({
         'temperature': true }) }>
       { renderTemperature(current) }
-      { renderUnits(units) }
+      { renderTemperatureUnit(units) }
     </div>
 
     <div className={ cssModule({

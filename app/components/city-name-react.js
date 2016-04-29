@@ -39,13 +39,14 @@ const searchWeatherSafely = R.ifElse(
   R.always()
 );
 
-const preventDefault = R.invoker(0,
-  'preventDefault'
+const preventDefault = R.pipe(
+  R.nthArg(2),
+  R.invoker(0, 'preventDefault')
 );
 
 const onSearch = R.curryN(3, R.juxt([
   searchWeatherSafely,
-  R.pipe(R.nthArg(2), preventDefault)
+  preventDefault
 ]));
 
 const getCity = R.path(
@@ -68,7 +69,7 @@ export const CityName = ({ country, weather }) => (
       className={ cssModule({
         'input': true }) } />
 
-    <button onClick={ onSearch(country, weather) }
+    <button type="submit"
       className={ cssModule({
         'button': true }) }>Go
     </button>
