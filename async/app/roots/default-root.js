@@ -6,20 +6,25 @@ import WeatherAction from '../actions/weather-action';
 import WeatherStore from '../stores/weather-store';
 import CountryCodesAction from '../actions/country-codes-action';
 import CountryCodesStore from '../stores/country-codes-store';
-import { createRoot } from 'bdux-universal';
+import { createAsyncRoot } from 'bdux-universal';
 
-export const createElement = () => (
+export const createAsyncActions = () => (
   Bacon.when([
     // fetch country codes from internet.
     CountryCodesAction.load(),
     // fetch the current weather for Auckland.
-    WeatherAction.searchWeather('NZ', 'Auckland')
+    WeatherAction.searchWeather('NZ', 'Auckland').last()
   ],
-  // create application.
-  R.always(<App />))
+  // get arguments as an array.
+  R.unapply(R.identity))
 );
 
-export default createRoot(
+export const createElement = () => (
+  <App />
+);
+
+export default createAsyncRoot(
+  createAsyncActions,
   createElement, {
     countryCodes: CountryCodesStore,
     weather: WeatherStore
