@@ -101,7 +101,7 @@ export const switchToImperial = R.pipe(
 
 const shouldInit = R.pipe(
   R.path(['weather', 'current']),
-  R.anyPass([R.isNil, R.isEmpty])
+  R.anyPass([R.isNil, R.isEmpty, R.prop('unknown')])
 );
 
 const setDefaultCity = R.partial(
