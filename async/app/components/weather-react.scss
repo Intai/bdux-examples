@@ -1,0 +1,92 @@
+.wrap {
+  margin: 0 auto;
+  max-width: 480px;
+  padding-left: 10px;
+  width: 100%;
+}
+
+.city {
+  composes: sans bold large from "./typography.scss";
+  composes: text-offgrey from "./colors.scss";
+  text-transform: capitalize;
+  display: block;
+  margin-left: -10px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.weather {
+  composes: sans small from "./typography.scss";
+  composes: text-grey from "./colors.scss";
+  transition: opacity 500ms ease-out;
+  pointer-events: none;
+  margin-top: 15px;
+  width: 100%;
+  opacity: 0.2;
+
+  &::before {
+    font-family: owfont;
+    font-size: 5rem;
+    display: block;
+    position: absolute;
+    top: -5px;
+    left: -10px;
+  }
+
+  &.focus {
+    pointer-events: auto;;
+    opacity: 1;
+  }
+}
+
+.temperature {
+  composes: sans bold huge from "./typography.scss";
+  display: inline-block;
+  margin-left: 5rem;
+  margin-right: 20px;
+  padding-left: 10px;
+
+  >.detail {
+    display: inline-block;
+    text-align: right;
+    min-width: 1.5em;
+  }
+}
+
+.units {
+  composes: sans medium from "./typography.scss";
+  vertical-align: top;
+  cursor: pointer;
+  color: lightblue;
+
+  &.selected {
+    cursor: auto;
+    color: inherit;
+  }
+}
+
+.separator {
+  composes: sans medium from "./typography.scss";
+  composes: text-grey from "./colors.scss";
+  vertical-align: top;
+  padding-left: 3px;
+}
+
+.details {
+  display: block;
+  margin-top: 5px;
+  position: relative;
+  top: -1px;
+  left: 0;
+
+  @media (min-width: 480px) {
+    display: inline-block;
+    margin-top: 0;
+  }
+}
+
+.detail {
+  display: block;
+  margin-bottom: 5px;
+}

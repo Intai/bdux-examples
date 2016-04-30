@@ -1,0 +1,30 @@
+$serif: Times New Roman, Times, Serif;
+$sansserif: Lucida Grande, Helvetica, Arial, Sans-Serif;
+
+.serif {
+  font-family: $serif;
+}
+
+.sans {
+  font-family: $sansserif;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.small {
+  font-size: 0.8rem;
+}
+
+.medium {
+  font-size: 1rem;
+}
+
+.large {
+  font-size: 2rem;
+}
+
+.huge {
+  font-size: 4rem;
+}
