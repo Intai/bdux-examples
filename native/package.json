@@ -1,0 +1,22 @@
+{
+  "name": "dbux-examples",
+  "version": "0.1.0",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Intai/bdux-examples.git"
+  },
+  "author": "Intai",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Intai/bdux-examples/issues"
+  },
+  "homepage": "https://github.com/Intai/bdux-examples",
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start"
+  },
+  "dependencies": {
+    "react": "^0.14.8",
+    "react-native": "^0.24.1"
+  }
+}
