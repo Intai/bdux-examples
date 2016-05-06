@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "baconjs": "^0.7.84",
+    "bdux": "^0.1.17",
     "ramda": "^0.21.0",
     "react": "^0.14.8",
     "react-native": "^0.24.1"

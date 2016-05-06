@@ -1,4 +1,5 @@
 import React, { StyleSheet, Text, View } from 'react-native';
+import { createComponent } from 'bdux'
 
 const styles = StyleSheet.create({
   container: {
@@ -34,4 +35,4 @@ export const App = () => (
   </View>
 );
 
-export default App;
+export default createComponent(App);
