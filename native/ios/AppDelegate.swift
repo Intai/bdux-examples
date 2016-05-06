@@ -8,10 +8,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
 
     //let url = NSBundle.mainBundle().URLForResource("main", withExtension: "jsbundle")
-    let url = NSURL(string: "http://localhost:8081/index.ios.bundle?platform=ios&dev=true")
+    let url = NSURL(string: "http://localhost:8081/app/main.ios.bundle?platform=ios&dev=true")
     let rootView = RCTRootView(
       bundleURL: url,
-      moduleName: "native",
+      moduleName: "App",
       initialProperties: nil,
       launchOptions:launchOptions)
 
