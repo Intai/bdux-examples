@@ -59,6 +59,11 @@ import com.android.build.OutputFile
  * ]
  */
 
+project.ext.react = [
+    bundleAssetName: "app/main.android.bundle",
+    entryFile: "app/main.android.js"
+]
+
 apply from: "../../node_modules/react-native/react.gradle"
 
 /**
@@ -81,7 +86,7 @@ android {
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        applicationId "com.native"
+        applicationId "com.examples"
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 1
@@ -99,6 +104,10 @@ android {
         }
     }
     buildTypes {
+        debug {
+
+        }
+
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"

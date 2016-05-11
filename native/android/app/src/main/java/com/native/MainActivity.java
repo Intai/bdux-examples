@@ -1,9 +1,8 @@
-package com.native;
+package com.examples;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,7 +14,7 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "native";
+        return "App";
     }
 
     /**
