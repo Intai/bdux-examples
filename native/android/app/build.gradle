@@ -59,11 +59,6 @@ import com.android.build.OutputFile
  * ]
  */
 
-project.ext.react = [
-    bundleAssetName: "app/main.android.bundle",
-    entryFile: "app/main.android.js"
-]
-
 apply from: "../../node_modules/react-native/react.gradle"
 
 /**

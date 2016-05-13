@@ -26,7 +26,7 @@ export const App = () => (
       Welcome to React Native!
     </Text>
     <Text style={styles.instructions}>
-      To get started, edit main.ios.js
+      To get started, edit main.platform.js
     </Text>
     <Text style={styles.instructions}>
       Press Cmd+R to reload,{'\n'}
