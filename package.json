@@ -13,14 +13,14 @@
   },
   "homepage": "https://github.com/Intai/bdux-examples",
   "dependencies": {
-    "baconjs": "^0.7.83",
-    "bdux": "^0.1.4",
-    "bdux-logger": "^0.1.1",
-    "bdux-timetravel": "^0.1.5",
-    "classnames": "^2.2.3",
-    "ramda": "^0.19.1",
-    "react": "^0.14.7",
-    "react-dom": "^0.14.7"
+    "baconjs": "^0.7.84",
+    "bdux": "^0.1.19",
+    "bdux-logger": "^0.1.6",
+    "bdux-timetravel": "^0.1.16",
+    "classnames": "^2.2.5",
+    "ramda": "^0.21.0",
+    "react": "^15.1.0",
+    "react-dom": "^15.1.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.3",

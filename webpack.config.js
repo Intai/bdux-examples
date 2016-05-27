@@ -1,7 +1,6 @@
 var path = require('path'),
     webpack = require('webpack'),
-    autoprefixer = require('autoprefixer'),
-    localByDefault = require("postcss-modules-local-by-default");
+    autoprefixer = require('autoprefixer');
 
 module.exports = {
   context: path.join(__dirname, 'app'),
@@ -28,7 +27,7 @@ module.exports = {
       test: /\.scss$/,
       loaders: [
         'style',
-        'css?importLoaders=2&localIdentName=[name]__[local]___[hash:base64:5]',
+        'css?modules&importLoaders=2&localIdentName=[name]__[local]___[hash:base64:5]',
         'postcss',
         'sass'
       ]
@@ -39,8 +38,7 @@ module.exports = {
     filename: 'bundle.js'
   },
   postcss: [
-    autoprefixer,
-    localByDefault
+    autoprefixer
   ],
   eslint: {
     configFile: '.eslintrc'

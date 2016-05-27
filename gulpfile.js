@@ -17,17 +17,9 @@ gulp.task('clean', function () {
   require('del').sync('dist');
 });
 
-gulp.task('webpack', function() {
-  return gulp.src('app/main.js')
-    .pipe($.sourcemaps.init())
-    .pipe(webpackStream(webpackConfig))
-    .pipe($.uglify())
-    .pipe($.sourcemaps.write())
-    .pipe(gulp.dest('dist'));
-});
-
-gulp.task('webpack-dev-server', function(callback) {
+gulp.task('dev-server', function(callback) {
   new WebpackDevServer(webpack(webpackConfig), {
+    historyApiFallback: true,
     noInfo: true,
     hot: true
   })
@@ -37,18 +29,10 @@ gulp.task('webpack-dev-server', function(callback) {
   });
 });
 
-gulp.task('watch', function() {
-  gulp.watch(files + '.js', ['webpack']);
-});
-
-gulp.task('build', [
-  'webpack'
-]);
-
-gulp.task('server', [
-  'webpack-dev-server'
+gulp.task('dev', [
+  'dev-server'
 ]);
 
 gulp.task('default', [
-  'server'
+  'dev-server'
 ]);
