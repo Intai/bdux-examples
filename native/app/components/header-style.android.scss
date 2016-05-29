@@ -1,0 +1,12 @@
+@import 'partials/colors';
+@import 'partials/typography.android';
+
+wrap {
+  @extend .background-offwhite;
+  padding: 15 0;
+}
+
+label {
+  @extend .text-grey, .large, .sans;
+  text-align: center;
+}

@@ -1,0 +1,30 @@
+$serif: Times New Roman;
+$sansserif: Helvetica Neue;
+
+.serif {
+  font-family: $serif;
+}
+
+.sans {
+  font-family: $sansserif;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.small {
+  font-size: 14;
+}
+
+.medium {
+  font-size: 16;
+}
+
+.large {
+  font-size: 18;
+}
+
+.huge {
+  font-size: 20;
+}

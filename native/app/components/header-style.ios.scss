@@ -1,0 +1,12 @@
+@import 'partials/colors';
+@import 'partials/typography.ios';
+
+wrap {
+  @extend .background-offwhite;
+  padding: 30 0 15 0;
+}
+
+label {
+  @extend .text-grey, .large, .sans;
+  text-align: center;
+}

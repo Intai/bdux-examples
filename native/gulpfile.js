@@ -6,8 +6,31 @@ var gulp = require('gulp'),
     WebpackDevServer = require('webpack-dev-server'),
     webpackConfig = require('./webpack.config.js'),
     $ = require('gulp-load-plugins')(),
+    mergeStream = require('merge-stream'),
     spawn = require('child_process').spawn,
-    files = './!(dist|build|node_modules)/**/*';
+    nativeStyles = ['app/**/*.!(web).scss', 'app/**/+([^.]).scss'];
+
+var mergeInheritance = function(stream, file) {
+  return mergeStream(
+    gulp.src(file.path),
+    gulp.src(file.path)
+      .pipe($.sassInheritance({ dir: 'app' }))
+  );
+};
+
+var isNotPartial = function(file) {
+  return !/\/_[^\/]*$/.test(file.relative);
+};
+
+var replaceDir  = function(file) {
+  file.base = file.base.replace(/app\/.*$/, 'app/');
+  return file;
+};
+
+var replaceDest  = function(file) {
+  file.path = file.path.replace(/([^\/]*)$/, 'generated/$1');
+  return file;
+};
 
 gulp.task('image', function() {
   return gulp.src('./images/**/*.{jpg,png}')
@@ -16,6 +39,22 @@ gulp.task('image', function() {
 
 gulp.task('clean', function () {
   require('del').sync('dist');
+});
+
+gulp.task('sass', function() {
+  return gulp.src(nativeStyles)
+    .pipe($.cached('sass'))
+    .pipe($.flatmap(mergeInheritance))
+    .pipe($.filter(isNotPartial))
+    .pipe($.map(replaceDir))
+    .pipe($.sass().on('error', $.sass.logError))
+    .pipe($.reactNativeStylesheetCss())
+    .pipe($.map(replaceDest))
+    .pipe(gulp.dest('app'));
+});
+
+gulp.task('sass-watch', function(){
+  gulp.watch(nativeStyles, ['sass']);
 });
 
 gulp.task('packager', function(cb) {
@@ -27,6 +66,7 @@ gulp.task('packager', function(cb) {
   });
 
   cmd.on('close', cb);
+  console.log();
 });
 
 gulp.task('dev-server', function(cb) {
@@ -41,15 +81,18 @@ gulp.task('dev-server', function(cb) {
   });
 });
 
-gulp.task('dev-native', [
-  'packager'
-]);
+gulp.task('dev-native', $.sequence(
+  'sass', [
+    'sass-watch',
+    'packager'
+  ]
+));
 
 gulp.task('dev-web', [
   'dev-server'
 ]);
 
 gulp.task('default', [
-  'packager',
-  'dev-server'
+  'dev-web',
+  'dev-native'
 ]);

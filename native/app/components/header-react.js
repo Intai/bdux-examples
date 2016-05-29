@@ -1,9 +1,18 @@
 import React from 'react'
-import { Text } from 'react-native'
+import { View, StatusBar, Text } from 'react-native'
 import { createComponent } from 'bdux'
+import styles from './generated/header-style'
 
 export const Header = ({ children }) => (
-  <Text>{ children }</Text>
+  <View style={ styles.wrap }>
+    <StatusBar
+      backgroundColor="#444"
+      barStyle="default" />
+
+    <Text style={ styles.label }>
+      { children }
+    </Text>
+  </View>
 )
 
 export default createComponent(Header)
