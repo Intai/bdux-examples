@@ -1,0 +1,11 @@
+.label {
+  composes: sans medium from "./partials/_typography.web.scss";
+  composes: text-grey border-offgrey from "./partials/_colors.scss";
+  display: block;
+  text-align: center;
+  margin: 0 auto;
+  padding: 10px 0 15px 0;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  max-width: 480px;
+}
