@@ -1,0 +1,12 @@
+@import 'partials/colors';
+@import 'partials/typography.ios';
+
+wrap {
+  padding: 20 0 0 176;
+}
+
+time {
+  @extend .text-offgrey, .large, .sans;
+  text-align: center;
+  line-height: $size-large;
+}

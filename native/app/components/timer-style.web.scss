@@ -1,0 +1,10 @@
+.time {
+  composes: sans huge from "./partials/_typography.web.scss";
+  composes: text-grey from "./partials/_colors.scss";
+  display: block;
+  text-align: center;
+  margin: 0 auto;
+  padding: 0 0 35px 0;
+  max-width: 480px;
+  line-height: 1em;
+}

@@ -1,6 +1,11 @@
 $serif: Times New Roman, Times, Serif;
 $sansserif: Lucida Grande, Helvetica, Arial, Sans-Serif;
 
+$size-small: 0.8rem;
+$size-medium: 1rem;
+$size-large: 2rem;
+$size-huge: 4rem;
+
 .serif {
   font-family: $serif;
 }
@@ -14,17 +19,17 @@ $sansserif: Lucida Grande, Helvetica, Arial, Sans-Serif;
 }
 
 .small {
-  font-size: 0.8rem;
+  font-size: $size-small;
 }
 
 .medium {
-  font-size: 1rem;
+  font-size: $size-medium;
 }
 
 .large {
-  font-size: 2rem;
+  font-size: $size-large;
 }
 
 .huge {
-  font-size: 4rem;
+  font-size: $size-huge;
 }

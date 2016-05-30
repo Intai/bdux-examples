@@ -1,0 +1,13 @@
+@import 'partials/colors';
+@import 'partials/typography.android';
+
+wrap {
+  padding: 20 0 0 176;
+  margin-top: -5px;
+}
+
+time {
+  @extend .text-offgrey, .large, .sans;
+  text-align: center;
+  line-height: $size-large + 5;
+}

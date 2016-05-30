@@ -1,6 +1,11 @@
 $serif: Droid Serif;
 $sansserif: Droid Sans;
 
+$size-small: 14;
+$size-medium: 18;
+$size-large: 32;
+$size-huge: 80;
+
 .serif {
   font-family: $serif;
 }
@@ -14,17 +19,17 @@ $sansserif: Droid Sans;
 }
 
 .small {
-  font-size: 16;
+  font-size: $size-small;
 }
 
 .medium {
-  font-size: 18;
+  font-size: $size-medium;
 }
 
 .large {
-  font-size: 20;
+  font-size: $size-large;
 }
 
 .huge {
-  font-size: 22;
+  font-size: $size-huge;
 }
