@@ -39,10 +39,14 @@ module.exports = {
       test: /\.scss$/,
       loaders: [
         'style',
-        'css?modules&importLoaders=2&localIdentName=[name]__[local]___[hash:base64:5]',
+        'css?modules&importLoaders=3&localIdentName=[name]__[local]___[hash:base64:5]',
         'postcss',
-        'sass'
+        'sass',
+        'jsontosass?path=./app/components/_variables.json'
       ]
+    }, {
+      test: /\.json$/,
+      loader: 'json-loader'
     }]
   },
   output: {

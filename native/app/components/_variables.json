@@ -1,0 +1,32 @@
+{
+  "colour": {
+    "grey": "#444",
+    "offgrey": "#ddd",
+    "offwhite": "#eee",
+    "alert": "#e74c3c"
+  },
+  "web": {
+    "serif": "Times New Roman, Times, Serif",
+    "sansserif": "Lucida Grande, Helvetica, Arial, Sans-Serif",
+    "fontSmall": "0.8rem",
+    "fontMedium": "1rem",
+    "fontLarge": "2rem",
+    "fontHuge": "4rem"
+  },
+  "ios": {
+    "serif": "Times New Roman",
+    "sansserif": "Helvetica Neue",
+    "fontSmall": 14,
+    "fontMedium": 18,
+    "fontLarge": 32,
+    "fontHuge": 80
+  },
+  "android": {
+    "serif": "Droid Serif",
+    "sansserif": "Droid Sans",
+    "fontSmall": 14,
+    "fontMedium": 18,
+    "fontLarge": 32,
+    "fontHuge": 80
+  }
+}

@@ -1,0 +1,27 @@
+.serif {
+  font-family: map-get($web, serif);
+}
+
+.sans {
+  font-family: map-get($web, sansserif);
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.small {
+  font-size: map-get($web, fontSmall);
+}
+
+.medium {
+  font-size: map-get($web, fontMedium);
+}
+
+.large {
+  font-size: map-get($web, fontLarge);
+}
+
+.huge {
+  font-size: map-get($web, fontHuge);
+}

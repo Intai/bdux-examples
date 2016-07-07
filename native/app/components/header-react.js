@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, StatusBar, Text } from 'react-native'
 import { createComponent } from 'bdux'
-import styles from './generated/header-style'
+import styles from './header-style'
 
 export const Header = ({ children }) => (
   <View style={ styles.wrap }>

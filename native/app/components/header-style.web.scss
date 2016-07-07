@@ -1,6 +1,6 @@
 .label {
-  composes: sans medium from "./partials/_typography.web.scss";
-  composes: text-grey border-offgrey from "./partials/_colors.scss";
+  composes: sans medium from "./_typography.scss";
+  composes: text-grey border-offgrey from "./_colors.scss";
   display: block;
   text-align: center;
   margin: 0 auto;

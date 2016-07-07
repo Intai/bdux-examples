@@ -1,14 +1,15 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import Container from './container-react'
+import Label from './label-react'
 import { createComponent } from 'bdux'
-import styles from './generated/timer-lap-style'
+import styles from './timer-lap-style'
 
 export const Timerlap = () => (
-  <View style={ styles.wrap }>
-    <Text style={ styles.time }>
+  <Container style={ styles.wrap }>
+    <Label style={ styles.time }>
       00:00.00
-    </Text>
-  </View>
+    </Label>
+  </Container>
 )
 
 export default createComponent(Timerlap)

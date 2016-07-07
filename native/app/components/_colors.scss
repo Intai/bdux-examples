@@ -1,0 +1,23 @@
+.background-offwhite {
+  background-color: map-get($colour, offwhite);
+}
+
+.border-offgrey {
+  border-color: map-get($colour, offgrey);
+}
+
+.text-offgrey {
+  color: map-get($colour, offgrey);
+}
+
+.text-offwhite {
+  color: map-get($colour, offwhite);
+}
+
+.text-grey {
+  color: map-get($colour, grey);
+}
+
+.text-alert {
+  color: map-get($colour, offwhite);
+}

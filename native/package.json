@@ -46,6 +46,8 @@
     "gulp-sequence": "^0.4.5",
     "gulp-util": "^3.0.7",
     "html-webpack-plugin": "^2.15.0",
+    "json-loader": "^0.5.4",
+    "jsontosass-loader": "^0.1.8",
     "merge-stream": "^1.0.0",
     "node-sass": "^3.4.2",
     "postcss-loader": "^0.8.1",

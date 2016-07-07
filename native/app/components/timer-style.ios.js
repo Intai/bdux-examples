@@ -1,0 +1,17 @@
+import vars from './_variables.json'
+
+export {
+  wrap: {
+    paddingTop: 0,
+    paddingRight: 0,
+    paddingBottom: 35,
+    paddingLeft: 0
+  },
+  time: {
+    color: vars.colour.offgrey,
+    fontSize: vars.ios.fontHuge,
+    fontFamily: vars.ios.sans,
+    textAlign: 'center',
+    lineHeight: vars.ios.fontHuge
+  }
+}
