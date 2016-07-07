@@ -66,7 +66,6 @@ gulp.task('packager', function(cb) {
   });
 
   cmd.on('close', cb);
-  console.log();
 });
 
 gulp.task('dev-server', function(cb) {
@@ -81,12 +80,9 @@ gulp.task('dev-server', function(cb) {
   });
 });
 
-gulp.task('dev-native', $.sequence(
-  'sass', [
-    'sass-watch',
-    'packager'
-  ]
-));
+gulp.task('dev-native', [
+  'packager'
+]);
 
 gulp.task('dev-web', [
   'dev-server'
