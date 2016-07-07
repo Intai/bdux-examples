@@ -10,7 +10,7 @@ export {
   time: {
     color: vars.colour.offgrey,
     fontSize: vars.ios.fontLarge,
-    fontFamily: vars.ios.sans,
+    fontFamily: vars.ios.sansserif,
     textAlign: 'center',
     lineHeight: vars.ios.fontLarge
   }

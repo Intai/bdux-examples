@@ -10,7 +10,7 @@ export default {
   time: {
     color: vars.colour.grey,
     fontSize: vars.web.fontHuge,
-    fontFamily: vars.web.sans,
+    fontFamily: vars.sansserif,
     display: 'block',
     textAlign: 'center',
     margin: '0 auto',

@@ -1,9 +1,9 @@
 .serif {
-  font-family: map-get($web, serif);
+  font-family: $serif;
 }
 
 .sans {
-  font-family: map-get($web, sansserif);
+  font-family: $sansserif;
 }
 
 .bold {

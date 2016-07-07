@@ -11,7 +11,7 @@ export {
   time: {
     color: vars.colour.offgrey,
     fontSize: vars.android.fontLarge,
-    fontFamily: vars.android.sans,
+    fontFamily: vars.android.sansserif,
     textAlign: 'center',
     lineHeight: vars.android.fontLarge + 5
   }

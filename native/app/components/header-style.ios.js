@@ -11,7 +11,7 @@ export {
   label: {
     color: vars.colour.grey,
     fontSize: vars.ios.fontMedium,
-    fontFamily: vars.ios.sans,
+    fontFamily: vars.ios.sansserif,
     textAlign: 'center'
   }
 }

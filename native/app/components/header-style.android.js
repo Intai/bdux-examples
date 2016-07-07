@@ -11,7 +11,7 @@ export {
   label: {
     color: vars.colour.grey,
     fontSize: vars.android.fontMedium,
-    fontFamily: vars.android.sans,
+    fontFamily: vars.android.sansserif,
     textAlign: 'center'
   }
 }

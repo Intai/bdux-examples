@@ -1,4 +1,7 @@
 {
+  "serif": "Times New Roman, Times, Serif",
+  "sansserif": "Lucida Grande, Helvetica, Arial, Sans-Serif",
+
   "colour": {
     "grey": "#444",
     "offgrey": "#ddd",
@@ -6,8 +9,6 @@
     "alert": "#e74c3c"
   },
   "web": {
-    "serif": "Times New Roman, Times, Serif",
-    "sansserif": "Lucida Grande, Helvetica, Arial, Sans-Serif",
     "fontSmall": "0.8rem",
     "fontMedium": "1rem",
     "fontLarge": "2rem",
