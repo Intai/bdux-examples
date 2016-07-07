@@ -1,6 +1,6 @@
 import vars from './_variables.json'
 
-export {
+export default {
   wrap: {
     backgroundColor: vars.colour.offwhite,
     paddingTop: 30,

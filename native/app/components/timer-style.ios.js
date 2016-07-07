@@ -1,6 +1,6 @@
 import vars from './_variables.json'
 
-export {
+export default {
   wrap: {
     paddingTop: 0,
     paddingRight: 0,
