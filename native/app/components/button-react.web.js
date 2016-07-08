@@ -1,11 +1,9 @@
 import React from 'react'
-import { TouchableOpacity, Text } from 'react-native'
+import Container from './container-react'
 import { createComponent } from 'bdux'
 
 export const Button = ({ children }) => (
-  <TouchableOpacity>
-    <Text>{ children }</Text>
-  </TouchableOpacity>
+  <button>{ children }</button>
 )
 
 export default createComponent(Button)
