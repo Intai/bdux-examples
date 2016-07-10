@@ -1,9 +1,17 @@
 .button {
   composes: medium sans from './_typography.scss';
-  border: 1px solid map-get($colour, grey);
+  transition: opacity 200ms ease-out;
+  border: 1px solid map-get($colour, offgrey);
   border-radius: 50%;
+  outline: none;
   background: transparent;
   width: 4em;
   height: 4em;
+  margin: 0 5px;
   cursor: pointer;
+  user-select: none;
+
+  &:active {
+    opacity: 0.2;
+  }
 }

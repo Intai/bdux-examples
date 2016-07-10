@@ -5,6 +5,7 @@
   "colour": {
     "grey": "#444",
     "offgrey": "#ddd",
+    "white": "#fff",
     "offwhite": "#eee",
     "success": "#2ecc71",
     "alert": "#e74c3c"

@@ -2,9 +2,10 @@ import vars from './_variables.json'
 
 export default {
   wrap: {
-    borderWidth: 1,
-    borderColor: vars.colour.grey,
+    backgroundColor: vars.colour.white,
     borderRadius: vars.android.fontMedium * 2,
+    marginLeft: 5,
+    marginRight: 5,
     width: vars.android.fontMedium * 4,
     height: vars.android.fontMedium * 4,
     overflow: 'hidden'

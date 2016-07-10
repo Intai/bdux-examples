@@ -4,7 +4,7 @@ export default {
   wrap: {
     paddingTop: 0,
     paddingRight: 0,
-    paddingBottom: 35,
+    paddingBottom: 40,
     paddingLeft: 0,
     marginTop: -10
   },

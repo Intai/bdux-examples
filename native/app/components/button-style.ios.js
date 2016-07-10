@@ -2,9 +2,10 @@ import vars from './_variables.json'
 
 export default {
   wrap: {
-    borderWidth: 1,
-    borderColor: vars.colour.grey,
+    backgroundColor: vars.colour.white,
     borderRadius: vars.ios.fontMedium * 2,
+    marginLeft: 5,
+    marginRight: 5,
     width: vars.ios.fontMedium * 4,
     height: vars.ios.fontMedium * 4,
     overflow: 'hidden'

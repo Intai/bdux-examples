@@ -4,7 +4,7 @@ export default {
   wrap: {
     paddingTop: 0,
     paddingRight: 0,
-    paddingBottom: 35,
+    paddingBottom: 20,
     paddingLeft: 0
   },
   time: {
