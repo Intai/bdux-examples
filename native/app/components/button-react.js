@@ -1,10 +1,22 @@
+import R from 'ramda'
 import React from 'react'
-import { TouchableOpacity, Text } from 'react-native'
+import { TouchableOpacity, View, Text } from 'react-native'
+import styles from './button-style'
 import { createComponent } from 'bdux'
 
-export const Button = ({ children }) => (
-  <TouchableOpacity>
-    <Text>{ children }</Text>
+const mergeTextStyle = R.pipe(
+  R.defaultTo({}),
+  R.pick(['color']),
+  R.merge(styles.text)
+)
+
+export const Button = ({ onClick, style, children }) => (
+  <TouchableOpacity onPress={ onClick }>
+    <View style={ styles.wrap }>
+      <Text style={ mergeTextStyle(style) }>
+        { children }
+      </Text>
+    </View>
   </TouchableOpacity>
 )
 

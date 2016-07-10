@@ -1,0 +1,9 @@
+.button {
+  composes: medium sans from './_typography.scss';
+  border: 1px solid map-get($colour, grey);
+  border-radius: 50%;
+  background: transparent;
+  width: 4em;
+  height: 4em;
+  cursor: pointer;
+}

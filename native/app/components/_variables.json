@@ -6,6 +6,7 @@
     "grey": "#444",
     "offgrey": "#ddd",
     "offwhite": "#eee",
+    "success": "#2ecc71",
     "alert": "#e74c3c"
   },
   "web": {
