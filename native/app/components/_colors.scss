@@ -1,23 +1,23 @@
 .background-offwhite {
-  background-color: map-get($colour, offwhite);
+  background-color: map-get($color, offwhite);
 }
 
 .border-offgrey {
-  border-color: map-get($colour, offgrey);
+  border-color: map-get($color, offgrey);
 }
 
 .text-offgrey {
-  color: map-get($colour, offgrey);
+  color: map-get($color, offgrey);
 }
 
 .text-offwhite {
-  color: map-get($colour, offwhite);
+  color: map-get($color, offwhite);
 }
 
 .text-grey {
-  color: map-get($colour, grey);
+  color: map-get($color, grey);
 }
 
 .text-alert {
-  color: map-get($colour, offwhite);
+  color: map-get($color, offwhite);
 }

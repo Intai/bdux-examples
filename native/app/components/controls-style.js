@@ -2,7 +2,7 @@ import vars from './_variables.json'
 
 export default {
   wrap: {
-    backgroundColor: vars.colour.offwhite,
+    backgroundColor: vars.color.offwhite,
     flexDirection: 'row',
     justifyContent:'center',
     paddingTop: 15,
@@ -11,9 +11,9 @@ export default {
     paddingLeft: 5
   },
   start: {
-    color: vars.colour.success
+    color: vars.color.success
   },
   stop: {
-    color: vars.colour.alert
+    color: vars.color.alert
   }
 }

@@ -14,7 +14,7 @@
   "homepage": "https://github.com/Intai/bdux-examples",
   "dependencies": {
     "baconjs": "^0.7.84",
-    "bdux": "^0.1.19",
+    "bdux": "^0.1.20",
     "bdux-logger": "^0.1.6",
     "classnames": "^2.2.5",
     "ejs": "^2.4.2",

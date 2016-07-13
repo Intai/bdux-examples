@@ -2,7 +2,7 @@ import vars from './_variables.json'
 
 export default {
   wrap: {
-    backgroundColor: vars.colour.white,
+    backgroundColor: vars.color.white,
     borderRadius: vars.ios.fontMedium * 2,
     marginLeft: 5,
     marginRight: 5,
@@ -11,10 +11,15 @@ export default {
     overflow: 'hidden'
   },
   text: {
+    color: vars.color.grey,
     fontFamily: vars.ios.sans,
     fontSize: vars.ios.fontMedium,
     lineHeight: vars.ios.fontMedium,
     marginTop: vars.ios.fontMedium * 1.5,
     textAlign: 'center'
+  },
+  disabled: {
+    backgroundColor: vars.color.offwhite,
+    opacity: 0.4
   }
 }

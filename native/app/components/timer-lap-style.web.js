@@ -8,7 +8,7 @@ export default {
     paddingLeft: 0
   },
   time: {
-    color: vars.colour.offgrey,
+    color: vars.color.offgrey,
     fontSize: vars.web.fontLarge,
     fontFamily: vars.sansserif,
     display: 'block',

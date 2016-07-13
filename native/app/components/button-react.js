@@ -10,10 +10,16 @@ const mergeTextStyle = R.pipe(
   R.merge(styles.text)
 )
 
-export const Button = ({ onClick, style, children }) => (
-  <TouchableOpacity onPress={ onClick }>
-    <View style={ styles.wrap }>
-      <Text style={ mergeTextStyle(style) }>
+const mergeDisabledStyle = R.ifElse(
+  R.nthArg(1),
+  R.merge(styles.disabled),
+  R.identity
+)
+
+export const Button = ({ onClick, disabled, style, children }) => (
+  <TouchableOpacity onPress={ onClick } disabled={ disabled }>
+    <View style={ mergeDisabledStyle(styles.wrap, disabled) }>
+      <Text style={[ mergeTextStyle(style) ]}>
         { children }
       </Text>
     </View>

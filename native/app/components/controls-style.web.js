@@ -8,9 +8,9 @@ export default {
     padding: '0 5px'
   },
   start: {
-    color: vars.colour.success
+    color: vars.color.success
   },
   stop: {
-    color: vars.colour.alert
+    color: vars.color.alert
   }
 }

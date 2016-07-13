@@ -1,7 +1,8 @@
 .button {
   composes: medium sans from './_typography.scss';
+  composes: grey from './_colors.scss';
   transition: opacity 200ms ease-out;
-  border: 1px solid map-get($colour, offgrey);
+  border: 1px solid map-get($color, offgrey);
   border-radius: 50%;
   outline: none;
   background: transparent;
@@ -13,5 +14,12 @@
 
   &:active {
     opacity: 0.2;
+  }
+
+  &:disabled {
+    color: map-get($color, grey);
+    border-color: map-get($color, offgrey);
+    opacity: 0.4;
+    cursor: auto;
   }
 }

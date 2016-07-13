@@ -1,6 +1,5 @@
 import R from 'ramda'
 import Bacon from 'baconjs'
-import Common from '../utils/common-util'
 import ActionTypes from '../actions/action-types'
 import StoreNames from './store-names'
 import { createStore } from 'bdux'
@@ -50,7 +49,7 @@ const lap = R.when(
     recordLap)
 )
 
-const reset = R.when(
+const resetTimeTo = R.when(
   isReset,
   mergeState('timeTo',
     R.path(['state', 'timeFrom']))
@@ -62,25 +61,25 @@ const resetLaps = R.when(
     R.empty)
 )
 
-const start = R.when(
+const startTick = R.when(
   isStart,
   mergeState('isTicking',
     R.always(true))
 )
 
-const stop = R.when(
-  isStop,
-  mergeState('isTicking',
-    R.always(false))
-)
-
-const startTick = R.when(
+const startTimeFrom = R.when(
   isStart,
   mergeState('timeFrom',
     R.path(['action', 'time']))
 )
 
-const tick = R.when(
+const stopTick = R.when(
+  isStop,
+  mergeState('isTicking',
+    R.always(false))
+)
+
+const updateTimeTo = R.when(
   isTick,
   mergeState('timeTo',
     R.path(['action', 'time']))
@@ -89,12 +88,12 @@ const tick = R.when(
 const getOutputStream = (reducerStream) => (
   reducerStream
     .map(lap)
-    .map(reset)
+    .map(resetTimeTo)
     .map(resetLaps)
-    .map(start)
     .map(startTick)
-    .map(tick)
-    .map(stop)
+    .map(startTimeFrom)
+    .map(updateTimeTo)
+    .map(stopTick)
     .map(R.prop('state'))
 )
 

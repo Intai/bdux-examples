@@ -9,7 +9,7 @@ export default {
     marginTop: -10
   },
   time: {
-    color: vars.colour.grey,
+    color: vars.color.grey,
     fontSize: vars.android.fontHuge,
     fontFamily: vars.android.sansserif,
     textAlign: 'center',

@@ -8,7 +8,7 @@ export default {
     paddingLeft: 176
   },
   time: {
-    color: vars.colour.offgrey,
+    color: vars.color.offgrey,
     fontSize: vars.ios.fontLarge,
     fontFamily: vars.ios.sansserif,
     textAlign: 'center',
