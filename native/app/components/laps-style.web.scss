@@ -1,0 +1,8 @@
+.wrap {
+  composes: sans medium from "./_typography.scss";
+  composes: text-grey from "./_colors.scss";
+  display: block;
+  text-align: center;
+  margin: 0 auto;
+  max-width: 480px;
+}
