@@ -21,7 +21,7 @@
     "ramda": "^0.21.0",
     "react": "^15.2.0",
     "react-dom": "^15.2.0",
-    "react-native": "^0.28.0"
+    "react-native": "^0.29.1"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.3",

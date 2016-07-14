@@ -1,5 +1,3 @@
-app/**/generated
-
 # OSX
 #
 .DS_Store
