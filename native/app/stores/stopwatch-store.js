@@ -40,7 +40,7 @@ const mergeState = (name, func) => (
 )
 
 const recordLap = ({ state }) => (
-  R.append(state.timeTo, state.laps)
+  R.append(state.timeTo, state.laps || [])
 )
 
 const lap = R.when(
@@ -58,7 +58,7 @@ const resetTimeTo = R.when(
 const resetLaps = R.when(
   isReset,
   mergeState('laps',
-    R.empty)
+    R.always([]))
 )
 
 const startTick = R.when(
@@ -80,7 +80,7 @@ const stopTick = R.when(
 )
 
 const updateTimeTo = R.when(
-  isTick,
+  R.anyPass([isStart, isTick, isStop]),
   mergeState('timeTo',
     R.path(['action', 'time']))
 )
