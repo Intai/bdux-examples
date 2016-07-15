@@ -3,6 +3,32 @@
   composes: text-grey from "./_colors.scss";
   display: block;
   text-align: center;
-  margin: 0 auto;
-  max-width: 480px;
+  margin: 20px auto 0 auto;
+  padding: 0;
+  max-width: 320px;
+  list-style-type: none;
+}
+
+.item {
+  composes: border-offgrey from "./_colors.scss";
+  padding: 10px;
+  border-style: dotted;
+  border-width: 0 0 1px 0;
+
+  &:last-of-type {
+    border-width: 0;
+  }
+}
+
+.index {
+  composes: text-offgrey from "./_colors.scss";
+  display: inline-block;
+  text-align: center;
+  width: 50%;
+}
+
+.interval {
+  display: inline-block;
+  text-align: center;
+  width: 50%;
 }

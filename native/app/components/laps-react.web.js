@@ -24,16 +24,26 @@ const accumLapIntervals = R.converge(
   ]
 )
 
-const renderLap = (interval) => (
-  <li>
-    { Common.formatTimeInterval(interval) }
+const renderLap = (interval, index) => (
+  <li className={ cssModule({
+    'item': true }) }>
+
+    <span className={ cssModule({
+      'index': true }) }>
+      Lap { index + 1 }
+    </span>
+
+    <span className={ cssModule({
+      'interval': true }) }>
+      { Common.formatTimeInterval(interval) }
+    </span>
   </li>
 )
 
 const renderLapsArray = R.pipe(
   accumLapIntervals,
   R.nth(1),
-  R.map(renderLap)
+  R.addIndex(R.map)(renderLap)
 )
 
 const renderLaps = R.ifElse(

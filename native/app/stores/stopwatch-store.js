@@ -39,6 +39,25 @@ const mergeState = (name, func) => (
   ])
 )
 
+const getTimeStopped = R.path(
+  ['state', 'timeStopped']
+)
+
+const getTimeFrom = R.pipe(
+  R.path(['state', 'timeFrom']),
+  R.defaultTo(0)
+)
+
+const getTimeTo = R.pipe(
+  R.path(['state', 'timeTo']),
+  R.defaultTo(0)
+)
+
+const getLaps = R.pipe(
+  R.path(['state', 'laps']),
+  R.defaultTo([])
+)
+
 const recordLap = ({ state }) => (
   R.append(state.timeTo, state.laps || [])
 )
@@ -52,7 +71,7 @@ const lap = R.when(
 const resetTimeTo = R.when(
   isReset,
   mergeState('timeTo',
-    R.path(['state', 'timeFrom']))
+    getTimeFrom)
 )
 
 const resetLaps = R.when(
@@ -67,10 +86,49 @@ const startTick = R.when(
     R.always(true))
 )
 
-const startTimeFrom = R.when(
+const calcTimeStopped = R.converge(
+  R.subtract, [
+    R.path(['action', 'time']),
+    getTimeTo
+  ]
+)
+
+const updateTimeStopped = R.when(
+  isStart,
+  mergeState('timeStopped',
+    calcTimeStopped)
+)
+
+const adjustTimeFrom = R.converge(
+  R.add, [
+    getTimeStopped,
+    getTimeFrom
+  ]
+)
+
+const updateTimeFrom = R.when(
   isStart,
   mergeState('timeFrom',
-    R.path(['action', 'time']))
+    adjustTimeFrom)
+)
+
+const adjustLap = (timeStopped, timeLap) => (
+  [timeStopped, timeStopped + timeLap]
+)
+
+const adjustLaps = R.pipe(
+  R.converge(
+    R.mapAccum(adjustLap), [
+      getTimeStopped,
+      getLaps
+    ]
+  ), R.nth(1)
+)
+
+const updateLaps = R.when(
+  isStart,
+  mergeState('laps',
+    adjustLaps)
 )
 
 const stopTick = R.when(
@@ -91,8 +149,10 @@ const getOutputStream = (reducerStream) => (
     .map(resetTimeTo)
     .map(resetLaps)
     .map(startTick)
-    .map(startTimeFrom)
+    .map(updateTimeStopped)
+    .map(updateTimeFrom)
     .map(updateTimeTo)
+    .map(updateLaps)
     .map(stopTick)
     .map(R.prop('state'))
 )
