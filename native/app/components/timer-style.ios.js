@@ -1,17 +1,9 @@
+import R from 'ramda'
 import vars from './_variables.json'
+import styles from './timer-style.android'
 
-export default {
+export default R.mergeWith(R.merge, styles, {
   wrap: {
-    paddingTop: 0,
-    paddingRight: 0,
-    paddingBottom: 20,
-    paddingLeft: 0
-  },
-  time: {
-    color: vars.color.grey,
-    fontSize: vars.ios.fontHuge,
-    fontFamily: vars.ios.sansserif,
-    textAlign: 'center',
-    lineHeight: vars.ios.fontHuge
+    marginTop: -15
   }
-}
+})

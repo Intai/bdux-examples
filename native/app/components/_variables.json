@@ -16,20 +16,18 @@
     "fontLarge": "2rem",
     "fontHuge": "4rem"
   },
-  "ios": {
-    "serif": "Times New Roman",
-    "sansserif": "Helvetica Neue",
+  "native": {
     "fontSmall": 14,
     "fontMedium": 18,
     "fontLarge": 32,
     "fontHuge": 80
   },
+  "ios": {
+    "serif": "Times New Roman",
+    "sansserif": "Helvetica Neue"
+  },
   "android": {
     "serif": "Droid Serif",
-    "sansserif": "Droid Sans",
-    "fontSmall": 14,
-    "fontMedium": 18,
-    "fontLarge": 32,
-    "fontHuge": 80
+    "sansserif": "Droid Sans"
   }
 }

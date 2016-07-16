@@ -3,8 +3,8 @@ import vars from './_variables.json'
 export default {
   wrap: {
     backgroundColor: vars.color.offwhite,
-    paddingRight: 10,
-    paddingLeft: 10
+    paddingRight: 20,
+    paddingLeft: 20
   },
   separator: {
     borderColor: vars.color.white,
@@ -17,14 +17,14 @@ export default {
   },
   index: {
     textAlign: 'center',
-    fontSize: vars.ios.fontMedium,
+    fontSize: vars.native.fontMedium,
     color: vars.color.grey,
     opacity: 0.6,
     flex: 1
   },
   interval: {
     textAlign: 'center',
-    fontSize: vars.ios.fontMedium,
+    fontSize: vars.native.fontMedium,
     color: vars.color.grey,
     flex: 1
   }

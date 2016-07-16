@@ -5,7 +5,7 @@ export default {
     backgroundColor: vars.color.offwhite,
     flexDirection: 'row',
     justifyContent:'center',
-    paddingTop: 15,
+    paddingTop: 20,
     paddingRight: 5,
     paddingBottom: 25,
     paddingLeft: 5

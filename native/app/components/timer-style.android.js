@@ -1,18 +1,19 @@
 import vars from './_variables.json'
+import { Platform } from 'react-native'
 
 export default {
   wrap: {
+    backgroundColor: 'transparent',
     paddingTop: 0,
     paddingRight: 0,
-    paddingBottom: 40,
+    paddingBottom: 20,
     paddingLeft: 0,
-    marginTop: -10
+    marginTop: -20
   },
   time: {
     color: vars.color.grey,
-    fontSize: vars.android.fontHuge,
-    fontFamily: vars.android.sansserif,
-    textAlign: 'center',
-    lineHeight: vars.android.fontHuge + 5
+    fontSize: vars.native.fontHuge,
+    fontFamily: vars[Platform.OS].sansserif,
+    textAlign: 'center'
   }
 }

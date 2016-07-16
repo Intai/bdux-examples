@@ -1,17 +1,8 @@
-import vars from './_variables.json'
+import R from 'ramda'
+import styles from './header-style.android'
 
-export default {
+export default R.mergeWith(R.merge, styles, {
   wrap: {
-    backgroundColor: vars.color.offwhite,
-    paddingTop: 30,
-    paddingRight: 0,
-    paddingBottom: 15,
-    paddingLeft: 0
-  },
-  label: {
-    color: vars.color.grey,
-    fontSize: vars.ios.fontMedium,
-    fontFamily: vars.ios.sansserif,
-    textAlign: 'center'
+    paddingTop: 30
   }
-}
+})

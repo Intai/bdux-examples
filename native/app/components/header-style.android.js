@@ -10,8 +10,8 @@ export default {
   },
   label: {
     color: vars.color.grey,
-    fontSize: vars.android.fontMedium,
-    fontFamily: vars.android.sansserif,
+    fontSize: vars.native.fontMedium,
+    fontFamily: vars.native.sansserif,
     textAlign: 'center'
   }
 }

@@ -1,4 +1,5 @@
 import vars from './_variables.json'
+import { Platform } from 'react-native';
 
 export default {
   wrap: {
@@ -9,9 +10,8 @@ export default {
   },
   time: {
     color: vars.color.offgrey,
-    fontSize: vars.ios.fontLarge,
-    fontFamily: vars.ios.sansserif,
-    textAlign: 'center',
-    lineHeight: vars.ios.fontLarge
+    fontSize: vars.native.fontLarge,
+    fontFamily: vars[Platform.OS].sansserif,
+    textAlign: 'center'
   }
 }
