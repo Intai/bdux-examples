@@ -20,7 +20,7 @@
     "fontSmall": 14,
     "fontMedium": 18,
     "fontLarge": 32,
-    "fontHuge": 80
+    "fontHuge": 75
   },
   "ios": {
     "serif": "Times New Roman",

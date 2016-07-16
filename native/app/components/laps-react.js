@@ -16,7 +16,8 @@ const getLaps = R.propOr(
 
 const createDataSource = (intervals) => (
   new ListView.DataSource({ rowHasChanged: R.complement(R.equals) })
-    .cloneWithRows(intervals)
+    .cloneWithRows(intervals,
+      R.reverse(R.range(0, intervals.length)))
 )
 
 const accumLapInterval = (timeFrom, timeTo) => (
@@ -53,11 +54,14 @@ const renderSeparator = (sectionID, rowID) => (
 )
 
 export const Laps = ({ stopwatch }) => (
-  <ListView style={ styles.wrap }
-    dataSource={ createDataSource(accumLapIntervals(stopwatch)) }
-    renderRow={ renderLap }
-    renderSeparator={ renderSeparator }
-    enableEmptySections={ true } />
+  <View style={ styles.wrap }>
+    <ListView style={ styles.list }
+      dataSource={ createDataSource(accumLapIntervals(stopwatch)) }
+      renderRow={ renderLap }
+      renderSeparator={ renderSeparator }
+      enableEmptySections={ true }
+      showsVerticalScrollIndicator={ false } />
+  </View>
 )
 
 export default createComponent(Laps, {

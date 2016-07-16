@@ -6,7 +6,7 @@ export default {
     paddingTop: 20,
     paddingRight: 0,
     paddingBottom: 0,
-    paddingLeft: 176
+    paddingLeft: 165
   },
   time: {
     color: vars.color.offgrey,

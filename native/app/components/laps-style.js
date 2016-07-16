@@ -4,7 +4,13 @@ export default {
   wrap: {
     backgroundColor: vars.color.offwhite,
     paddingRight: 20,
-    paddingLeft: 20
+    paddingLeft: 20,
+    flexDirection: 'column',
+    alignItems: 'center',
+    flex: 1
+  },
+  list: {
+    width: 320
   },
   separator: {
     borderColor: vars.color.white,
