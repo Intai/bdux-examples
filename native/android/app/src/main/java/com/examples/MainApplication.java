@@ -15,6 +15,17 @@ import java.util.List;
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
+
+    @Override
+    protected String getBundleAssetName() {
+      return "app/main.android.bundle";
+    }
+
+    @Override
+    protected String getJSMainModuleName() {
+      return "app/main.android";
+    }
+
     @Override
     protected boolean getUseDeveloperSupport() {
       return BuildConfig.DEBUG;

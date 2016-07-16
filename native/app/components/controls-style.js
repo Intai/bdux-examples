@@ -7,7 +7,7 @@ export default {
     justifyContent:'center',
     paddingTop: 15,
     paddingRight: 5,
-    paddingBottom: 15,
+    paddingBottom: 25,
     paddingLeft: 5
   },
   start: {

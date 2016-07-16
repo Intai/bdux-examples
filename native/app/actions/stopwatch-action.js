@@ -4,7 +4,7 @@ import Common from '../utils/common-util'
 import ActionTypes from './action-types'
 import { bindToDispatch } from 'bdux'
 
-const TIME_TICK = 10
+const TIME_TICK = 50
 
 const stopStream = new Bacon.Bus()
 

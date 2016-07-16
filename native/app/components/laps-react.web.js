@@ -17,11 +17,13 @@ const accumLapInterval = (timeFrom, timeTo) => (
   [timeTo, timeTo - timeFrom]
 )
 
-const accumLapIntervals = R.converge(
-  R.mapAccum(accumLapInterval), [
-    R.prop('timeFrom'),
-    R.prop('laps')
-  ]
+const accumLapIntervals = R.pipe(
+  R.converge(
+    R.mapAccum(accumLapInterval), [
+      R.prop('timeFrom'),
+      R.prop('laps')
+    ]
+  ), R.nth(1)
 )
 
 const renderLap = (interval, index) => (
@@ -42,7 +44,6 @@ const renderLap = (interval, index) => (
 
 const renderLapsArray = R.pipe(
   accumLapIntervals,
-  R.nth(1),
   R.addIndex(R.map)(renderLap)
 )
 
