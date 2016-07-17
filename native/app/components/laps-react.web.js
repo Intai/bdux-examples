@@ -23,16 +23,18 @@ const accumLapIntervals = R.pipe(
       R.prop('timeFrom'),
       R.prop('laps')
     ]
-  ), R.nth(1)
+  ),
+  R.nth(1),
+  R.reverse
 )
 
-const renderLap = (interval, index) => (
+const renderLap = R.curry((length, interval, index) => (
   <li className={ cssModule({
     'item': true }) }>
 
     <span className={ cssModule({
       'index': true }) }>
-      Lap { index + 1 }
+      Lap { length - index }
     </span>
 
     <span className={ cssModule({
@@ -40,11 +42,16 @@ const renderLap = (interval, index) => (
       { Common.formatTimeInterval(interval) }
     </span>
   </li>
-)
+))
 
 const renderLapsArray = R.pipe(
   accumLapIntervals,
-  R.addIndex(R.map)(renderLap)
+  R.converge(
+    R.addIndex(R.map), [
+      R.pipe(R.length, renderLap),
+      R.identity
+    ]
+  )
 )
 
 const renderLaps = R.ifElse(
