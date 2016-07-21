@@ -6,6 +6,7 @@ import Timer from './timer-react'
 import Controls from './controls-react'
 import Laps from './laps-react'
 import styles from './app-style'
+import { TimeTravel } from 'bdux-timetravel';
 import { createComponent } from 'bdux'
 
 export const App = () => (
@@ -15,6 +16,7 @@ export const App = () => (
     <Timer />
     <Controls />
     <Laps />
+    <TimeTravel />
   </Container>
 )
 
