@@ -39,6 +39,10 @@ const mergeState = (name, func) => (
   ])
 )
 
+const isTicking = R.path(
+  ['state', 'isTicking']
+)
+
 const getTimeStopped = R.path(
   ['state', 'timeStopped']
 )
@@ -138,7 +142,8 @@ const stopTick = R.when(
 )
 
 const updateTimeTo = R.when(
-  R.anyPass([isStart, isTick, isStop]),
+  R.anyPass([isStart, isStop,
+    R.allPass([isTick, isTicking])]),
   mergeState('timeTo',
     R.path(['action', 'time']))
 )
