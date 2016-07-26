@@ -14,11 +14,19 @@ const getLaps = R.propOr(
   [], 'laps'
 )
 
-const createDataSource = (intervals) => (
-  new ListView.DataSource({ rowHasChanged: R.complement(R.equals) })
-    .cloneWithRows(intervals,
-      R.reverse(R.range(0, intervals.length)))
+const updateDataSource = (dataSource, intervals) => (
+  dataSource.cloneWithRows(intervals,
+    R.reverse(R.range(0, intervals.length)))
 )
+
+const createDataSource = (() => {
+  let dataSource = new ListView.DataSource({
+    rowHasChanged: R.complement(R.identical) })
+
+  return (intervals) => (
+    dataSource = updateDataSource(dataSource, intervals)
+  )
+})()
 
 const accumLapInterval = (timeFrom, timeTo) => (
   [timeTo, timeTo - timeFrom]
