@@ -14,7 +14,7 @@
   "homepage": "https://github.com/Intai/bdux-examples",
   "dependencies": {
     "baconjs": "^0.7.84",
-    "bdux": "^0.1.20",
+    "bdux": "^0.1.21",
     "bdux-logger": "^0.1.6",
     "bdux-timetravel": "file:../../bdux-timetravel",
     "classnames": "^2.2.5",
@@ -22,7 +22,7 @@
     "ramda": "^0.21.0",
     "react": "^15.2.0",
     "react-dom": "^15.2.0",
-    "react-native": "^0.29.1"
+    "react-native": "^0.30.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.3",
