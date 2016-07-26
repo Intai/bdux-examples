@@ -29,8 +29,9 @@ const accumLapIntervals = R.pipe(
 )
 
 const renderLap = R.curry((length, interval, index) => (
-  <li className={ cssModule({
-    'item': true }) }>
+  <li key={ index }
+    className={ cssModule({
+      'item': true }) }>
 
     <span className={ cssModule({
       'index': true }) }>

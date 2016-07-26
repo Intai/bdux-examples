@@ -46,7 +46,9 @@ const plusOne = (num) => (
 )
 
 const renderLap = (interval, sectionId, rowId) => (
-  <View style={ styles.item }>
+  <View key={ sectionId + rowId }
+    style={ styles.item }>
+
     <Text style={ styles.index }>
       Lap { plusOne(rowId) }
     </Text>
@@ -56,9 +58,9 @@ const renderLap = (interval, sectionId, rowId) => (
   </View>
 )
 
-const renderSeparator = (sectionID, rowID) => (
-  <View style={ styles.separator }
-    key={ sectionID + rowID } />
+const renderSeparator = (sectionId, rowId) => (
+  <View key={ sectionId + rowId }
+    style={ styles.separator } />
 )
 
 export const Laps = ({ stopwatch }) => (
