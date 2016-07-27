@@ -10,7 +10,10 @@ const cssModule = classNames.bind(styles);
 
 const hasChallenge = R.pipe(
   R.nthArg(1),
-  R.is(Object)
+  R.allPass([
+    R.is(Object),
+    R.complement(R.isEmpty)
+  ])
 );
 
 const renderResult = (countdown, challenge) => (
