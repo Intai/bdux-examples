@@ -138,7 +138,7 @@ const createInitStream = ({ country }) => (
     // enter auckland by default.
     Bacon.once(setDefaultCity()),
     // fetch the current weather from internet.
-    searchWeather(country && country.selected, DEFAULT_CITY)
+    searchWeather(country && country.selected || undefined, DEFAULT_CITY)
   )
 );
 

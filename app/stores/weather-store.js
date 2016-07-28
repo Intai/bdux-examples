@@ -68,7 +68,7 @@ const mergeState = (name, func) => (
 );
 
 const isCurrentCountryCity = ({ action, state, country }) => (
-  action.params.q === createWeatherQuery(country.selected, state.city)
+  action.params.q === createWeatherQuery(country && country.selected || undefined, state.city)
 );
 
 const setCurrent = R.when(
