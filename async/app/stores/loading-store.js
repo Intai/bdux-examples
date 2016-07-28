@@ -16,7 +16,7 @@ const isFetch =  isAction(
 );
 
 const isCurrentCountryCity = ({ action, country, weather }) => (
-  action.params.q === createWeatherQuery(country.selected, weather.city)
+  action.params.q === createWeatherQuery(country && country.selected || undefined, weather.city)
 );
 
 const isFetchEnd = R.allPass([
