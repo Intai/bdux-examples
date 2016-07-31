@@ -6,7 +6,7 @@ var gulp = require('gulp'),
     webpackStream = require('webpack-stream'),
     WebpackDevServer = require('webpack-dev-server'),
     $ = require('gulp-load-plugins')(),
-    files = './!(dist|build|node_modules)/**/*';
+    port = process.env.PORT || 8080;
 
 gulp.task('image', function() {
   return gulp.src('./images/**/*.{jpg,png}')
@@ -28,9 +28,9 @@ gulp.task('dev-server', function(callback) {
     noInfo: true,
     hot: true
   })
-  .listen(8080, 'localhost', function(err) {
+  .listen(port, '0.0.0.0', function(err) {
     if (err) throw new $.util.PluginError('webpack-dev-server', err);
-    $.util.log('[webpack-dev-server]', 'http://localhost:8080');
+    $.util.log('[webpack-dev-server]', 'http://localhost:' + port);
   });
 });
 
@@ -52,7 +52,7 @@ gulp.task('prod-server', function(cb) {
   }, false);
 
   server.start();
-  $.util.log('[express] http://localhost:8080');
+  $.util.log('[express] http://localhost:' + port);
 });
 
 gulp.task('build', $.sequence(

@@ -1,10 +1,12 @@
+/* eslint-env node */
+
 import './settings';
 import R from 'ramda';
 import Express from 'express';
 import DefaultRoot from './roots/default-root';
 
 const app = Express();
-const port = 8080;
+const port = process.env.PORT || 8080;
 
 app.set('view engine', 'ejs');
 app.set('views', 'dist');

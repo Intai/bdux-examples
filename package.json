@@ -2,6 +2,9 @@
   "name": "examples",
   "version": "0.1.0",
   "description": "",
+  "scripts": {
+    "start": "gulp server"
+  },
   "repository": {
     "type": "git",
     "url": "git@github.com:Intai/bdux-examples.git"
@@ -41,7 +44,7 @@
     "eslint-plugin-react": "^4.1.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "gulp": "^3.9.1",
-    "gulp-live-server": "0.0.29",
+    "gulp-live-server": "^0.0.30",
     "gulp-load-plugins": "^1.2.0",
     "gulp-sequence": "^0.4.5",
     "gulp-util": "^3.0.7",
