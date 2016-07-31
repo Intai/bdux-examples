@@ -47,11 +47,6 @@ module.exports = {
         js: ['/static/client.js']
       }
     }),
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify('production')
-      }
-    }),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: false,
       compress: {
