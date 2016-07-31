@@ -23,9 +23,9 @@ gulp.task('dev-server', function(callback) {
     noInfo: true,
     hot: true
   })
-  .listen(8080, 'localhost', function(err) {
+  .listen(process.env.PORT || 8080, '0.0.0.0', function(err) {
     if (err) throw new $.util.PluginError('webpack-dev-server', err);
-    $.util.log('[webpack-dev-server]', 'http://localhost:8080');
+    $.util.log('[webpack-dev-server]', 'http://localhost:' + process.env.PORT);
   });
 });
 
