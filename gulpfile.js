@@ -6,7 +6,8 @@ var gulp = require('gulp'),
     WebpackDevServer = require('webpack-dev-server'),
     webpackConfig = require('./webpack.config.js'),
     $ = require('gulp-load-plugins')(),
-    files = './!(dist|build|node_modules)/**/*';
+    files = './!(dist|build|node_modules)/**/*',
+    port = process.env.PORT || 8080;
 
 gulp.task('image', function() {
   return gulp.src('./images/**/*.{jpg,png}')
@@ -23,9 +24,9 @@ gulp.task('dev-server', function(callback) {
     noInfo: true,
     hot: true
   })
-  .listen(process.env.PORT || 8080, '0.0.0.0', function(err) {
+  .listen(port, '0.0.0.0', function(err) {
     if (err) throw new $.util.PluginError('webpack-dev-server', err);
-    $.util.log('[webpack-dev-server]', 'http://localhost:' + process.env.PORT);
+    $.util.log('[webpack-dev-server]', 'http://localhost:' + port);
   });
 });
 
