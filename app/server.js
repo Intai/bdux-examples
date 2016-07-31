@@ -1,3 +1,5 @@
+/* eslint-env node */
+
 import './settings';
 import R from 'ramda';
 import Express from 'express';
