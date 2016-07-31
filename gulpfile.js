@@ -23,7 +23,7 @@ gulp.task('dev-server', function(callback) {
     noInfo: true,
     hot: true
   })
-  .listen(port, 'localhost', function(err) {
+  .listen(port, '0.0.0.0', function(err) {
     if (err) throw new $.util.PluginError('webpack-dev-server', err);
     $.util.log('[webpack-dev-server]', 'http://localhost:' + port);
   });
