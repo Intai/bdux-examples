@@ -8,6 +8,10 @@ const TIME_TICK = 75
 
 const stopStream = new Bacon.Bus()
 
+const stopTicking = (action) => {
+  stopStream.push(action)
+}
+
 const createStart = () => ({
   type: ActionTypes.STOPWATCH_START,
   time: Common.now()
@@ -35,7 +39,7 @@ const isStopEvent = R.pipe(
 
 const handleTickEnd = function(event) {
   return isStopEvent(event)
-    ? (this.push(event) && this.push(new Bacon.End()))
+    ? this.push(new Bacon.End())
     : this.push(event)
 }
 
@@ -60,9 +64,10 @@ export const start = () => (
   .withHandler(handleTickEnd)
 )
 
-export const stop = () => {
-  stopStream.push(createStop())
-}
+export const stop = R.pipe(
+  createStop,
+  R.tap(stopTicking)
+)
 
 export default bindToDispatch({
   lap,
