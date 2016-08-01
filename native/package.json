@@ -20,8 +20,8 @@
     "classnames": "^2.2.5",
     "ejs": "^2.4.2",
     "ramda": "^0.21.0",
-    "react": "^15.2.0",
-    "react-dom": "^15.2.0",
+    "react": "~15.2.0",
+    "react-dom": "~15.2.0",
     "react-native": "^0.30.0"
   },
   "devDependencies": {

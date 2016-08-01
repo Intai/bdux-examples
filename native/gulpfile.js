@@ -8,7 +8,8 @@ var gulp = require('gulp'),
     $ = require('gulp-load-plugins')(),
     mergeStream = require('merge-stream'),
     spawn = require('child_process').spawn,
-    nativeStyles = ['app/**/*.!(web).scss', 'app/**/+([^.]).scss'];
+    nativeStyles = ['app/**/*.!(web).scss', 'app/**/+([^.]).scss'],
+    port = process.env.PORT || 8080;
 
 var mergeInheritance = function(stream, file) {
   return mergeStream(
@@ -74,9 +75,9 @@ gulp.task('dev-server', function(cb) {
     noInfo: true,
     hot: true
   })
-  .listen(8080, 'localhost', function(err) {
+  .listen(port, '0.0.0.0', function(err) {
     if (err) throw new $.util.PluginError('webpack-dev-server', err);
-    $.util.log('[webpack-dev-server]', 'http://localhost:8080\n');
+    $.util.log('[webpack-dev-server]', 'http://localhost:' + port + '\n');
   });
 });
 
@@ -88,7 +89,11 @@ gulp.task('dev-web', [
   'dev-server'
 ]);
 
-gulp.task('default', [
+gulp.task('dev', [
   'dev-web',
   'dev-native'
+]);
+
+gulp.task('default', [
+  'dev'
 ]);
