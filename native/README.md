@@ -1,5 +1,7 @@
 # Bdux Example - Native
 
+Firstly follow [React Native Docs](https://facebook.github.io/react-native/docs/getting-started.html) to setup watchman.
+
 ```
 git clone https://github.com/Intai/bdux-examples.git
 cd native
