@@ -1,0 +1,4 @@
+web:
+  image: intai/bdux-example-async
+  ports:
+    - "80:8080"
