@@ -1,6 +1,7 @@
 version: '2'
 services:
   web:
+    image: intai/bdux-example-countdown
     build:
       context: .
       dockerfile: Dockerfile
