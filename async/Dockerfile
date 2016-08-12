@@ -1,6 +1,7 @@
 FROM node:argon
 
 ENV NPM_CONFIG_PRODUCTION=false
+ENV NODE_ENV=development
 ENV PORT=8080
 
 RUN mkdir -p /usr/src/app
