@@ -16,20 +16,20 @@
   },
   "homepage": "https://github.com/Intai/bdux-examples",
   "dependencies": {
-    "baconjs": "^0.7.84",
-    "bdux": "^0.1.19",
+    "baconjs": "^0.7.85",
+    "bdux": "^0.1.21",
     "bdux-logger": "^0.1.6",
     "bdux-react-router": "^0.1.10",
-    "bdux-timetravel": "^0.1.16",
+    "bdux-timetravel": "^0.1.23",
     "bdux-universal": "^0.1.5",
     "classnames": "^2.2.5",
     "ejs": "^2.4.1",
     "express": "^4.13.4",
     "history": "^2.1.2",
     "ramda": "^0.21.0",
-    "react": "^15.1.0",
-    "react-dom": "^15.1.0",
-    "react-router": "^2.4.1"
+    "react": "^15.3.0",
+    "react-dom": "^15.3.0",
+    "react-router": "^2.6.1"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.3",
