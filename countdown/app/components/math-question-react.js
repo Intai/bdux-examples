@@ -1,6 +1,5 @@
 import R from 'ramda';
 import React from 'react';
-import Actions from '../actions/math-challenge-action';
 import ChallengeStore from '../stores/math-challenge-store';
 import { createComponent } from 'bdux'
 
@@ -23,6 +22,4 @@ export const MathQuestion = ({ challenge }) => (
 
 export default createComponent(MathQuestion, {
   challenge: ChallengeStore
-},
-// create the first challenge.
-Actions.challenge);
+});
