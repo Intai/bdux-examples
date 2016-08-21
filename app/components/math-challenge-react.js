@@ -2,7 +2,9 @@ import R from 'ramda';
 import React from 'react';
 import MathAnswer from './math-answer-react';
 import MathQuestion from './math-question-react';
+import Actions from '../actions/math-challenge-action';
 import CountDownStore from '../stores/countdown-store';
+import ChallengeStore from '../stores/math-challenge-store';
 import classNames from 'classnames/bind';
 import styles from './math-challenge-react.scss';
 import { createComponent } from 'bdux'
@@ -31,5 +33,8 @@ export const MathChallenge = ({ countdown }) => (
 );
 
 export default createComponent(MathChallenge, {
-  countdown: CountDownStore
-});
+  countdown: CountDownStore,
+  challenge: ChallengeStore
+},
+// create the first challenge.
+Actions.challenge);

@@ -25,7 +25,7 @@ const renderResult = (countdown, challenge) => (
 
 const render = R.ifElse(
   // if has timed up.
-  R.allPass([R.gte(0), hasChallenge]),
+  R.allPass([R.is(Number), R.gte(0), hasChallenge]),
   // render the challenge result.
   renderResult,
   // otherwise, nothing to render.

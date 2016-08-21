@@ -153,7 +153,6 @@ const getOutputStream = (reducerStream) => (
     .map(clearCount)
     .map(setCount)
     .map(R.prop('state'))
-    .map(R.defaultTo({}))
 );
 
 const getReducer = () => {
