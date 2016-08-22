@@ -12,6 +12,10 @@ export const createAsyncActions = () => (
   Bacon.when([
     // fetch country codes from internet.
     CountryCodesAction.load(),
+    // select New Zealand.
+    Bacon.once(CountryCodesAction.select('NZ')),
+    // set Auckland as the target.
+    Bacon.once(WeatherAction.setCity('Auckland')),
     // fetch the current weather for Auckland.
     WeatherAction.searchWeather('NZ', 'Auckland').last()
   ],

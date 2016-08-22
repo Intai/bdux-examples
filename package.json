@@ -17,10 +17,10 @@
   "homepage": "https://github.com/Intai/bdux-examples",
   "dependencies": {
     "baconjs": "^0.7.84",
-    "bdux": "^0.1.21",
+    "bdux": "^0.1.23",
     "bdux-logger": "^0.1.6",
-    "bdux-timetravel": "^0.1.20",
-    "bdux-universal": "^0.1.5",
+    "bdux-timetravel": "^0.1.24",
+    "bdux-universal": "^0.1.7",
     "classnames": "^2.2.5",
     "ejs": "^2.4.1",
     "express": "^4.13.4",
