@@ -5,10 +5,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
 
-  func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
+  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
-    //let url = NSBundle.mainBundle().URLForResource("main", withExtension: "jsbundle")
-    let url = NSURL(string: "http://localhost:8081/app/main.ios.bundle?platform=ios&dev=true")
+    //let url = RCTBundleURLProvider.sharedSettings().jsBundleURL(forBundleRoot: "main.ios", fallbackResource: nil)
+    let url = URL(string: "http://localhost:8081/app/main.ios.bundle?platform=ios&dev=true")
     let rootView = RCTRootView(
       bundleURL: url,
       moduleName: "App",
@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let rootViewController = UIViewController()
     rootViewController.view = rootView
     
-    self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+    self.window = UIWindow(frame: UIScreen.main.bounds)
     self.window?.rootViewController = rootViewController
     self.window?.makeKeyAndVisible()
     
