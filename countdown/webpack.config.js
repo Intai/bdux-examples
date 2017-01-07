@@ -1,3 +1,5 @@
+/* eslint-env node */
+
 var path = require('path'),
     webpack = require('webpack'),
     autoprefixer = require('autoprefixer');
