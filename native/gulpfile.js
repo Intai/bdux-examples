@@ -1,8 +1,7 @@
-'use strict';
+/* eslint-env node */
 
 var gulp = require('gulp'),
     webpack = require('webpack'),
-    webpackStream = require('webpack-stream'),
     WebpackDevServer = require('webpack-dev-server'),
     webpackConfig = require('./webpack.config.js'),
     $ = require('gulp-load-plugins')(),
@@ -58,7 +57,7 @@ gulp.task('sass-watch', function(){
   gulp.watch(nativeStyles, ['sass']);
 });
 
-gulp.task('packager', function(cb) {
+gulp.task('packager', function(callback) {
   var cmd = spawn('node', [
     'node_modules/react-native/local-cli/cli.js',
     'start'
@@ -66,10 +65,10 @@ gulp.task('packager', function(cb) {
     stdio: 'inherit'
   });
 
-  cmd.on('close', cb);
+  cmd.on('close', callback);
 });
 
-gulp.task('dev-server', function(cb) {
+gulp.task('dev-server', function(_callback) {
   new WebpackDevServer(webpack(webpackConfig), {
     historyApiFallback: true,
     noInfo: true,
