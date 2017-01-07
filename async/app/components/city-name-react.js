@@ -49,8 +49,8 @@ const onSearch = R.curryN(3, R.juxt([
   preventDefault
 ]));
 
-const getCity = R.path(
-  ['city']
+const getCity = R.pathOr(
+  '', ['city']
 );
 
 export const CityName = ({ country, weather }) => (
@@ -62,7 +62,8 @@ export const CityName = ({ country, weather }) => (
       'label': true }) }>City
     </label>
 
-    <input value={ getCity(weather) }
+    <input type="text"
+      value={ getCity(weather) }
       onChange={ onChange }
       onFocus={ onFocus }
       onBlur={ onBlur }
