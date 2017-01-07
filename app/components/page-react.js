@@ -1,17 +1,17 @@
-import React from 'react';
-import classNames from 'classnames/bind';
-import styles from './page-react.scss';
-import { Link } from 'bdux-react-router';
+import React from 'react'
+import classNames from 'classnames/bind'
+import styles from './page-react.scss'
+import { Link } from 'bdux-react-router'
 
-const cssModule = classNames.bind(styles);
+const cssModule = classNames.bind(styles)
 
 const getPagePath = (page) => (
   '/' + page
-);
+)
 
 const isCurrent = (page, id) => (
   page === (id || '1')
-);
+)
 
 const renderPage = (page, id) => (
   <Link to={ getPagePath(page) }
@@ -20,7 +20,7 @@ const renderPage = (page, id) => (
       'current': isCurrent(page, id) }) }>
     { page }
   </Link>
-);
+)
 
 export const Page = ({ params }) => (
   <div className={ cssModule({
@@ -29,6 +29,6 @@ export const Page = ({ params }) => (
     { renderPage('2', params.id) }
     { renderPage('3', params.id) }
   </div>
-);
+)
 
-export default Page;
+export default Page
