@@ -1,8 +1,7 @@
-'use strict';
+/* eslint-env node */
 
 var gulp = require('gulp'),
     webpack = require('webpack'),
-    webpackStream = require('webpack-stream'),
     WebpackDevServer = require('webpack-dev-server'),
     webpackConfig = require('./webpack.config.js'),
     $ = require('gulp-load-plugins')(),
@@ -17,7 +16,7 @@ gulp.task('clean', function () {
   require('del').sync('dist');
 });
 
-gulp.task('dev-server', function(callback) {
+gulp.task('dev-server', function(_callback) {
   new WebpackDevServer(webpack(webpackConfig), {
     historyApiFallback: true,
     noInfo: true,
