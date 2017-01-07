@@ -1,3 +1,5 @@
+/* eslint-env node */
+
 var path = require('path'),
     webpack = require('webpack'),
     autoprefixer = require('autoprefixer'),
@@ -10,13 +12,7 @@ module.exports = {
   ],
   plugins: [
     new webpack.NoErrorsPlugin(),
-    new ExtractTextPlugin('client.css'),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: false,
-      compress: {
-        warnings: false
-      }
-    })
+    new ExtractTextPlugin('client.css')
   ],
   module: {
     preLoaders: [{
