@@ -1,3 +1,5 @@
+/* eslint-env node */
+
 var R = require('ramda'),
     path = require('path'),
     webpack = require('webpack'),

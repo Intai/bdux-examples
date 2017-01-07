@@ -1,4 +1,4 @@
-'use strict';
+/* eslint-env node */
 
 var gulp = require('gulp'),
     gls = require('gulp-live-server'),
@@ -22,7 +22,7 @@ gulp.task('clean', function () {
   require('del').sync('dist');
 });
 
-gulp.task('dev-server', function(callback) {
+gulp.task('dev-server', function(_callback) {
   new WebpackDevServer(webpack(require('./webpack/dev.config.js')), {
     historyApiFallback: true,
     noInfo: true,
@@ -46,7 +46,7 @@ gulp.task('build-server', function() {
     .pipe(gulp.dest('dist'));
 });
 
-gulp.task('prod-server', function(cb) {
+gulp.task('prod-server', function(_callback) {
   var server = gls(['dist/server.js'], {
     env: process.env
   }, false);
