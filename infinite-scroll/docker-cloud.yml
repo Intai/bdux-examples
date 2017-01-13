@@ -1,0 +1,4 @@
+web:
+  image: intai/bdux-example-infinite-scroll
+  ports:
+    - "80:8080"
