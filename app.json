@@ -1,0 +1,13 @@
+{
+  "name": "Bdux Example - Infinite Scroll",
+  "description": "Development",
+  "repository": "https://github.com/Intai/bdux-examples/tree/infinite-scroll",
+  "env": {
+    "NPM_CONFIG_PRODUCTION": {
+      "value": "false"
+    },
+    "PORT": {
+      "value": "8080"
+    }
+  }
+}
