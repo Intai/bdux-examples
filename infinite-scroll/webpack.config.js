@@ -1,8 +1,7 @@
 /* eslint-env node */
 
 var path = require('path'),
-    webpack = require('webpack'),
-    autoprefixer = require('autoprefixer');
+    webpack = require('webpack');
 
 module.exports = {
   context: path.join(__dirname, 'app'),
@@ -28,23 +27,12 @@ module.exports = {
       test: /\.jsx?$/,
       loader: 'babel-loader',
       exclude: /node_modules/
-    }, {
-      test: /\.scss$/,
-      loaders: [
-        'style',
-        'css?modules&importLoaders=2&localIdentName=[name]__[local]___[hash:base64:5]',
-        'postcss',
-        'sass'
-      ]
     }]
   },
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js'
   },
-  postcss: [
-    autoprefixer
-  ],
   eslint: {
     configFile: '.eslintrc'
   }
