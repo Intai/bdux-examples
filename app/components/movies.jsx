@@ -2,16 +2,13 @@ import R from 'ramda'
 import React from 'react'
 import Movie from './movie'
 import CountStore from '../stores/count-store'
-import classNames from 'classnames/bind'
-import styles from './movies.scss'
+import styled from 'styled-components'
 import { scrollInfinite } from './decorators/scroll-infinite'
 import { createComponent } from 'bdux'
 
-const cssModule = classNames.bind(styles)
-
-const getListClassName = () => cssModule({
-  'list': true
-})
+const List = styled.ul`
+  position: relative;
+`
 
 const renderMovie = R.curry((refItems, index) => (
   <Movie
@@ -31,12 +28,9 @@ const renderMovies = R.ifElse(
 )
 
 export const Movies = ({ count, refList, refItems }) => (
-  <ul
-    className={getListClassName()}
-    ref={refList}
-  >
+  <List innerRef={refList}>
     {renderMovies(count, refItems)}
-  </ul>
+  </List>
 )
 
 const MoviesDecorated = R.compose(
