@@ -1,6 +1,6 @@
 import R from 'ramda'
 
-const PREFIX = 'IF'
+const PREFIX = 'MV'
 
 const mapToKeyValue = (obj, key) => {
   obj[key] = PREFIX + '_' + key

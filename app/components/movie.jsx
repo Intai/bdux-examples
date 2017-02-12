@@ -1,15 +1,14 @@
 import React from 'react'
 import MovieStore from '../stores/movie-store'
+import styled from 'styled-components'
 import { createComponent } from 'bdux'
 
-const renderMovie = (movie) => (
-  <li>{movie.title}</li>
-)
+const Item = styled.li`
+  height: 50px;
+`
 
-export const Movie = ({ movie }) => (
-  (movie)
-    ? renderMovie(movie)
-    : false
+export const Movie = ({ refItems }) => (
+  <Item innerRef={refItems} />
 )
 
 export default createComponent(Movie, {
