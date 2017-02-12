@@ -1,18 +1,30 @@
 import R from 'ramda'
 import React from 'react'
 import Movie from './movie'
-import CountStore from '../stores/count-store'
+import MoviesStore from '../stores/movies-store'
 import styled from 'styled-components'
 import { scrollInfinite } from './decorators/scroll-infinite'
 import { createComponent } from 'bdux'
 
 const List = styled.ul`
-  position: relative;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 `
+
+const getScrollTop = R.propOr(
+  0, 'scrollTop'
+)
 
 const renderMovie = R.curry((refItems, index) => (
   <Movie
     index={index}
+    key={index}
     refItems={refItems(index)}
   />
 ))
@@ -21,15 +33,19 @@ const renderMoviesByCount = (count, refItems) => (
   R.times(renderMovie(refItems), count)
 )
 
-const renderMovies = R.ifElse(
-  R.lt(0),
-  renderMoviesByCount,
-  R.F
+const renderMovies = R.useWith(
+  renderMoviesByCount, [
+    R.propOr(0, 'count'),
+    R.identity
+  ]
 )
 
-export const Movies = ({ count, refList, refItems }) => (
-  <List innerRef={refList}>
-    {renderMovies(count, refItems)}
+export const Movies = ({ movies, refList, refItems }) => (
+  <List
+    data-scroll-top={getScrollTop(movies)}
+    innerRef={refList}
+  >
+    {renderMovies(movies, refItems)}
   </List>
 )
 
@@ -38,5 +54,5 @@ const MoviesDecorated = R.compose(
 )(Movies)
 
 export default createComponent(MoviesDecorated, {
-  count: CountStore
+  movies: MoviesStore
 })
