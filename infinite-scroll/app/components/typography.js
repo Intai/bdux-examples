@@ -11,5 +11,5 @@ export const fontBold = () => `
 `
 
 export const fontSmall = () => `
-  font-size: 0.8rem;
+  font-size: .8rem;
 `

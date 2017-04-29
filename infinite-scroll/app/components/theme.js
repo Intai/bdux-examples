@@ -1,6 +1,7 @@
 export default {
   color: {
     grey: '#444',
+    offgrey: '#888',
     offwhite: '#eee',
     alert: '#e74c3c'
   },

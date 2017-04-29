@@ -8,14 +8,20 @@ import { bindToDispatch } from 'bdux'
 const RESULTS_PER_PAGE = 20
 const APP_KEY = '5ca7d322b2286fb4baa5d46af38c4fca'
 const URI_MOVIEDB = uriTemplates('https://api.themoviedb.org/3/discover/movie{?sort_by,page,api_key}')
+const URI_MOVIEDB_CONFIG = uriTemplates('https://api.themoviedb.org/3/configuration{?api_key}')
 
 const createJsonStream = (response) => (
   Bacon.fromPromise(response.json())
 )
 
+const createConfig = (data) => ({
+  type: ActionTypes.MOVIE_CONFIG,
+  data
+})
+
 const getDataByOffset = R.uncurryN(2, (offset) => R.pipe(
   R.pathOr({}, ['results', offset]),
-  R.pick(['title'])
+  R.pick(['title', 'poster_path', 'release_date', 'vote_average', 'overview'])
 ))
 
 const createMovie = R.curry((index, offset, data) => ({
@@ -48,6 +54,19 @@ const createMovieStreamByPage = (index, page, offset) => (
     .first()
 )
 
+export const config = () => (
+  Bacon.fromPromise(
+    fetch(URI_MOVIEDB_CONFIG.fill({
+      api_key: APP_KEY
+    }), {
+      method: 'GET',
+      timeout: 5000
+    })
+  )
+  .flatMap(createJsonStream)
+  .map(createConfig)
+)
+
 export const load = ({ props: { index }}) => (
   createMovieStreamByPage(
     index,
@@ -57,5 +76,6 @@ export const load = ({ props: { index }}) => (
 )
 
 export default bindToDispatch({
+  config,
   load
 })
