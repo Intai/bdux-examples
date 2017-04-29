@@ -64,6 +64,7 @@ export const config = () => (
     })
   )
   .flatMap(createJsonStream)
+  .map(R.pick(['images']))
   .map(createConfig)
 )
 

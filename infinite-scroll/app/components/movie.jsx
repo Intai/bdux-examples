@@ -11,10 +11,13 @@ import { pureRender } from './decorators/pure-render'
 import { createComponent } from 'bdux'
 
 const Item = styled.li`
+  padding-top: 10px;
+`
+
+const ItemInner = styled.div`
   ${backgroundOffWhite}
   position: relative;
   height: 100px;
-  margin-top: 10px;
 `
 
 const Image = styled.img`
@@ -102,13 +105,15 @@ const renderStar = () => (
 export const Movie = ({ refItems, config, movie }) => (
   R.is(Object, movie) && (
     <Item innerRef={refItems}>
-      {renderImage(config, movie)}
-      <Details>
-        <Title>{movie.title}</Title>
-        <Release>{movie.release_date}</Release>
-        <Rating>{movie.vote_average}{renderStar()}</Rating>
-        <Overview><Multiline rows="3">{movie.overview}</Multiline></Overview>
-      </Details>
+      <ItemInner>
+        {renderImage(config, movie)}
+        <Details>
+          <Title>{movie.title}</Title>
+          <Release>{movie.release_date}</Release>
+          <Rating>{movie.vote_average}{renderStar()}</Rating>
+          <Overview><Multiline rows="3">{movie.overview}</Multiline></Overview>
+        </Details>
+      </ItemInner>
     </Item>
   )
 )

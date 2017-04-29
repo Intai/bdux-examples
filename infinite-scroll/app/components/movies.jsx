@@ -23,7 +23,7 @@ const Container = styled.div`
 const List = styled.ul`
   list-style: none;
   padding: 0;
-  margin: ${props => props.top}px auto 0 auto;
+  margin: ${props => props.top}px auto 100% auto;
   max-width: 480px;
   width: 100%;
 `
