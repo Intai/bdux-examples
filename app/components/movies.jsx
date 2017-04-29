@@ -3,11 +3,15 @@ import React from 'react'
 import Movie from './movie'
 import MoviesStore from '../stores/movies-store'
 import styled from 'styled-components'
+import { textGrey } from './color'
+import { fontSans } from './typography'
 import { pureRender } from './decorators/pure-render'
 import { scrollInfinite } from './decorators/scroll-infinite'
 import { createComponent } from 'bdux'
 
 const Container = styled.div`
+  ${fontSans}
+  ${textGrey}
   overflow-y: scroll;
   position: absolute;
   width: 100%;
@@ -19,7 +23,9 @@ const Container = styled.div`
 const List = styled.ul`
   list-style: none;
   padding: 0;
-  margin: ${props => props.top}px 0 0 0;
+  margin: ${props => props.top}px auto 0 auto;
+  max-width: 480px;
+  width: 100%;
 `
 
 const getScrollId = R.propOr(

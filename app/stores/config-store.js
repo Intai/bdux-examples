@@ -8,31 +8,8 @@ const isAction = R.pathEq(
   ['action', 'type']
 )
 
-const parseInt10 = (string) => (
-  parseInt(string, 10)
-)
-
-const getIndex = R.pipe(
-  R.prop('name'),
-  R.match(/_([^_]*)$/),
-  R.last,
-  parseInt10
-)
-
-const isIndexMatch = R.converge(
-  R.equals, [
-    R.path(['action', 'index']),
-    getIndex
-  ]
-)
-
-const isMovieLoad = R.allPass([
-  isAction(ActionTypes.MOVIE_LOAD),
-  isIndexMatch,
-])
-
-const updateMovieData = R.when(
-  isMovieLoad,
+const updateConfig = R.when(
+  isAction(ActionTypes.MOVIE_CONFIG),
   R.converge(
     R.assoc('state'), [
       R.path(['action', 'data']),
@@ -43,14 +20,9 @@ const updateMovieData = R.when(
 
 const getOutputStream = (reducerStream) => (
   reducerStream
-    .map(updateMovieData)
+    .map(updateConfig)
     .map(R.prop('state'))
 )
-
-const getInstance = (props) => ({
-  name: `${StoreNames.MOVIE}_${props.index}`,
-  isRemovable: true
-})
 
 export const getReducer = () => {
   const reducerStream = new Bacon.Bus()
@@ -62,5 +34,5 @@ export const getReducer = () => {
 }
 
 export default createStore(
-  getInstance, getReducer
+  StoreNames.CONFIG, getReducer
 )
