@@ -1,21 +1,27 @@
 /* eslint-env node */
 
 var path = require('path'),
-    webpack = require('webpack');
+    webpack = require('webpack'),
+    isEnvProd = (process.env.NODE_ENV === 'production');
 
 module.exports = {
   context: path.join(__dirname, 'app'),
   entry: [
     'webpack-dev-server/client?http://localhost:8080',
     'webpack/hot/dev-server',
-    './main'
+    'main'
   ],
   plugins: [
+    new webpack.EnvironmentPlugin(['NODE_ENV']),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin()
   ],
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
+    alias: {
+      main: path.join(__dirname, 'app',
+        isEnvProd ? 'main.prod' : 'main.dev')
+    }
   },
   module: {
     rules: [

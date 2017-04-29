@@ -1,7 +1,6 @@
-import './settings'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './components/app'
+import App from './components/app.prod'
 
 ReactDOM.render(
   <App />,
