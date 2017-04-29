@@ -10,6 +10,7 @@ const Lines = styled.div`
   margin-right: -1em;
   padding-right: 1em;
   overflow: hidden;
+  background-color: inherit;
 
   &:before {
     content: '…';
