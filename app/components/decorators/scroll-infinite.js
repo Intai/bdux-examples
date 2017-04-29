@@ -125,15 +125,22 @@ const findPrevCallIndex = R.useWith(
   ]
 )
 
-const stripUpdateCall = R.when(
+const getUpdateArgs = R.ifElse(
   R.is(Array),
-  R.adjust(R.omit(['scrollId', 'scrollTop']), 1)
+  R.nth(1),
+  R.always({})
 )
 
+const isUpdateArgsEqual = R.uncurryN(2, (current) => R.where({
+  itemsTop: R.equals(current.itemsTop),
+  itemsRangeFrom: R.equals(current.itemsRangeFrom),
+  itemsRangeCount: R.lte(current.itemsRangeCount)
+}))
+
 const isUpdateCallEqual = R.useWith(
-  R.equals, [
-    stripUpdateCall,
-    stripUpdateCall
+  isUpdateArgsEqual, [
+    getUpdateArgs,
+    getUpdateArgs
   ]
 )
 
