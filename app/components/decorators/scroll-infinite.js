@@ -5,6 +5,9 @@ const getDisplayName = (Component) => (
   Component.displayName || Component.name || 'Component'
 )
 
+const whenReady = requestAnimationFrame
+  || (func => setTimeout(func, 0));
+
 const hasOnUpdate = R.propIs(
   Function, 'onUpdate'
 )
@@ -25,8 +28,9 @@ const setItemByIndex = (index, item, items) => {
 }
 
 const removeItem = R.converge(
-  R.drop, [
+  R.remove, [
     R.identity,
+    R.always(1),
     R.nthArg(2)
   ]
 )
@@ -48,8 +52,9 @@ const memoizeProp = (propName, func) => {
   }
 }
 
-const bindScrollEventOnList = memoizeProp('list', (args) => {
-  args.list.addEventListener('scroll', () => scrollToItems(args))
+const bindScrollEventOnList = memoizeProp('list', (component) => {
+  component.list.addEventListener('scroll',
+    R.bind(component.scrollToItems, component))
 })
 
 const mergeProp = (func) => R.converge(
@@ -62,7 +67,9 @@ const mergeProp = (func) => R.converge(
 const calcAvgItemHeight = mergeProp(({ items }) => (
   R.pipe(
     R.defaultTo([]),
+    R.values,
     R.pluck('offsetHeight'),
+    R.filter(R.identity),
     R.mean,
     R.defaultTo(0),
     R.objOf('itemHeight')
@@ -90,6 +97,27 @@ const calcItemsTop = mergeProp(({ itemHeight, itemsRangeFrom }) => ({
   itemsTop: itemsRangeFrom * itemHeight
 }))
 
+const getListDataAttrs = mergeProp(({ list }) => ({
+  dataScrollId: list.getAttribute('data-scroll-id'),
+  dataScrollTop: list.getAttribute('data-scroll-top')
+}))
+
+const createScrollToDataAttrs = (() => {
+  let prevScrollId = 0
+  return ({ list, scrollEvent, dataScrollId, dataScrollTop }) => {
+    (!scrollEvent && dataScrollId <= prevScrollId)
+      ? list.scrollTop = dataScrollTop
+      : prevScrollId = dataScrollId
+  }
+})
+
+const callScrollToDataAttrs = R.converge(
+  R.call, [
+    R.prop('scrollToDataAttrs'),
+    R.identity
+  ]
+)
+
 const findPrevCallIndex = R.useWith(
   R.findIndex, [
     R.propEq(0),
@@ -97,9 +125,21 @@ const findPrevCallIndex = R.useWith(
   ]
 )
 
+const stripUpdateCall = R.when(
+  R.is(Array),
+  R.adjust(R.omit(['scrollId', 'scrollTop']), 1)
+)
+
+const isUpdateCallEqual = R.useWith(
+  R.equals, [
+    stripUpdateCall,
+    stripUpdateCall
+  ]
+)
+
 const callIfNotDupe = (index, currentCall, prevCalls) => {
   const prevCall = R.nth(index, prevCalls)
-  if (!R.equals(currentCall, prevCall)) {
+  if (!isUpdateCallEqual(currentCall, prevCall)) {
     R.apply(R.call, currentCall)
   }
 }
@@ -122,39 +162,59 @@ const callThenUpdate = R.pipe(
   R.last
 )
 
-const skipDuplicates = (() => {
+const createSkipDuplicates = (() => {
   let prevCalls = []
   return (func, args) => {
     const index = findPrevCallIndex(func, prevCalls)
     prevCalls = callThenUpdate(index, [func, args], prevCalls)
   }
+})
+
+const getScrollId = (() => {
+  let id = 0
+  return () => ++id
 })()
 
-const triggerUpdate = ({ itemsTop, itemsRangeFrom, itemsRangeCount, onUpdate }) => {
+const triggerUpdate = ({ scrollTop, itemsTop, itemsRangeFrom, itemsRangeCount, skipDuplicates, onUpdate }) => {
   skipDuplicates(onUpdate, {
+    scrollId: getScrollId(),
+    scrollTop,
     itemsTop,
     itemsRangeFrom,
     itemsRangeCount
   })
 }
 
-const scrollToItems = R.when(
+const throttle = (func) => {
+  let timer
+  return (...args) => {
+    clearTimeout(timer)
+    timer = setTimeout(() => {
+      func.apply(func, args)
+    }, 0)
+  }
+}
+
+const scrollToItems = throttle(R.when(
   R.allPass([hasOnUpdate, hasList, isListVisible]),
   R.pipe(
-    R.tap(bindScrollEventOnList),
     calcAvgItemHeight,
     getListDimension,
     calcItemsRangeFrom,
     calcItemsRangeCount,
     calcItemsTop,
+    getListDataAttrs,
+    R.tap(callScrollToDataAttrs),
     triggerUpdate
   )
-)
+))
 
 export const scrollInfinite = (Component = R.F) => (
   class extends React.Component {
     static displayName = getDisplayName(Component)
     static defaultProps = {}
+    skipDuplicates = createSkipDuplicates()
+    scrollToDataAttrs = createScrollToDataAttrs()
     state = {}
     items = []
 
@@ -167,27 +227,29 @@ export const scrollInfinite = (Component = R.F) => (
       this.scrollToItems()
     }
 
-    scrollToItems() {
-      scrollToItems(R.merge(
-        R.pick(['list', 'items'], this),
-        R.pick(['onUpdate'], this.props)
-      ))
-    }
-
-    scrollToItemsForNode(node) {
-      if (node) {
-        this.scrollToItems()
-      }
+    scrollToItems(e) {
+      scrollToItems(
+        R.mergeAll([
+          R.objOf('scrollEvent', e),
+          R.pick(['list', 'items', 'skipDuplicates', 'scrollToDataAttrs'], this),
+          R.pick(['onUpdate'], this.props)
+        ])
+      )
     }
 
     setList(node) {
       this.list = node
-      this.scrollToItemsForNode(node)
+      if (node) {
+        whenReady(this.scrollToItems.bind(this, null))
+        bindScrollEventOnList(this)
+      }
     }
 
     setItem(index, node) {
       this.items = setItem(index, node, this.items)
-      this.scrollToItemsForNode(node)
+      if (node) {
+        whenReady(this.scrollToItems.bind(this, null))
+      }
     }
 
     render() {
