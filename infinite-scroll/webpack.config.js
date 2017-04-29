@@ -12,28 +12,31 @@ module.exports = {
   ],
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin()
   ],
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['.js', '.jsx']
   },
   module: {
-    preLoaders: [{
-      test: /\.jsx?$/,
-      loader: 'eslint-loader',
-      exclude: /node_modules/
-    }],
-    loaders: [{
-      test: /\.jsx?$/,
-      loader: 'babel-loader',
-      exclude: /node_modules/
-    }]
+    rules: [
+      {
+        enforce: 'pre',
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        loader: 'eslint-loader',
+        options: {
+          configFile: '.eslintrc'
+        }
+      },
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+      }
+    ]
   },
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js'
-  },
-  eslint: {
-    configFile: '.eslintrc'
   }
 };

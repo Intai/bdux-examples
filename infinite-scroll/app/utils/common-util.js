@@ -13,6 +13,17 @@ export default {
     (new Date()).getTime()
   )),
 
+  mergeState: (name, func) => R.converge(
+    R.mergeWith(R.merge), [
+      R.identity,
+      R.pipe(
+        func,
+        R.objOf(name),
+        R.objOf('state')
+      )
+    ]
+  ),
+
   // map an array of strings to
   // object keys and prefixed values.
   createObjOfConsts: R.reduce(

@@ -1,5 +1,6 @@
-import Common from '../utils/common-util';
+import Common from '../utils/common-util'
 
 export default Common.createObjOfConsts([
-  'DISCOVER_UPDATE'
-]);
+  'DISCOVER_UPDATE',
+  'MOVIE_LOAD'
+])
