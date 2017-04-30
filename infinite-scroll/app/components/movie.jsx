@@ -75,16 +75,16 @@ const get2XSize = R.pathOr(
 )
 
 const getSrc = (config, movie) => (`
-  ${config.base_url}${getDefaultSize(config)}/${movie.poster_path}
+  ${config.secure_base_url}${getDefaultSize(config)}/${movie.poster_path}
 `)
 
 const getSrcSet = (config, movie) => (`
-  ${config.base_url}${getDefaultSize(config)}/${movie.poster_path},
-  ${config.base_url}${get2XSize(config)}/${movie.poster_path} 2x
+  ${config.secure_base_url}${getDefaultSize(config)}/${movie.poster_path},
+  ${config.secure_base_url}${get2XSize(config)}/${movie.poster_path} 2x
 `)
 
 const hasBaseUrl = R.pathOr(
-  false, ['images', 'base_url']
+  false, ['images', 'secure_base_url']
 )
 
 const hasImage = (movie) => (
