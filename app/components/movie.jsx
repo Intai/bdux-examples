@@ -34,7 +34,7 @@ const Title = styled.div`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  margin-right: 49px;
+  margin-right: ${props => props.hasRating && '49px'};
 `
 
 const Release = styled.span`
@@ -83,8 +83,16 @@ const getSrcSet = (config, movie) => (`
   ${config.base_url}${get2XSize(config)}/${movie.poster_path} 2x
 `)
 
+const hasBaseUrl = R.pathOr(
+  false, ['images', 'base_url']
+)
+
+const hasImage = (movie) => (
+  !!movie.poster_path
+)
+
 const renderImage = (config, movie) => (
-  R.is(Object, config) && (
+  hasBaseUrl(config) && hasImage(movie) && (
     <Image
       alt={movie.title}
       src={getSrc(config.images, movie)}
@@ -102,16 +110,33 @@ const renderStar = () => (
   </Star>
 )
 
+const renderRating = (movie) => (
+  !!movie.vote_average && (
+    <Rating>
+      {movie.vote_average}
+      {renderStar()}
+    </Rating>
+  )
+)
+
+const renderOverview = (movie) => (
+  <Overview>
+    <Multiline rows="3">
+      {movie.overview}
+    </Multiline>
+  </Overview>
+)
+
 export const Movie = ({ refItems, config, movie }) => (
   R.is(Object, movie) && (
     <Item innerRef={refItems}>
       <ItemInner>
         {renderImage(config, movie)}
         <Details>
-          <Title>{movie.title}</Title>
+          <Title hasRating={movie.vote_average}>{movie.title}</Title>
           <Release>{movie.release_date}</Release>
-          <Rating>{movie.vote_average}{renderStar()}</Rating>
-          <Overview><Multiline rows="3">{movie.overview}</Multiline></Overview>
+          {renderRating(movie)}
+          {renderOverview(movie)}
         </Details>
       </ItemInner>
     </Item>

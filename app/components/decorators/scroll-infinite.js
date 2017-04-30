@@ -21,6 +21,11 @@ const isListVisible = ({ list }) => (
     && list.tagName !== 'NOSCRIPT'
 )
 
+const shouldUpdateScroll = R.anyPass([
+  R.prop('itemHeight'),
+  R.propSatisfies(R.isEmpty, 'items')
+])
+
 const setItemByIndex = (index, item, items) => {
   const clone = items.slice(0)
   clone[index] = item
@@ -192,6 +197,14 @@ const triggerUpdate = ({ scrollTop, itemsTop, itemsRangeFrom, itemsRangeCount, s
   })
 }
 
+const triggerScrollUpdate = R.when(
+  shouldUpdateScroll,
+  R.juxt([
+    callScrollToDataAttrs,
+    triggerUpdate
+  ])
+)
+
 const throttle = (func) => {
   let timer
   return (...args) => {
@@ -206,13 +219,12 @@ const scrollToItems = throttle(R.when(
   R.allPass([hasOnUpdate, hasList, isListVisible]),
   R.pipe(
     calcAvgItemHeight,
+    getListDataAttrs,
     getListDimension,
     calcItemsRangeFrom,
     calcItemsRangeCount,
     calcItemsTop,
-    getListDataAttrs,
-    R.tap(callScrollToDataAttrs),
-    triggerUpdate
+    triggerScrollUpdate
   )
 ))
 

@@ -29,7 +29,10 @@
     "jsx-quotes": 1,
     "react/jsx-indent": [1, 2],
     "react/jsx-indent-props": [1, 2],
-    "react/prop-types": 0
+    "react/prop-types": 0,
+    "react/no-multi-comp": [2, {
+      "ignoreStateless": true
+    }]
   },
   "globals": {
     "process": true
