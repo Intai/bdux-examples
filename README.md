@@ -12,7 +12,7 @@ gulp server
 open http://localhost:8080
 ```
 
-[![Deploy to Docker Cloud](https://files.cloud.docker.com/images/deploy-to-dockercloud.svg)](https://cloud.docker.com/_/stack/wizard?name=bdux-example-universal&stackfile=web%3A%0A%20%20image%3A%20intai%2Fbdux-example-universal%0A%20%20ports%3A%0A%20%20%20%20-%20%2280%3A8080%22%0A)
+[![Deploy to Docker Cloud](https://files.cloud.docker.com/images/deploy-to-dockercloud.svg)](https://cloud.docker.com/stack/wizard?name=bdux-example-universal&stackfile=web%3A%0A%20%20image%3A%20intai%2Fbdux-example-universal%0A%20%20ports%3A%0A%20%20%20%20-%20%2280%3A8080%22%0A)
 
 ```
 git clone https://github.com/Intai/bdux-examples.git
