@@ -18,6 +18,7 @@ gulp.task('clean', function () {
 
 gulp.task('dev-server', function(_callback) {
   new WebpackDevServer(webpack(webpackConfig), {
+    disableHostCheck: true,
     historyApiFallback: true,
     noInfo: true,
     hot: true
