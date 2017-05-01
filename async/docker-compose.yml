@@ -8,5 +8,8 @@ services:
       args:
         - http_proxy=$http_proxy
         - https_proxy=$https_proxy
+    environment:
+      NODE_ENV: production
+      PORT: 8080
     ports:
       - "8080:8080"
