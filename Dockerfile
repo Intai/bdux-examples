@@ -1,4 +1,4 @@
-FROM node:argon
+FROM node:boron
 
 ENV NPM_CONFIG_PRODUCTION=false
 ENV NODE_ENV=production
@@ -9,6 +9,7 @@ WORKDIR /usr/src/app
 
 COPY . /usr/src/app
 RUN npm config set ignore-scripts false
+RUN npm install --unsafe-perm node-sass
 RUN npm install
 
 EXPOSE 8080
