@@ -43,7 +43,7 @@ gulp.task('build-server', function() {
 });
 
 gulp.task('prod-server', function(_callback) {
-  var server = gls(['dist/server.js'], {
+  var server = gls('dist/server.js', {
     env: process.env
   }, false);
 
