@@ -26,4 +26,4 @@ const renderApp = R.curry((root, req, res) => {
 app.use('/static', Express.static('dist'));
 app.get('*', renderApp(DefaultRoot));
 
-app.listen(port, '0.0.0.0');
+app.listen(port);
