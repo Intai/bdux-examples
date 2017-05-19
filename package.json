@@ -19,13 +19,14 @@
     "baconjs": "^0.7.84",
     "bdux": "^0.1.26",
     "bdux-logger": "^0.1.9",
-    "bdux-react-router": "^3.0.1",
+    "bdux-react-router": "^4.0.0",
     "bdux-timetravel": "^0.1.27",
     "classnames": "^2.2.5",
     "ramda": "^0.23.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
-    "react-router": "^3.0.0"
+    "react-router": "^4.0.0",
+    "react-router-dom": "^4.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.6.1",
