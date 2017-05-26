@@ -1,5 +1,5 @@
 import React from 'react';
-import App from '../components/app-react';
+import App from '../components/app';
 import MessageAction from '../actions/message-action';
 import MessageStore from '../stores/message-store';
 import { resetLocationHistory, LocationStore } from 'bdux-react-router';

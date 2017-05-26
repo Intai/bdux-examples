@@ -14,6 +14,9 @@ module.exports = {
     new webpack.NoErrorsPlugin(),
     new ExtractTextPlugin('client.css')
   ],
+  resolve: {
+    extensions: ['', '.js', '.jsx']
+  },
   module: {
     preLoaders: [{
       test: /\.jsx?$/,
