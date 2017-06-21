@@ -1,4 +1,4 @@
-FROM node:argon
+FROM node:boron
 
 ENV NPM_CONFIG_PRODUCTION=false
 ENV PORT=8080
