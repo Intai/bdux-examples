@@ -1,7 +1,5 @@
 /* eslint-env node */
 
-'use strict';
-
 var gulp = require('gulp'),
     gls = require('gulp-live-server'),
     webpack = require('webpack'),
@@ -10,11 +8,6 @@ var gulp = require('gulp'),
     $ = require('gulp-load-plugins')(),
     spawn = require('child_process').spawn,
     port = process.env.PORT || 8080;
-
-gulp.task('image', function() {
-  return gulp.src('./images/**/*.{jpg,png}')
-    .pipe(gulp.dest('dist/images'));
-});
 
 gulp.task('clean', function () {
   require('del').sync('dist');
