@@ -27,13 +27,13 @@ gulp.task('dev-server', function() {
 
 gulp.task('build-client', function() {
   return gulp.src('app/main.js')
-    .pipe(webpackStream(require('./webpack/client.config.js')))
+    .pipe(webpackStream(require('./webpack/client.config.js'), webpack))
     .pipe(gulp.dest('dist'));
 });
 
 gulp.task('build-server', function() {
   return gulp.src('app/server.js')
-    .pipe(webpackStream(require('./webpack/server.config.js')))
+    .pipe(webpackStream(require('./webpack/server.config.js'), webpack))
     .pipe(gulp.dest('dist'));
 });
 
@@ -46,8 +46,8 @@ gulp.task('prod-server', function() {
   $.util.log('[express] http://localhost:' + port);
 });
 
-gulp.task('pouchdb-server', function(cb) {
-  var cmd = spawn('./node_modules/pouchdb-server/bin/pouchdb-server', [
+gulp.task('pouchdb-server', function() {
+  spawn('./node_modules/pouchdb-server/bin/pouchdb-server', [
     '--port', '5984',
     '--host', '0.0.0.0',
     '--dir', './pouchdb',
@@ -55,8 +55,6 @@ gulp.task('pouchdb-server', function(cb) {
   ], {
     stdio: 'inherit'
   });
-
-  cmd.on('close', cb);
 });
 
 gulp.task('build', [
@@ -66,11 +64,13 @@ gulp.task('build', [
 
 gulp.task('server', $.sequence(
   'build',
-  'prod-server'
+  'prod-server',
+  'pouchdb-server'
 ));
 
 gulp.task('dev', [
-  'dev-server'
+  'dev-server',
+  'pouchdb-server'
 ]);
 
 gulp.task('default', [
