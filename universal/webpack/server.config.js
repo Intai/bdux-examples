@@ -35,7 +35,7 @@ module.exports = {
     './server'
   ],
   plugins: [
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
     new HtmlWebpackPlugin({
       filename: 'server.ejs',
       template: '../app/index.ejs',
@@ -57,36 +57,52 @@ module.exports = {
     })
   ],
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['.js', '.jsx']
   },
   module: {
-    preLoaders: [{
-      test: /\.jsx?$/,
-      loader: 'eslint-loader',
-      exclude: /node_modules/
-    }],
-    loaders: [{
-      test: /\.jsx?$/,
-      loader: 'babel-loader',
-      exclude: /node_modules/
-    }, {
-      test: /\.scss$/,
-      loaders: [
-        'css/locals?modules&importLoaders=2&localIdentName=[name]__[local]___[hash:base64:5]',
-        'postcss',
-        'sass'
-      ]
-    }]
+    rules: [
+      {
+        enforce: 'pre',
+        test: /\.jsx?$/,
+        loader: 'eslint-loader',
+        exclude: /node_modules/,
+        options: {
+          configFile: '.eslintrc'
+        }
+      },
+      {
+        test: /\.jsx?$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          {
+            loader: 'css-loader/locals',
+            options: {
+              modules: true,
+              importLoaders: 2,
+              localIdentName: '[name]__[local]___[hash:base64:5]'
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              plugins: [
+                autoprefixer
+              ]
+            }
+          },
+          'sass-loader'
+        ]
+      }
+    ]
   },
   output: {
     libraryTarget: 'commonjs2',
     path: path.join(__dirname, '../dist'),
     filename: 'server.js'
-  },
-  postcss: [
-    autoprefixer
-  ],
-  eslint: {
-    configFile: '.eslintrc'
   }
 };

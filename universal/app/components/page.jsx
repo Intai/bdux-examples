@@ -37,14 +37,14 @@ const renderPage = (page, id) => (
 )
 
 export const Page = ({ match: { params }}) => (
-  <div>
+  <React.Fragment>
     <div className={getContainerClass()}>
       {renderPage('1', params.id)}
       {renderPage('2', params.id)}
       {renderPage('3', params.id)}
     </div>
     <Message />
-  </div>
+  </React.Fragment>
 )
 
 export default Page
