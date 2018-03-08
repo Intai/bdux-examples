@@ -1,15 +1,15 @@
-import R from 'ramda';
-import Bacon from 'baconjs';
-import fetch from 'isomorphic-fetch';
-import ActionTypes from './action-types';
-import { bindToDispatch } from 'bdux';
+import * as R from 'ramda'
+import Bacon from 'baconjs'
+import fetch from 'isomorphic-fetch'
+import ActionTypes from './action-types'
+import { bindToDispatch } from 'bdux'
 
-const DEFAULT_COUNTRY = 'NZ';
-const URI_COUNTRIES = 'http://data.okfn.org/data/core/country-list/r/data.json';
+const DEFAULT_COUNTRY = 'NZ'
+const URI_COUNTRIES = 'http://data.okfn.org/data/core/country-list/r/data.json'
 
 const createJsonStream = (response) => (
   Bacon.fromPromise(response.json())
-);
+)
 
 const createCodesStream = () => (
   Bacon.fromPromise(
@@ -20,49 +20,71 @@ const createCodesStream = () => (
   )
   .flatMap(createJsonStream)
   .mapError(R.always([]))
-);
+)
 
 const createLoad = (codes) => ({
   type: ActionTypes.COUNTRY_CODES_LOAD,
   codes: codes
-});
+})
 
 export const load = () => (
   createCodesStream()
     .map(createLoad)
-);
+)
 
 export const select = (code) => ({
   type: ActionTypes.COUNTRY_CODES_SELECT,
   code: code
-});
+})
 
-const shouldInit = R.pipe(
+const shouldInitCodes = R.pipe(
   R.path(['country', 'codes']),
-  R.anyPass([R.isNil, R.isEmpty])
-);
+  R.either(R.isNil, R.isEmpty)
+)
+
+const shouldInitCountry = R.complement(
+  R.pathEq(['country', 'selected'], DEFAULT_COUNTRY)
+)
 
 const selectDefault = R.partial(
   select, [DEFAULT_COUNTRY]
-);
+)
 
-const createInitStream = () => (
-  Bacon.mergeAll(
+const initCodes = R.ifElse(
+  shouldInitCodes,
+  // fetch country codes from internet.
+  load,
+  R.F
+)
+
+const initCountry = R.ifElse(
+  shouldInitCountry,
+  R.pipe(
     // select new zealand by default.
-    Bacon.once(selectDefault()),
-    // fetch country codes from internet.
-    load()
-  )
-);
+    selectDefault,
+    Bacon.once
+  ),
+  R.F
+)
 
-export const init = R.ifElse(
-  shouldInit,
-  createInitStream,
-  selectDefault
-);
+export const init = (...args) => {
+  const streams = []
+  const codes = initCodes(...args)
+  const country = initCountry(...args)
+
+  if (codes) {
+    streams.push(codes)
+  }
+  if (country) {
+    streams.push(country)
+  }
+  if (streams.length > 0) {
+    return Bacon.mergeAll(streams)
+  }
+}
 
 export default bindToDispatch({
   init,
   load,
   select
-});
+})

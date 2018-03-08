@@ -1,21 +1,21 @@
-import R from 'ramda';
+import * as R from 'ramda'
 
-const PREFIX = 'AC';
+const PREFIX = 'AC'
 
 const mapToKeyValue = (obj, key) => {
-  obj[key] = PREFIX + '_' + key;
+  obj[key] = PREFIX + '_' + key
   return obj
-};
+}
 
 export default {
 
   createProp: (defaultValue) => {
-    let current = defaultValue;
+    let current = defaultValue
     return (next) => (
       (typeof next !== 'undefined')
         ? (current = next)
         : current
-    );
+    )
   },
 
   // map an array of strings to
@@ -23,4 +23,4 @@ export default {
   createObjOfConsts: R.reduce(
     mapToKeyValue, {}
   )
-};
+}

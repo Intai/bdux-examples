@@ -14,7 +14,7 @@ gulp.task('image', function() {
 });
 
 gulp.task('font', function() {
-  return gulp.src('./fonts/**/*.{eot,otf,svg,ttf,woff,css}')
+  return gulp.src('./fonts/**/*.{eot,otf,svg,ttf,woff,woff2,css}')
     .pipe(gulp.dest('dist/fonts'));
 });
 
