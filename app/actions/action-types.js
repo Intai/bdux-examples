@@ -1,4 +1,4 @@
-import Common from '../utils/common-util';
+import Common from '../utils/common-util'
 
 export default Common.createObjOfConsts([
   'COUNTRY_CODES_LOAD',
@@ -10,4 +10,4 @@ export default Common.createObjOfConsts([
   'WEATHER_UNIT_METRIC',
   'WEATHER_UNIT_IMPERIAL',
   'WEATHER_CLEAR'
-]);
+])
