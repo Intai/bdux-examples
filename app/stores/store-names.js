@@ -1,6 +1,6 @@
-import Common from '../utils/common-util';
+import Common from '../utils/common-util'
 
 export default Common.createObjOfConsts([
   'COUNTDOWN',
   'CHALLENGE'
-]);
+])

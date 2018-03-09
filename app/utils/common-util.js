@@ -1,11 +1,11 @@
-import R from 'ramda';
+import * as R from 'ramda'
 
-const PREFIX = 'CD';
+const PREFIX = 'CD'
 
 const mapToKeyValue = (obj, key) => {
-  obj[key] = PREFIX + '_' + key;
+  obj[key] = PREFIX + '_' + key
   return obj
-};
+}
 
 export default {
 
@@ -18,4 +18,4 @@ export default {
   createObjOfConsts: R.reduce(
     mapToKeyValue, {}
   )
-};
+}

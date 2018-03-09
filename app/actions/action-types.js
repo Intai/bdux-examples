@@ -1,4 +1,4 @@
-import Common from '../utils/common-util';
+import Common from '../utils/common-util'
 
 export default Common.createObjOfConsts([
   'COUNTDOWN_START',
@@ -7,4 +7,4 @@ export default Common.createObjOfConsts([
   'MATH_CHALLENGE',
   'MATH_ANSWER',
   'MATH_CONFIRM'
-]);
+])
