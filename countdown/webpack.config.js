@@ -9,40 +9,59 @@ module.exports = {
   entry: [
     'webpack-dev-server/client?http://localhost:8080',
     'webpack/hot/dev-server',
-    './main'
+    './index'
   ],
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin()
   ],
+  resolve: {
+    extensions: ['.js', '.jsx']
+  },
   module: {
-    preLoaders: [{
-      test: /\.jsx?$/,
-      loader: 'eslint-loader',
-      exclude: /node_modules/
-    }],
-    loaders: [{
-      test: /\.jsx?$/,
-      loader: 'babel-loader',
-      exclude: /node_modules/
-    }, {
-      test: /\.scss$/,
-      loaders: [
-        'style',
-        'css?modules&importLoaders=2&localIdentName=[name]__[local]___[hash:base64:5]',
-        'postcss',
-        'sass'
-      ]
-    }]
+    rules: [
+      {
+        enforce: 'pre',
+        test: /\.jsx?$/,
+        loader: 'eslint-loader',
+        exclude: /node_modules/,
+        options: {
+          configFile: '.eslintrc'
+        }
+      },
+      {
+        test: /\.jsx?$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              importLoaders: 2,
+              localIdentName: '[name]__[local]___[hash:base64:5]'
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              plugins: [
+                autoprefixer
+              ]
+            }
+          },
+          'sass-loader'
+        ]
+      }
+    ]
   },
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js'
-  },
-  postcss: [
-    autoprefixer
-  ],
-  eslint: {
-    configFile: '.eslintrc'
   }
 };
