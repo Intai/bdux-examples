@@ -17,10 +17,10 @@ const renderRouter = (location) => (
 )
 
 export const App = ({ location }) => (
-  <div>
+  <React.Fragment>
     {renderRouter(location)}
     <TimeTravel />
-  </div>
+  </React.Fragment>
 )
 
 export default createComponent(App, {
