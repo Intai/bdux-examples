@@ -1,5 +1,5 @@
 import vars from './_variables.json'
-import { Platform } from 'react-native';
+import { Platform } from 'react-native'
 
 export default {
   wrap: {

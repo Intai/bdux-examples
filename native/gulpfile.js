@@ -19,7 +19,7 @@ var mergeInheritance = function(stream, file) {
 };
 
 var isNotPartial = function(file) {
-  return !/\/_[^\/]*$/.test(file.relative);
+  return !/\/_[^/]*$/.test(file.relative);
 };
 
 var replaceDir  = function(file) {
@@ -28,7 +28,7 @@ var replaceDir  = function(file) {
 };
 
 var replaceDest  = function(file) {
-  file.path = file.path.replace(/([^\/]*)$/, 'generated/$1');
+  file.path = file.path.replace(/([^/]*)$/, 'generated/$1');
   return file;
 };
 

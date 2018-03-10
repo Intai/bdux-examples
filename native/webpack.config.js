@@ -11,7 +11,7 @@ module.exports = {
   entry: [
     'webpack-dev-server/client?http://localhost:8080',
     'webpack/hot/dev-server',
-    './index.web'
+    './index'
   ],
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
@@ -26,7 +26,7 @@ module.exports = {
     })
   ],
   resolve: {
-    extensions: ['.web.js', '.js', '.web.jsx', '.jsx']
+    extensions: ['.web.js', '.web.jsx', '.js', '.jsx']
   },
   module: {
     rules: [

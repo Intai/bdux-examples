@@ -1,7 +1,7 @@
 import * as R from 'ramda'
 import React from 'react'
-import StopwatchStore from '../stores/stopwatch-store';
-import StopwatchAction from '../actions/stopwatch-action';
+import StopwatchStore from '../stores/stopwatch-store'
+import StopwatchAction from '../actions/stopwatch-action'
 import Button from './button'
 import Container from './container'
 import styles from './controls-style'

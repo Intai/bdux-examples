@@ -7,8 +7,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
-    //let url = RCTBundleURLProvider.sharedSettings().jsBundleURL(forBundleRoot: "main.ios", fallbackResource: nil)
-    let url = URL(string: "http://localhost:8081/app/main.ios.bundle?platform=ios&dev=true")
+    //let url = RCTBundleURLProvider.sharedSettings().jsBundleURL(forBundleRoot: "index.ios", fallbackResource: nil)
+    let url = URL(string: "http://localhost:8081/app/index.ios.bundle?platform=ios&dev=true")
     let rootView = RCTRootView(
       bundleURL: url,
       moduleName: "App",

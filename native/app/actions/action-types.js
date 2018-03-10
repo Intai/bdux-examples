@@ -1,4 +1,4 @@
-import Common from '../utils/common-util';
+import Common from '../utils/common-util'
 
 export default Common.createObjOfConsts([
   'STOPWATCH_LAP',
@@ -6,4 +6,4 @@ export default Common.createObjOfConsts([
   'STOPWATCH_START',
   'STOPWATCH_STOP',
   'STOPWATCH_TICK'
-]);
+])
