@@ -20,9 +20,9 @@
     "classnames": "^2.2.5",
     "ejs": "^2.5.7",
     "ramda": "^0.25.0",
-    "react": "~16.2.0",
-    "react-dom": "~16.2.0",
-    "react-native": "^0.53.0"
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-native": "^0.53.3"
   },
   "devDependencies": {
     "autoprefixer": "^8.1.0",
