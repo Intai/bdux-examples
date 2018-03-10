@@ -3,6 +3,7 @@
 var path = require('path'),
     webpack = require('webpack'),
     autoprefixer = require('autoprefixer'),
+    jsonImporter = require('node-sass-json-importer'),
     HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -10,11 +11,11 @@ module.exports = {
   entry: [
     'webpack-dev-server/client?http://localhost:8080',
     'webpack/hot/dev-server',
-    './main.web'
+    './index.web'
   ],
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'index.ejs',
@@ -24,45 +25,69 @@ module.exports = {
       }
     })
   ],
+  resolve: {
+    extensions: ['.web.js', '.js', '.web.jsx', '.jsx']
+  },
   module: {
-    preLoaders: [{
-      test: /\.jsx?$/,
-      loader: 'eslint-loader',
-      exclude: /node_modules/
-    }],
-    loaders: [{
-      test: /\.jsx?$/,
-      loader: 'babel-loader',
-      exclude: /node_modules/,
-      query: {
-        presets: ['es2015', 'react'],
-        plugins: [
-          'syntax-object-rest-spread',
-          'transform-object-rest-spread'
+    rules: [
+      {
+        enforce: 'pre',
+        test: /\.jsx?$/,
+        loader: 'eslint-loader',
+        exclude: /node_modules/,
+        options: {
+          configFile: '.eslintrc'
+        }
+      },
+      {
+        test: /\.jsx?$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/,
+        options: {
+          presets: ['es2015', 'react'],
+          plugins: [
+            'syntax-object-rest-spread',
+            'transform-object-rest-spread'
+          ]
+        }
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              importLoaders: 3,
+              localIdentName: '[name]__[local]___[hash:base64:5]'
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              plugins: [
+                autoprefixer
+              ]
+            }
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              importer: jsonImporter,
+            }
+          }
         ]
+      },
+      {
+        test: /\.json$/,
+        loader: 'json-loader'
       }
-    }, {
-      test: /\.scss$/,
-      loaders: [
-        'style',
-        'css?modules&importLoaders=3&localIdentName=[name]__[local]___[hash:base64:5]',
-        'postcss',
-        'sass',
-        'jsontosass?path=./app/components/_variables.json'
-      ]
-    }, {
-      test: /\.json$/,
-      loader: 'json-loader'
-    }]
+    ]
   },
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js'
-  },
-  postcss: [
-    autoprefixer
-  ],
-  eslint: {
-    configFile: '.eslintrc'
   }
 };

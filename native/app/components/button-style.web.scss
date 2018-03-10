@@ -1,3 +1,5 @@
+@import '_variables.json';
+
 .button {
   composes: medium sans from './_typography.scss';
   composes: grey from './_colors.scss';

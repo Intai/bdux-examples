@@ -1,12 +1,9 @@
-import R from 'ramda'
+import * as R from 'ramda'
 import React from 'react'
 import Common from '../utils/common-util'
 import StopwatchStore from '../stores/stopwatch-store'
-import classNames from 'classnames/bind'
 import styles from './laps-style.web.scss'
 import { createComponent } from 'bdux'
-
-const cssModule = classNames.bind(styles);
 
 const hasLaps = R.allPass([
   R.is(Object),
@@ -29,18 +26,15 @@ const accumLapIntervals = R.pipe(
 )
 
 const renderLap = R.curry((length, interval, index) => (
-  <li key={ index }
-    className={ cssModule({
-      'item': true }) }>
-
-    <span className={ cssModule({
-      'index': true }) }>
-      Lap { length - index }
+  <li
+    className={styles.item}
+    key={index}
+  >
+    <span className={styles.index}>
+      {`Lap ${length - index}`}
     </span>
-
-    <span className={ cssModule({
-      'interval': true }) }>
-      { Common.formatTimeInterval(interval) }
+    <span className={styles.interval}>
+      {Common.formatTimeInterval(interval)}
     </span>
   </li>
 ))
@@ -58,13 +52,12 @@ const renderLapsArray = R.pipe(
 const renderLaps = R.ifElse(
   hasLaps,
   renderLapsArray,
-  R.always(<noscript />)
+  R.F
 )
 
 export const Laps = ({ stopwatch }) => (
-  <ul className={ cssModule({
-    'wrap': true }) }>
-    { renderLaps(stopwatch) }
+  <ul className={styles.wrap}>
+    {renderLaps(stopwatch)}
   </ul>
 )
 

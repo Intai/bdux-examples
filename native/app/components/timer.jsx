@@ -1,8 +1,8 @@
-import R from 'ramda'
+import * as R from 'ramda'
 import React from 'react'
 import Common from '../utils/common-util'
-import Container from './container-react'
-import Label from './label-react'
+import Container from './container'
+import Label from './label'
 import StopwatchStore from '../stores/stopwatch-store'
 import styles from './timer-style'
 import { createComponent } from 'bdux'
@@ -35,9 +35,9 @@ const renderTimeInterval = R.ifElse(
 )
 
 export const Timer = ({ stopwatch }) => (
-  <Container style={ styles.wrap }>
-    <Label style={ styles.time }>
-      { renderTimeInterval(stopwatch) }
+  <Container style={styles.wrap}>
+    <Label style={styles.time}>
+      {renderTimeInterval(stopwatch)}
     </Label>
   </Container>
 )

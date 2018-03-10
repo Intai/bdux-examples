@@ -4,13 +4,13 @@ import { createComponent } from 'bdux'
 import styles from './header-style'
 
 export const Header = ({ children }) => (
-  <View style={ styles.wrap }>
+  <View style={styles.wrap}>
     <StatusBar
       backgroundColor="#444"
-      barStyle="default" />
-
-    <Text style={ styles.label }>
-      { children }
+      barStyle="default"
+    />
+    <Text style={styles.label}>
+      {children}
     </Text>
   </View>
 )

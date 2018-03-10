@@ -1,4 +1,4 @@
-import R from 'ramda'
+import * as R from 'ramda'
 import React from 'react'
 import Common from '../utils/common-util'
 import { ListView, View, Text } from 'react-native'
@@ -46,31 +46,36 @@ const plusOne = (num) => (
 )
 
 const renderLap = (interval, sectionId, rowId) => (
-  <View key={ sectionId + rowId }
-    style={ styles.item }>
-
-    <Text style={ styles.index }>
-      Lap { plusOne(rowId) }
+  <View
+    key={sectionId + rowId}
+    style={styles.item}
+  >
+    <Text style={styles.index}>
+      {`Lap ${plusOne(rowId)}`}
     </Text>
-    <Text style={ styles.interval }>
-      { Common.formatTimeInterval(interval) }
+    <Text style={styles.interval}>
+      {Common.formatTimeInterval(interval)}
     </Text>
   </View>
 )
 
 const renderSeparator = (sectionId, rowId) => (
-  <View key={ sectionId + rowId }
-    style={ styles.separator } />
+  <View
+    key={sectionId + rowId}
+    style={styles.separator}
+  />
 )
 
 export const Laps = ({ stopwatch }) => (
-  <View style={ styles.wrap }>
-    <ListView style={ styles.list }
-      dataSource={ createDataSource(accumLapIntervals(stopwatch)) }
-      renderRow={ renderLap }
-      renderSeparator={ renderSeparator }
-      enableEmptySections={ true }
-      showsVerticalScrollIndicator={ false } />
+  <View style={styles.wrap}>
+    <ListView
+      dataSource={createDataSource(accumLapIntervals(stopwatch))}
+      enableEmptySections
+      renderRow={renderLap}
+      renderSeparator={renderSeparator}
+      showsVerticalScrollIndicator={false}
+      style={styles.list}
+    />
   </View>
 )
 

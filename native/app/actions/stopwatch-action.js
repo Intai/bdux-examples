@@ -1,4 +1,4 @@
-import R from 'ramda'
+import * as R from 'ramda'
 import Bacon from 'baconjs'
 import Common from '../utils/common-util'
 import ActionTypes from './action-types'
@@ -33,7 +33,7 @@ const createTickForPoll = R.pipe(
 )
 
 const isStopEvent = R.pipe(
-  R.invoker(0, 'value'),
+  R.prop('value'),
   R.propEq('type', ActionTypes.STOPWATCH_STOP)
 )
 

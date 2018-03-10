@@ -1,5 +1,4 @@
-import R from 'ramda'
-import vars from './_variables.json'
+import * as R from 'ramda'
 import styles from './timer-style.android'
 
 export default R.mergeWith(R.merge, styles, {

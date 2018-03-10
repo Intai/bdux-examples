@@ -1,4 +1,4 @@
-import R from 'ramda'
+import * as R from 'ramda'
 import React from 'react'
 import { TouchableOpacity, View, Text } from 'react-native'
 import styles from './button-style'
@@ -17,10 +17,13 @@ const mergeDisabledStyle = R.ifElse(
 )
 
 export const Button = ({ onClick, disabled, style, children }) => (
-  <TouchableOpacity onPress={ onClick } disabled={ disabled }>
-    <View style={ mergeDisabledStyle(styles.wrap, disabled) }>
-      <Text style={[ mergeTextStyle(style) ]}>
-        { children }
+  <TouchableOpacity
+    disabled={disabled}
+    onPress={onClick}
+  >
+    <View style={mergeDisabledStyle(styles.wrap, disabled)}>
+      <Text style={[mergeTextStyle(style)]}>
+        {children}
       </Text>
     </View>
   </TouchableOpacity>
