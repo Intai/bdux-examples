@@ -1,19 +1,19 @@
-export const textOffWhite = (props) => `
-  color: ${props.theme.color.offwhite};
+export const textOffWhite = ({ theme }) => `
+  color: ${theme.color.offwhite};
 `
 
-export const textOffGrey = (props) => `
-  color: ${props.theme.color.offgrey};
+export const textOffGrey = ({ theme }) => `
+  color: ${theme.color.offgrey};
 `
 
-export const textGrey = (props) => `
-  color: ${props.theme.color.grey};
+export const textGrey = ({ theme }) => `
+  color: ${theme.color.grey};
 `
 
-export const textAlert = (props) => `
-  color: ${props.theme.color.alert};
+export const textAlert = ({ theme }) => `
+  color: ${theme.color.alert};
 `
 
-export const backgroundOffWhite = (props) => `
-  background-color: ${props.theme.color.offwhite};
+export const backgroundOffWhite = ({ theme }) => `
+  background-color: ${theme.color.offwhite};
 `

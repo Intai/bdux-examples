@@ -1,4 +1,4 @@
-import R from 'ramda'
+import * as R from 'ramda'
 import Bacon from 'baconjs'
 import ActionTypes from '../actions/action-types'
 import StoreNames from '../stores/store-names'
@@ -47,8 +47,8 @@ const getOutputStream = (reducerStream) => (
     .map(R.prop('state'))
 )
 
-const getInstance = (props) => ({
-  name: `${StoreNames.MOVIE}_${props.index}`,
+const getInstance = ({ index }) => ({
+  name: `${StoreNames.MOVIE}_${index}`,
   isRemovable: true
 })
 

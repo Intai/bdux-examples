@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { createComponent } from 'bdux'
 
 const Lines = styled.div`
-  max-height: ${props => props.rows * 1.2}em;
+  max-height: ${({ rows }) => rows * 1.2}em;
   line-height: 1.2em;
   position: relative;
   text-align: justify;

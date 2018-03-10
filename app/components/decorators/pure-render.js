@@ -1,4 +1,4 @@
-import R from 'ramda'
+import * as R from 'ramda'
 import React from 'react'
 import shallowCompare from 'react-addons-shallow-compare'
 
@@ -18,11 +18,6 @@ export const pureRender = (Component = R.F) => (
     static displayName = getDisplayName(Component)
     static defaultProps = {}
     state = {}
-
-    /* istanbul ignore next */
-    constructor() {
-      super()
-    }
 
     shouldComponentUpdate(nextProps, nextState) {
       return shallowCompare(this,

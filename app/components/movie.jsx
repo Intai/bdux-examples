@@ -1,4 +1,4 @@
-import R from 'ramda'
+import * as R from 'ramda'
 import React from 'react'
 import MovieAction from '../actions/movie-action'
 import ConfigStore from '../stores/config-store'
@@ -34,7 +34,7 @@ const Title = styled.div`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  margin-right: ${props => props.hasRating && '49px'};
+  margin-right: ${({ hasRating }) => hasRating && '49px'};
 `
 
 const Release = styled.span`
@@ -127,17 +127,25 @@ const renderOverview = (movie) => (
   </Overview>
 )
 
+const renderDetails = (movie) => (
+  <Details>
+    <Title hasRating={movie.vote_average}>
+      {movie.title}
+    </Title>
+    <Release>
+      {movie.release_date}
+    </Release>
+    {renderRating(movie)}
+    {renderOverview(movie)}
+  </Details>
+)
+
 export const Movie = ({ refItems, config, movie }) => (
   R.is(Object, movie) && (
     <Item innerRef={refItems}>
       <ItemInner>
         {renderImage(config, movie)}
-        <Details>
-          <Title hasRating={movie.vote_average}>{movie.title}</Title>
-          <Release>{movie.release_date}</Release>
-          {renderRating(movie)}
-          {renderOverview(movie)}
-        </Details>
+        {renderDetails(movie)}
       </ItemInner>
     </Item>
   )
