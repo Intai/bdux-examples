@@ -9,7 +9,7 @@ module.exports = {
   entry: [
     'webpack-dev-server/client?http://localhost:8080',
     'webpack/hot/dev-server',
-    'main'
+    'index'
   ],
   plugins: [
     new webpack.EnvironmentPlugin({ NODE_ENV: 'development' }),
@@ -19,8 +19,8 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
-      main: path.join(__dirname, 'app',
-        isEnvProd ? 'main.prod' : 'main.dev')
+      index: path.join(__dirname, 'app',
+        isEnvProd ? 'index.prod' : 'index.dev')
     }
   },
   module: {

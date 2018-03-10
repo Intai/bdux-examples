@@ -7,10 +7,10 @@ import { createComponent } from 'bdux'
 
 export const App = () => (
   <ThemeProvider theme={Theme}>
-    <div>
+    <React.Fragment>
       <Discover />
       <TimeTravel />
-    </div>
+    </React.Fragment>
   </ThemeProvider>
 )
 

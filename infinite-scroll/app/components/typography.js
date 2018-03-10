@@ -1,9 +1,9 @@
-export const fontSerif = (props) => `
-  font-family: ${props.theme.font.serif};
+export const fontSerif = ({ theme }) => `
+  font-family: ${theme.font.serif};
 `
 
-export const fontSans = (props) => `
-  font-family: ${props.theme.font.sansserif};
+export const fontSans = ({ theme }) => `
+  font-family: ${theme.font.sansserif};
 `
 
 export const fontBold = () => `

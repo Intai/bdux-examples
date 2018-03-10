@@ -1,4 +1,4 @@
-import R from 'ramda'
+import * as R from 'ramda'
 import React from 'react'
 import Movie from './movie'
 import MoviesStore from '../stores/movies-store'
@@ -23,7 +23,7 @@ const Container = styled.div`
 const List = styled.ul`
   list-style: none;
   padding: 0;
-  margin: ${props => props.top}px auto 100% auto;
+  margin: ${({ top }) => top}px auto 100% auto;
   max-width: 480px;
   width: 100%;
 `

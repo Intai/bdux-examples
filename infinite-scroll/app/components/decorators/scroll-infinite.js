@@ -1,4 +1,4 @@
-import R from 'ramda'
+import * as R from 'ramda'
 import React from 'react'
 
 const getDisplayName = (Component) => (
@@ -47,11 +47,11 @@ const setItem = R.ifElse(
 )
 
 const memoizeProp = (propName, func) => {
-  const props = []
+  const propArray = []
   return (args) => {
     const prop = args[propName];
-    if (props.indexOf(prop) < 0) {
-      props.push(prop)
+    if (propArray.indexOf(prop) < 0) {
+      propArray.push(prop)
       func(args)
     }
   }
@@ -232,19 +232,15 @@ export const scrollInfinite = (Component = R.F) => (
   class extends React.Component {
     static displayName = getDisplayName(Component)
     static defaultProps = {}
-    skipDuplicates = createSkipDuplicates()
-    scrollToDataAttrs = createScrollToDataAttrs()
     state = {}
-    items = []
-
-    /* istanbul ignore next */
-    constructor() {
-      super()
-    }
 
     componentDidMount() {
       this.scrollToItems()
     }
+
+    skipDuplicates = createSkipDuplicates()
+    scrollToDataAttrs = createScrollToDataAttrs()
+    items = []
 
     scrollToItems(e) {
       scrollToItems(
