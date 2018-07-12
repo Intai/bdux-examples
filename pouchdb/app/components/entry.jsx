@@ -13,11 +13,11 @@ const renderLink = (entry) => (
 )
 
 const BlogEntry = ({ entry }) => (
-  <div>
+  <React.Fragment>
     {renderLink(entry)}
     {entry.createdAt}
     {entry.content}
-  </div>
+  </React.Fragment>
 )
 
 export default createComponent(BlogEntry)

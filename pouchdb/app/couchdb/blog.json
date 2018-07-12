@@ -1,0 +1,42 @@
+{
+  "_id": "_design/blog",
+  "validate_doc_update": "function(newDoc, oldDoc, userCtx) {
+    if (userCtx.roles.indexOf('admin') < 0) {
+      throw({ unauthorized : 'You are not authorized to update this db.' });
+    }
+
+    function require(field, message) {
+      message = message || `Document must have a ${field}.`;
+      if (!newDoc[field]) throw({ forbidden : message });
+    };
+
+    require('title');
+    require('content');
+    require('year');
+    require('month');
+    require('day');
+    require('slug');
+  }",
+  "views": {
+    
+  },
+  "filters": {
+    "filter_entries": "function filter_entries(doc, req) {
+      return (
+        (!req.query.year || doc.year === req.query.year)
+          && (!req.query.month || doc.month === req.query.month)
+          && (!req.query.day || doc.day === req.query.day)
+          && (!req.query.slug || doc.slug === req.query.slug))
+        || (doc.history && doc.history.reduce(
+          function(accum, doc) {
+            if (accum !== true) {
+              const prev = Object.assign({}, accum, doc, { history: null });
+              return !!filter_entries(prev, req) || prev;
+            }
+            return true;
+          },
+          doc
+        ) === true);
+    }"
+  }
+}

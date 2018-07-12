@@ -16,7 +16,7 @@ const renderRouter = (location) => (
         />
         <Route
           component={Blog}
-          path="/:year?/:month?/:day?/:slug?"
+          path="/blog/:year?/:month?/:day?/:slug?"
         />
       </Switch>
     </Router>
@@ -24,10 +24,10 @@ const renderRouter = (location) => (
 )
 
 export const App = ({ location }) => (
-  <div>
+  <React.Fragment>
     {renderRouter(location)}
     <UniversalStates />
-  </div>
+  </React.Fragment>
 )
 
 export default createComponent(App, {

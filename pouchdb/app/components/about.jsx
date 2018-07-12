@@ -3,11 +3,15 @@ import Menu from './menu'
 import AboutStore from '../stores/about-store'
 import { createComponent } from 'bdux'
 
+const renderDescription = (about) => (
+  !!about && about.description
+)
+
 export const About = ({ about }) => (
-  <div>
+  <React.Fragment>
     <Menu />
-    {about}
-  </div>
+    {renderDescription(about)}
+  </React.Fragment>
 )
 
 export default createComponent(About, {

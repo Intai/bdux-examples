@@ -5,7 +5,7 @@ import { createRoot } from 'bdux-universal'
 
 export const createElement = (req) => {
   resetLocationHistory(req.path)
-  return (<App />)
+  return <App />
 }
 
 export default createRoot(

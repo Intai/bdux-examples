@@ -1,7 +1,8 @@
-import R from 'ramda'
+import * as R from 'ramda'
 import React from 'react'
 import Menu from './menu'
-import BlogStore from '../stores/blog-store'
+import * as BlogAction from '../actions/blog-action';
+import BlogStore from '../stores/blog-entries-store'
 import BlogEntry from './entry'
 import { createComponent } from 'bdux'
 
@@ -19,12 +20,14 @@ const renderEntries = (blog) => (
 )
 
 export const Blog = ({ blog }) => (
-  <div>
+  <React.Fragment>
     <Menu />
     {renderEntries(blog)}
-  </div>
+  </React.Fragment>
 )
 
 export default createComponent(Blog, {
   blog: BlogStore
-})
+},
+// fetch and replicate blog entries.
+BlogAction.load)

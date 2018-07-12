@@ -1,7 +1,7 @@
 /* eslint-env node */
 
 import './settings'
-import R from 'ramda'
+import * as R from 'ramda'
 import Express from 'express'
 import DefaultRoot from './roots/default-root'
 

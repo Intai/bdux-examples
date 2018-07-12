@@ -5,6 +5,8 @@ var gulp = require('gulp'),
     webpack = require('webpack'),
     webpackStream = require('webpack-stream'),
     WebpackDevServer = require('webpack-dev-server'),
+    PluginError = require('plugin-error'),
+    log = require('fancy-log'),
     $ = require('gulp-load-plugins')(),
     spawn = require('child_process').spawn,
     port = process.env.PORT || 8080;
@@ -20,8 +22,8 @@ gulp.task('dev-server', function() {
     hot: true
   })
   .listen(port, '0.0.0.0', function(err) {
-    if (err) throw new $.util.PluginError('webpack-dev-server', err);
-    $.util.log('[webpack-dev-server]', 'http://localhost:' + port);
+    if (err) throw new PluginError('webpack-dev-server', err);
+    log('[webpack-dev-server]', 'http://localhost:' + port);
   });
 });
 
@@ -43,7 +45,7 @@ gulp.task('prod-server', function() {
   }, false);
 
   server.start();
-  $.util.log('[express] http://localhost:' + port);
+  log('[express] http://localhost:' + port);
 });
 
 gulp.task('pouchdb-server', function() {
