@@ -32,13 +32,13 @@ gulp.task('dev-server', function(_callback) {
 
 gulp.task('build-client', function() {
   return gulp.src('app/main.js')
-    .pipe(webpackStream(require('./webpack/client.config.js')))
+    .pipe(webpackStream(require('./webpack/client.config.js'), webpack))
     .pipe(gulp.dest('dist'));
 });
 
 gulp.task('build-server', function() {
   return gulp.src('app/server.js')
-    .pipe(webpackStream(require('./webpack/server.config.js')))
+    .pipe(webpackStream(require('./webpack/server.config.js'), webpack))
     .pipe(gulp.dest('dist'));
 });
 

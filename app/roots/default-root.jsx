@@ -1,19 +1,19 @@
-import React from 'react';
-import App from '../components/app';
-import MessageAction from '../actions/message-action';
-import MessageStore from '../stores/message-store';
-import { resetLocationHistory, LocationStore } from 'bdux-react-router';
-import { createRoot } from 'bdux-universal';
+import React from 'react'
+import App from '../components/app'
+import * as MessageAction from '../actions/message-action'
+import MessageStore from '../stores/message-store'
+import { resetLocationHistory, LocationStore } from 'bdux-react-router'
+import { createRoot } from 'bdux-universal'
 
-export const createElement = (req) => {
-  resetLocationHistory(req.path);
-  MessageAction.message('Message from Server');
-  return (<App />);
-};
+export const renderElement = ({ dispatch }, req) => {
+  resetLocationHistory(req.path)
+  dispatch(MessageAction.message('Message from Server'))
+  return <App />
+}
 
 export default createRoot(
-  createElement, {
+  renderElement, {
     location: LocationStore,
     message: MessageStore
   }
-);
+)

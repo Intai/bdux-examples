@@ -7,14 +7,12 @@ import { TimeTravel } from 'bdux-timetravel'
 import { createComponent } from 'bdux'
 
 const renderRouter = (location) => (
-  !!location && (
-    <Router history={createLocationHistory(location)}>
-      <Route
-        component={Page}
-        path="/:id?"
-      />
-    </Router>
-   )
+  <Router history={createLocationHistory(location)}>
+    <Route
+      component={Page}
+      path="/:id?"
+    />
+  </Router>
 )
 
 export const App = ({ location }) => (
