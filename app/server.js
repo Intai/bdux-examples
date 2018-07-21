@@ -2,6 +2,7 @@
 
 import './settings'
 import fs from 'fs'
+import path from 'path'
 import * as R from 'ramda'
 import Express from 'express'
 import DefaultRoot from './roots/default-root'
@@ -37,8 +38,9 @@ const renderApp = R.curry((root, req, res) => {
   })
 })
 
-app.use('/static', Express.static('./dist'))
-app.use('/favicon.ico', Express.static('./dist'))
+const dist = path.join(process.cwd(), 'dist')
+app.use('/static', Express.static(dist))
+app.use('/favicon.ico', Express.static(dist))
 app.get('*', renderApp(DefaultRoot))
 
 app.listen(port)
