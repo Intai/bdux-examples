@@ -44,7 +44,11 @@ gulp.task('build-server', function() {
 
 gulp.task('prod-server', function(_callback) {
   var server = gls('dist/server.js', {
-    env: process.env
+    env: Object.assign(process.env, {
+      NODE_ENV: process.env.NPM_CONFIG_PRODUCTION
+        ? 'production'
+        : 'development'
+    })
   }, false);
 
   server.start();
