@@ -6,6 +6,9 @@
     "NPM_CONFIG_PRODUCTION": {
       "value": "false"
     },
+    "NODE_ENV": {
+      "value": "development"
+    },
     "PORT": {
       "value": "8080"
     }
