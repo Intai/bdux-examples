@@ -10,7 +10,7 @@ var gulp = require('gulp'),
 
 gulp.task('image', function() {
   return gulp.src('./images/**/*.{jpg,png}')
-    .pipe(gulp.dest('dist/images'));
+    .pipe(gulp.dest('./dist/images'));
 });
 
 gulp.task('clean', function () {
@@ -33,20 +33,18 @@ gulp.task('dev-server', function(_callback) {
 gulp.task('build-client', function() {
   return gulp.src('app/main.js')
     .pipe(webpackStream(require('./webpack/client.config.js'), webpack))
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('./dist'));
 });
 
 gulp.task('build-server', function() {
   return gulp.src('app/server.js')
     .pipe(webpackStream(require('./webpack/server.config.js'), webpack))
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('./dist'));
 });
 
 gulp.task('prod-server', function(_callback) {
   var server = gls('dist/server.js', {
-    env: Object.assign(process.env, {
-      NODE_ENV: 'development'
-    })
+    env: process.env
   }, false);
 
   server.start();
