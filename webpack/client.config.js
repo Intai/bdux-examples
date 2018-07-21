@@ -14,7 +14,7 @@ module.exports = {
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),
     new MiniCssExtractPlugin({
-      filename: '[name].css'
+      filename: 'client.css'
     })
   ],
   resolve: {
