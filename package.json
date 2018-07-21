@@ -1,9 +1,6 @@
 {
   "name": "examples",
   "version": "0.1.0",
-  "engines": {
-    "npm": "^6.2.0"
-  },
   "description": "",
   "scripts": {
     "start": "gulp server"
