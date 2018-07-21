@@ -1,4 +1,4 @@
-FROM node:boron
+FROM node:carbon
 
 ENV NPM_CONFIG_PRODUCTION=false
 ENV NODE_ENV=production
