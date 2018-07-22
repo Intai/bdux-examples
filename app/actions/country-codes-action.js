@@ -2,10 +2,9 @@ import * as R from 'ramda'
 import Bacon from 'baconjs'
 import fetch from 'isomorphic-fetch'
 import ActionTypes from './action-types'
-import { bindToDispatch } from 'bdux'
 
 const DEFAULT_COUNTRY = 'NZ'
-const URI_COUNTRIES = 'http://data.okfn.org/data/core/country-list/r/data.json'
+const URI_COUNTRIES = 'https://datahub.io/core/country-list/r/data.json'
 
 const createJsonStream = (response) => (
   Bacon.fromPromise(response.json())
@@ -82,9 +81,3 @@ export const init = (...args) => {
     return Bacon.mergeAll(streams)
   }
 }
-
-export default bindToDispatch({
-  init,
-  load,
-  select
-})

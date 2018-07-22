@@ -27,6 +27,7 @@ var getExternals = function() {
 };
 
 module.exports = {
+  mode: 'development',
   target: 'node',
   externals: getExternals(),
   context: path.join(__dirname, '../app'),
@@ -34,6 +35,9 @@ module.exports = {
   entry: [
     './server'
   ],
+  optimization: {
+    minimize: true
+  },
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),
     new HtmlWebpackPlugin({
@@ -47,12 +51,6 @@ module.exports = {
       files: {
         css: ['/static/fonts/font-awesome.css', '/static/fonts/owfont-regular.css', '/static/client.css'],
         js: ['/static/client.js']
-      }
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: false,
-      compress: {
-        warnings: false
       }
     })
   ],

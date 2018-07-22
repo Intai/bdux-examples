@@ -2,22 +2,22 @@ import * as R from 'ramda'
 import React from 'react'
 import CountryCodesStore from '../stores/country-codes-store'
 import WeatherStore from '../stores/weather-store'
-import WeatherAction from '../actions/weather-action'
+import * as WeatherAction from '../actions/weather-action'
 import classNames from 'classnames/bind'
 import styles from './weather.scss'
 import { createComponent } from 'bdux'
 
 const cssModule = classNames.bind(styles)
 
-const switchToMetric = (event) => {
-  WeatherAction.switchToMetric()
-  WeatherAction.searchWeather()
+const switchToMetric = (dispatch) => (event) => {
+  dispatch(WeatherAction.switchToMetric())
+  dispatch(WeatherAction.searchWeather())
   event.preventDefault()
 }
 
-const switchToImperial = (event) => {
-  WeatherAction.switchToImperial()
-  WeatherAction.searchWeather()
+const switchToImperial = (dispatch) => (event) => {
+  dispatch(WeatherAction.switchToImperial())
+  dispatch(WeatherAction.searchWeather())
   event.preventDefault()
 }
 
@@ -98,11 +98,11 @@ const getUnitsClass = (selected, units) => (
   })
 )
 
-const renderTemperatureUnit = ({ units }) => (
+const renderTemperatureUnit = ({ units }, dispatch) => (
   <React.Fragment>
     <a
       className={getUnitsClass('metric', units)}
-      onClick={switchToMetric}
+      onClick={switchToMetric(dispatch)}
     >
       {'°C'}
     </a>
@@ -111,7 +111,7 @@ const renderTemperatureUnit = ({ units }) => (
     </span>
     <a
       className={getUnitsClass('imperial', units)}
-      onClick={switchToImperial}
+      onClick={switchToImperial(dispatch)}
     >
       {'°F'}
     </a>
@@ -161,12 +161,12 @@ const getWeatherClass = (weather) => (
   })
 )
 
-const renderWeather = (weather) => (
+const renderWeather = ({ weather, dispatch }) => (
   hasCurrent(weather) && (
     <div className={getWeatherClass(weather)}>
       <div className={styles.temperature}>
         {renderTemperature(weather)}
-        {renderTemperatureUnit(weather)}
+        {renderTemperatureUnit(weather, dispatch)}
       </div>
       <div className={styles.details}>
         {renderCloudiness(weather)}
@@ -177,14 +177,17 @@ const renderWeather = (weather) => (
   )
 )
 
-export const Weather = ({ weather }) => (
-  <div className={styles.wrap}>
-    <span className={styles.city}>
-      {getTitle(weather)}
-    </span>
-    {renderWeather(weather)}
-  </div>
-)
+export const Weather = (props) => {
+  const { weather } = props
+  return (
+    <div className={styles.wrap}>
+      <span className={styles.city}>
+        {getTitle(weather)}
+      </span>
+      {renderWeather(props)}
+    </div>
+  )
+}
 
 export default createComponent(Weather, {
   country: CountryCodesStore,

@@ -4,7 +4,6 @@ import fetch from 'isomorphic-fetch'
 import uriTemplates from 'uri-templates'
 import Common from '../utils/common-util'
 import ActionTypes from './action-types'
-import { bindToDispatch } from 'bdux'
 
 const DEFAULT_COUNTRY = 'NZ'
 const DEFAULT_CITY = 'Auckland'
@@ -147,13 +146,3 @@ export const init = R.ifElse(
   createInitStream,
   R.F
 )
-
-export default bindToDispatch({
-  init,
-  setCity,
-  setFocus,
-  searchWeather,
-  switchToMetric,
-  switchToImperial,
-  clear
-})
