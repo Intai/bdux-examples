@@ -1,8 +1,8 @@
 import * as R from 'ramda'
 import React from 'react'
 import CountryCodesStore from '../stores/country-codes-store'
-import CountryCodesAction from '../actions/country-codes-action'
-import WeatherAction from '../actions/weather-action'
+import * as CountryCodesAction from '../actions/country-codes-action'
+import * as WeatherAction from '../actions/weather-action'
 import classNames from 'classnames/bind'
 import styles from './country-codes.scss'
 import { createComponent } from 'bdux'
@@ -18,9 +18,9 @@ const isNotEmpty = R.both(
   )
 )
 
-const onChange = (event) => {
-  CountryCodesAction.select(event.target.value)
-  WeatherAction.clear()
+const handleChange = (dispatch) => (event) => {
+  dispatch(CountryCodesAction.select(event.target.value))
+  dispatch(WeatherAction.clear())
 }
 
 const renderOption = (code) => (
@@ -43,14 +43,14 @@ const getWrapClass = (country) => (
   })
 )
 
-const renderCountryCodes = (country) => (
+const renderCountryCodes = ({ country, dispatch }) => (
   <div className={getWrapClass(country)}>
     <label className={styles.label}>
       {'Country'}
     </label>
     <select
       className={styles.select}
-      onChange={onChange}
+      onChange={handleChange(dispatch)}
       value={country.selected}
     >
       {renderOptions(country.codes)}
@@ -58,10 +58,11 @@ const renderCountryCodes = (country) => (
   </div>
 )
 
-export const CountryCodes = ({ country }) => (
-  renderCountryCodes(
-    isNotEmpty(country) ? country : {}
-  )
+export const CountryCodes = ({ country, ...props }) => (
+  renderCountryCodes({
+    ...props,
+    country: isNotEmpty(country) ? country : {}
+  })
 )
 
 export default createComponent(CountryCodes, {

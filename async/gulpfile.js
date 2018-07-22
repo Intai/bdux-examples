@@ -1,6 +1,8 @@
 /* eslint-env node */
 
 var gulp = require('gulp'),
+    log = require('fancy-log'),
+    PluginError = require('plugin-error'),
     gls = require('gulp-live-server'),
     webpack = require('webpack'),
     webpackStream = require('webpack-stream'),
@@ -30,13 +32,13 @@ gulp.task('dev-server', function(_callback) {
     hot: true
   })
   .listen(port, '0.0.0.0', function(err) {
-    if (err) throw new $.util.PluginError('webpack-dev-server', err);
-    $.util.log('[webpack-dev-server]', 'http://localhost:' + port);
+    if (err) throw new PluginError('webpack-dev-server', err);
+    log('[webpack-dev-server]', 'http://localhost:' + port);
   });
 });
 
 gulp.task('build-client', function() {
-  return gulp.src('app/main.js')
+  return gulp.src('app/index.jsx')
     .pipe(webpackStream(require('./webpack/client.config.js')))
     .pipe(gulp.dest('dist'));
 });
@@ -53,7 +55,7 @@ gulp.task('prod-server', function(_callback) {
   }, false);
 
   server.start();
-  $.util.log('[express] http://localhost:' + port);
+  log('[express] http://localhost:' + port);
 });
 
 gulp.task('build', $.sequence(

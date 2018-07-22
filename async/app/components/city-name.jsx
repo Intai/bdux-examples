@@ -2,20 +2,20 @@ import * as R from 'ramda'
 import React from 'react'
 import CountryCodesStore from '../stores/country-codes-store'
 import WeatherStore from '../stores/weather-store'
-import WeatherAction from '../actions/weather-action'
+import * as WeatherAction from '../actions/weather-action'
 import styles from './city-name.scss'
 import { createComponent } from 'bdux'
 
-const onChange = (event) => {
-  WeatherAction.setCity(event.target.value)
+const handleChange = ({ dispatch }) => (event) => {
+  dispatch(WeatherAction.setCity(event.target.value))
 }
 
-const onFocus = () => {
-  WeatherAction.setFocus(false)
+const handleFocus = ({ dispatch }) => () => {
+  dispatch(WeatherAction.setFocus(false))
 }
 
-const onBlur = () => {
-  WeatherAction.setFocus(true)
+const handleBlur = ({ dispatch }) => () => {
+  dispatch(WeatherAction.setFocus(true))
 }
 
 const hasCountryAndWeather = ({ country, weather }) => (
@@ -25,9 +25,11 @@ const hasCountryAndWeather = ({ country, weather }) => (
 
 const onSearch = (props) => (event) => {
   if (hasCountryAndWeather(props)) {
-    WeatherAction.searchWeather(
-      props.country.selected,
-      props.weather.city
+    props.dispatch(
+      WeatherAction.searchWeather(
+        props.country.selected,
+        props.weather.city
+      )
     )
   }
 
@@ -48,9 +50,9 @@ export const CityName = (props) => (
     </label>
     <input
       className={styles.input}
-      onBlur={onBlur}
-      onChange={onChange}
-      onFocus={onFocus}
+      onBlur={handleBlur(props)}
+      onChange={handleChange(props)}
+      onFocus={handleFocus(props)}
       type="text"
       value={getCity(props)}
     />
