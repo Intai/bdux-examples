@@ -8,7 +8,7 @@ import ActionTypes from './action-types'
 const DEFAULT_COUNTRY = 'NZ'
 const DEFAULT_CITY = 'Auckland'
 const APPID = '7cbd36bfb4764f5613cf8b8e68bf1665'
-const URI_WEATHER = uriTemplates('http://api.openweathermap.org/data/2.5/weather{?q,units,appid}')
+const URI_WEATHER = uriTemplates('https://api.openweathermap.org/data/2.5/weather{?q,units,appid}')
 
 const countryCodeProp = Common.createProp(DEFAULT_COUNTRY)
 const cityNameProp = Common.createProp(DEFAULT_CITY)
