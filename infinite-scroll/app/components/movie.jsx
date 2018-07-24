@@ -1,6 +1,6 @@
 import * as R from 'ramda'
 import React from 'react'
-import MovieAction from '../actions/movie-action'
+import * as MovieAction from '../actions/movie-action'
 import ConfigStore from '../stores/config-store'
 import MovieStore from '../stores/movie-store'
 import Multiline from './multiline'
@@ -151,13 +151,16 @@ export const Movie = ({ refItems, config, movie }) => (
   )
 )
 
-const MovieDecorated = R.compose(
-  pureRender
-)(Movie)
+const decorate = R.pipe(
+  pureRender,
+  createComponent(
+    {
+      config: ConfigStore,
+      movie: MovieStore
+    },
+    // load the movie details.
+    MovieAction.load
+  )
+)
 
-export default createComponent(MovieDecorated, {
-  config: ConfigStore,
-  movie: MovieStore
-},
-// load the movie details.
-MovieAction.load)
+export default decorate(Movie)

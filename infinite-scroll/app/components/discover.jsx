@@ -1,25 +1,29 @@
 import * as R from 'ramda'
 import React from 'react'
 import Movies from './movies'
-import DiscoverAction from '../actions/discover-action'
-import MovieAction from '../actions/movie-action'
+import * as DiscoverAction from '../actions/discover-action'
+import * as MovieAction from '../actions/movie-action'
+import ConfigStore from '../stores/config-store'
 import { createComponent } from 'bdux'
 
-const onUpdate = ({ itemsTop, itemsRangeFrom, itemsRangeCount, ...args }) => {
-  DiscoverAction.update(R.merge(
-    args, {
-      top: itemsTop,
-      from: itemsRangeFrom,
-      count: itemsRangeCount
-    }
-  ))
+const handleUpdate = (dispatch) => ({ itemsTop, itemsRangeFrom, itemsRangeCount, ...args }) => {
+  dispatch(
+    DiscoverAction.update(R.merge(
+      args, {
+        top: itemsTop,
+        from: itemsRangeFrom,
+        count: itemsRangeCount
+      }
+    ))
+  )
 }
 
-export const Discover = () => (
-  <Movies onUpdate={onUpdate} />
+export const Discover = ({ dispatch }) => (
+  <Movies onUpdate={handleUpdate(dispatch)} />
 )
 
-export default createComponent(Discover, {},
-  // load image base url and sizes.
-  MovieAction.config
-)
+export default createComponent(Discover, {
+  config: ConfigStore,
+},
+// load image base url and sizes.
+MovieAction.config)
