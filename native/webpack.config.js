@@ -7,6 +7,7 @@ var path = require('path'),
     HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+  mode: 'development',
   context: path.join(__dirname, 'app'),
   entry: [
     'webpack-dev-server/client?http://localhost:8080',
@@ -44,7 +45,7 @@ module.exports = {
         loader: 'babel-loader',
         exclude: /node_modules/,
         options: {
-          presets: ['es2015', 'react'],
+          presets: ['env', 'react'],
           plugins: [
             'syntax-object-rest-spread',
             'transform-object-rest-spread'
@@ -59,7 +60,7 @@ module.exports = {
             loader: 'css-loader',
             options: {
               modules: true,
-              importLoaders: 3,
+              importLoaders: 2,
               localIdentName: '[name]__[local]___[hash:base64:5]'
             }
           },
@@ -79,10 +80,6 @@ module.exports = {
             }
           }
         ]
-      },
-      {
-        test: /\.json$/,
-        loader: 'json-loader'
       }
     ]
   },

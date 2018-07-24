@@ -2,7 +2,6 @@ import * as R from 'ramda'
 import Bacon from 'baconjs'
 import Common from '../utils/common-util'
 import ActionTypes from './action-types'
-import { bindToDispatch } from 'bdux'
 
 const TIME_TICK = 75
 
@@ -68,10 +67,3 @@ export const stop = R.pipe(
   createStop,
   R.tap(stopTicking)
 )
-
-export default bindToDispatch({
-  lap,
-  reset,
-  start,
-  stop
-})

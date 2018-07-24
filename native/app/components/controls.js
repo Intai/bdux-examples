@@ -1,33 +1,32 @@
 import * as R from 'ramda'
 import React from 'react'
 import StopwatchStore from '../stores/stopwatch-store'
-import StopwatchAction from '../actions/stopwatch-action'
+import * as StopwatchAction from '../actions/stopwatch-action'
 import Button from './button'
 import Container from './container'
 import styles from './controls-style'
 import { createComponent } from 'bdux'
 
-const renderStartButton = () => (
+const renderStartButton = ({ bindToDispatch }) => (
   <Button
-    onClick={StopwatchAction.start}
+    onClick={bindToDispatch(StopwatchAction.start)}
     style={styles.start}
   >
     {'Start'}
   </Button>
 )
 
-const renderStopButton = () => (
+const renderStopButton = ({ bindToDispatch }) => (
   <Button
-    onClick={StopwatchAction.stop}
+    onClick={bindToDispatch(StopwatchAction.stop)}
     style={styles.stop}
   >
     {'Stop'}
   </Button>
 )
 
-const isTicking = R.pipe(
-  R.defaultTo({}),
-  R.prop('isTicking')
+const isTicking = R.path(
+  ['stopwatch', 'isTicking']
 )
 
 const renderStartStop = R.ifElse(
@@ -36,25 +35,24 @@ const renderStartStop = R.ifElse(
   renderStartButton
 )
 
-const isCleared = R.pipe(
-  R.defaultTo({}),
-  R.converge(R.equals, [
-    R.prop('timeFrom'),
-    R.prop('timeTo')
-  ])
+const isCleared = R.converge(
+  R.equals, [
+    R.path(['stopwatch', 'timeFrom']),
+    R.path(['stopwatch', 'timeTo'])
+  ]
 )
 
-const renderLapButton = (stopwatch) => (
+const renderLapButton = ({ bindToDispatch, props }) => (
   <Button
-    disabled={isCleared(stopwatch)}
-    onClick={StopwatchAction.lap}
+    disabled={isCleared(props)}
+    onClick={bindToDispatch(StopwatchAction.lap)}
   >
     {'Lap'}
   </Button>
 )
 
-const renderResetButton = () => (
-  <Button onClick={StopwatchAction.reset}>
+const renderResetButton = ({ bindToDispatch }) => (
+  <Button onClick={bindToDispatch(StopwatchAction.reset)}>
     {'Reset'}
   </Button>
 )
@@ -65,10 +63,10 @@ const renderLapReset = R.ifElse(
   renderResetButton
 )
 
-export const Controls = ({ stopwatch }) => (
+export const Controls = (props) => (
   <Container style={styles.wrap}>
-    {renderLapReset(stopwatch)}
-    {renderStartStop(stopwatch)}
+    {renderLapReset(props)}
+    {renderStartStop(props)}
   </Container>
 )
 

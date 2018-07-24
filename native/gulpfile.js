@@ -1,6 +1,8 @@
 /* eslint-env node */
 
 var gulp = require('gulp'),
+    log = require('fancy-log'),
+    PluginError = require('plugin-error'),
     webpack = require('webpack'),
     WebpackDevServer = require('webpack-dev-server'),
     webpackConfig = require('./webpack.config.js'),
@@ -76,8 +78,8 @@ gulp.task('dev-server', function(_callback) {
     hot: true
   })
   .listen(port, '0.0.0.0', function(err) {
-    if (err) throw new $.util.PluginError('webpack-dev-server', err);
-    $.util.log('[webpack-dev-server]', 'http://localhost:' + port + '\n');
+    if (err) throw new PluginError('webpack-dev-server', err);
+    log('[webpack-dev-server]', 'http://localhost:' + port + '\n');
   });
 });
 
