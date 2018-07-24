@@ -2,7 +2,7 @@ import * as R from 'ramda'
 import React from 'react'
 import MathAnswer from './math-answer'
 import MathQuestion from './math-question'
-import Actions from '../actions/math-challenge-action'
+import * as MathAction from '../actions/math-challenge-action'
 import CountDownStore from '../stores/countdown-store'
 import ChallengeStore from '../stores/math-challenge-store'
 import styles from './math-challenge.scss'
@@ -29,4 +29,4 @@ export default createComponent(MathChallenge, {
   challenge: ChallengeStore
 },
 // create the first challenge.
-Actions.challenge)
+MathAction.challenge)

@@ -2,7 +2,6 @@ import * as R from 'ramda'
 import Bacon from 'baconjs'
 import Common from '../utils/common-util'
 import ActionTypes from './action-types'
-import { bindToDispatch } from 'bdux'
 
 const TIME_COUNTDOWN = 60000
 const TIME_TICK = 1000
@@ -73,7 +72,3 @@ export const countdown = whenOnEnd(
   // stop the countdown.
   .mapEnd(createStop)
 )
-
-export default bindToDispatch({
-  countdown
-})

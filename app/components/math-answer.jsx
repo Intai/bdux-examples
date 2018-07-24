@@ -1,6 +1,6 @@
 import * as R from 'ramda'
 import React from 'react'
-import Actions from '../actions/math-challenge-action'
+import * as MathAction from '../actions/math-challenge-action'
 import ChallengeStore from '../stores/math-challenge-store'
 import classNames from 'classnames/bind'
 import styles from './math-answer.scss'
@@ -8,23 +8,15 @@ import { createComponent } from 'bdux'
 
 const cssModule = classNames.bind(styles)
 
-const onChange = (event) => {
-  Actions.answer(event.target.value)
+const handleChange = (dispatch) => (event) => {
+  dispatch(MathAction.answer(event.target.value))
 }
 
-const confirm = () => {
-  Actions.confirm()
-}
-
-const nextChallenge = (pass) => {
+const handleSubmit = (dispatch, pass) => (event) => {
+  dispatch(MathAction.confirm())
   if (pass) {
-    Actions.challenge()
+    dispatch(MathAction.challenge())
   }
-}
-
-const onSubmit = (pass) => (event) => {
-  confirm()
-  nextChallenge(pass)
   event.preventDefault()
 }
 
@@ -36,15 +28,15 @@ const getFormClass = (challenge) => (
   })
 )
 
-const renderAnswer = ({ challenge }) => (
+const renderAnswer = ({ challenge, dispatch }) => (
   <form
     className={getFormClass(challenge)}
-    onSubmit={onSubmit(challenge.pass)}
+    onSubmit={handleSubmit(dispatch, challenge.pass)}
   >
     <input
       autoFocus
       className={styles.input}
-      onChange={onChange}
+      onChange={handleChange(dispatch)}
       type="text"
       value={challenge.answer}
     />

@@ -5,6 +5,7 @@ var path = require('path'),
     autoprefixer = require('autoprefixer');
 
 module.exports = {
+  mode: 'development',
   context: path.join(__dirname, 'app'),
   entry: [
     'webpack-dev-server/client?http://localhost:8080',

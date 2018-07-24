@@ -1,6 +1,6 @@
 import * as R from 'ramda'
 import React from 'react'
-import CountDownAction from '../actions/countdown-action'
+import * as CountDownAction from '../actions/countdown-action'
 import CountDownStore from '../stores/countdown-store'
 import styles from './countdown.scss'
 import { createComponent } from 'bdux'
