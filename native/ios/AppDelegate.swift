@@ -2,18 +2,18 @@ import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
   var window: UIWindow?
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    let jsCodeLocation = RCTBundleURLProvider.sharedSettings()
+      .jsBundleURL(forBundleRoot: "app/index.ios", fallbackResource: nil)
 
-    //let url = RCTBundleURLProvider.sharedSettings().jsBundleURL(forBundleRoot: "index.ios", fallbackResource: nil)
-    let url = URL(string: "http://localhost:8081/app/index.ios.bundle?platform=ios&dev=true")
     let rootView = RCTRootView(
-      bundleURL: url,
+      bundleURL: jsCodeLocation,
       moduleName: "App",
       initialProperties: nil,
       launchOptions:launchOptions)
+    rootView?.backgroundColor = UIColor(red: 1, green:1, blue:1, alpha:1)
 
     let rootViewController = UIViewController()
     rootViewController.view = rootView
