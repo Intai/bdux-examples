@@ -5,6 +5,7 @@ var path = require('path'),
     isEnvProd = (process.env.NODE_ENV === 'production');
 
 module.exports = {
+  mode: 'development',
   context: path.join(__dirname, 'app'),
   entry: [
     'webpack-dev-server/client?http://localhost:8080',
@@ -12,7 +13,6 @@ module.exports = {
     'index'
   ],
   plugins: [
-    new webpack.EnvironmentPlugin({ NODE_ENV: 'development' }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin()
   ],

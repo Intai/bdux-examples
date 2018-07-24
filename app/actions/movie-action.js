@@ -3,7 +3,6 @@ import Bacon from 'baconjs'
 import fetch from 'isomorphic-fetch'
 import uriTemplates from 'uri-templates'
 import ActionTypes from './action-types'
-import { bindToDispatch } from 'bdux'
 
 const RESULTS_PER_PAGE = 20
 const APP_KEY = '5ca7d322b2286fb4baa5d46af38c4fca'
@@ -75,8 +74,3 @@ export const load = ({ props: { index }}) => (
     index % RESULTS_PER_PAGE
   )
 )
-
-export default bindToDispatch({
-  config,
-  load
-})

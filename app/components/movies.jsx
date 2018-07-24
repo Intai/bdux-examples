@@ -71,11 +71,12 @@ export const Movies = ({ movies, refList, refItems }) => (
   </Container>
 )
 
-const MoviesDecorated = R.compose(
+const decorate = R.pipe(
+  scrollInfinite,
   pureRender,
-  scrollInfinite
-)(Movies)
+  createComponent({
+    movies: MoviesStore
+  })
+)
 
-export default createComponent(MoviesDecorated, {
-  movies: MoviesStore
-})
+export default decorate(Movies)
