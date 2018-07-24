@@ -1,6 +1,5 @@
 import * as R from 'ramda'
 import ActionTypes from './action-types'
-import { bindToDispatch } from 'bdux'
 
 const OPERATORS = ['+', '-', '*']
 
@@ -37,10 +36,4 @@ export const answer = (number) => ({
 
 export const confirm = () => ({
   type: ActionTypes.MATH_CONFIRM
-})
-
-export default bindToDispatch({
-  challenge,
-  answer,
-  confirm
 })
