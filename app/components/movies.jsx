@@ -20,10 +20,14 @@ const Container = styled.div`
   top: 0;
 `
 
+const Padding = styled.div`
+  height: ${({ top }) => top}px;
+`
+
 const List = styled.ul`
   list-style: none;
   padding: 0;
-  margin: ${({ top }) => top}px auto 100% auto;
+  margin: 0 auto 100% auto;
   max-width: 480px;
   width: 100%;
 `
@@ -65,7 +69,8 @@ export const Movies = ({ movies, refList, refItems }) => (
     data-scroll-top={getScrollTop(movies)}
     innerRef={refList}
   >
-    <List top={getTop(movies)}>
+    <Padding top={getTop(movies)} />
+    <List>
       {renderMovies(movies, refItems)}
     </List>
   </Container>
