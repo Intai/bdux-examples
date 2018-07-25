@@ -1,8 +1,20 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { BduxContext, createDispatcher } from 'bdux'
 import App from './components/app.prod'
 
+const bduxContext = {
+  dispatcher: createDispatcher(),
+  stores: new WeakMap()
+}
+
+const renderApp = () => (
+  <BduxContext.Provider value={bduxContext}>
+    <App />
+  </BduxContext.Provider>
+)
+
 ReactDOM.render(
-  <App />,
+  renderApp(),
   document.getElementById('app')
 )
