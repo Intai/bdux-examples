@@ -3,7 +3,7 @@ import App from '../components/app'
 import { resetLocationHistory, LocationStore } from 'bdux-react-router'
 import { createRoot } from 'bdux-universal'
 
-export const createElement = (req) => {
+export const createElement = (_, req) => {
   resetLocationHistory(req.path)
   return <App />
 }

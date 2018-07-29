@@ -26,12 +26,16 @@ var getExternals = function() {
 };
 
 module.exports = {
+  mode: 'development',
   target: 'node',
   externals: getExternals(),
   context: path.join(__dirname, '../app'),
   entry: [
     './server'
   ],
+  optimization: {
+    minimize: true
+  },
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),
     new HtmlWebpackPlugin({
@@ -46,12 +50,6 @@ module.exports = {
         css: ['/static/client.css'],
         js: ['/static/client.js']
       }
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: false,
-      compress: {
-        warnings: false
-      }
     })
   ],
   resolve: {
@@ -62,16 +60,16 @@ module.exports = {
       {
         enforce: 'pre',
         test: /\.jsx?$/,
-        exclude: /node_modules/,
         loader: 'eslint-loader',
+        exclude: /node_modules/,
         options: {
           configFile: '.eslintrc'
         }
       },
       {
         test: /\.jsx?$/,
-        exclude: /node_modules/,
         loader: 'babel-loader',
+        exclude: /node_modules/
       }
     ]
   },

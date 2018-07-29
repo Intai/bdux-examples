@@ -4,6 +4,7 @@ var path = require('path'),
     webpack = require('webpack');
 
 module.exports = {
+  mode: 'development',
   context: path.join(__dirname, '../app'),
   entry: [
     './index'

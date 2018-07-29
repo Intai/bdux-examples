@@ -5,6 +5,7 @@ var path = require('path'),
     HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+  mode: 'development',
   context: path.join(__dirname, '../app'),
   entry: [
     'webpack-dev-server/client?http://localhost:8080',
@@ -32,16 +33,16 @@ module.exports = {
       {
         enforce: 'pre',
         test: /\.jsx?$/,
-        exclude: /node_modules/,
         loader: 'eslint-loader',
+        exclude: /node_modules/,
         options: {
           configFile: '.eslintrc'
         }
       },
       {
         test: /\.jsx?$/,
-        exclude: /node_modules/,
         loader: 'babel-loader',
+        exclude: /node_modules/
       }
     ]
   },
