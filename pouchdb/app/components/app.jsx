@@ -1,6 +1,9 @@
+import * as R from 'ramda'
 import React from 'react'
 import Blog from './blog'
 import About from './about'
+import * as StartupAction from '../actions/startup-action'
+import { pureRender } from './decorators/pure-render'
 import { Router, Switch, Route, createLocationHistory } from 'bdux-react-router'
 import { LocationAction, LocationStore } from 'bdux-react-router'
 import { UniversalStates } from 'bdux-universal'
@@ -30,8 +33,17 @@ export const App = ({ location }) => (
   </React.Fragment>
 )
 
-export default createComponent(App, {
-  location: LocationStore
-},
-// start listening to browser history.
-LocationAction.listen)
+const decorate = R.pipe(
+  pureRender,
+  createComponent(
+    {
+      location: LocationStore
+    },
+    // start listening to browser history.
+    LocationAction.listen,
+    // synchronise states from pouchdb.
+    StartupAction.syncPouchDB
+  )
+)
+
+export default decorate(App)

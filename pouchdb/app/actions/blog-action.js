@@ -1,10 +1,30 @@
-import ActionTypes from './action-types'
+import * as R from 'ramda'
+import StoreNames from '../stores/store-names'
 import { PouchDBAction } from 'bdux-pouchdb'
-import { bindToDispatch } from 'bdux'
+
+const parseInt10 = (value) => (
+  parseInt(value, 10)
+)
+
+const createSelector = R.pipe(
+  R.filter(R.identity),
+  R.assoc('createdAt', { '$gte': 0 }),
+  R.evolve({
+    year: parseInt10,
+    month: parseInt10,
+    day: parseInt10
+  })
+)
+
+const sortIndices = R.sortBy(
+  R.flip(R.indexOf)(['year', 'month', 'day', 'slug', 'createdAt'])
+)
 
 export const load = ({ props: { match: { params }}}) => {
+  const selector = createSelector(params)
+  const indices = sortIndices(R.keys(selector))
+
   PouchDBAction.replicate({
-    name: 'PDB_BLOG',
     src: 'http://localhost:5984/blog',
     target: 'blog',
     options: {
@@ -16,13 +36,17 @@ export const load = ({ props: { match: { params }}}) => {
       query_params: params
     }
   })
-
-  return {
-    type: ActionTypes.BLOG_LOAD,
-    params
-  };
+  .createIndex({
+    index: {
+      fields: indices
+    }
+  })
+  .find({
+    selector,
+    sort: [{ createdAt: 'desc' }]
+  })
+  .to({
+    storeName: StoreNames.BLOG,
+  })
+  .create()
 }
-
-export default bindToDispatch({
-  load
-})

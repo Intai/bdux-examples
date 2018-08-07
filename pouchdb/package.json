@@ -27,6 +27,7 @@
     "ejs": "^2.6.1",
     "express": "^4.16.3",
     "pouchdb": "^7.0.0",
+    "pouchdb-find": "^7.0.0",
     "pouchdb-server": "^4.0.1",
     "ramda": "^0.25.0",
     "react": "^16.4.1",
