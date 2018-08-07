@@ -7,7 +7,9 @@ var gulp = require('gulp'),
     WebpackDevServer = require('webpack-dev-server'),
     PluginError = require('plugin-error'),
     log = require('fancy-log'),
-    $ = require('gulp-load-plugins')(),
+    fs = require('fs'),
+    rename = require('gulp-rename'),
+    sequence = require('gulp-sequence'),
     spawn = require('child_process').spawn,
     port = process.env.PORT || 8080;
 
@@ -48,6 +50,14 @@ gulp.task('prod-server', function() {
   log('[express] http://localhost:' + port);
 });
 
+gulp.task('init-pouchdb', function() {
+  if (!fs.existsSync('pouchdb')) {
+    return gulp.src('pouchdb_init')
+      .pipe(rename('pouchdb'))
+      .pipe(gulp.dest('.'));
+  }
+})
+
 gulp.task('pouchdb-server', function() {
   spawn('./node_modules/pouchdb-server/bin/pouchdb-server', [
     '--port', '5984',
@@ -64,16 +74,18 @@ gulp.task('build', [
   'build-server'
 ]);
 
-gulp.task('server', $.sequence(
+gulp.task('server', sequence(
   'build',
   'prod-server',
+  'init-pouchdb',
   'pouchdb-server'
 ));
 
-gulp.task('dev', [
+gulp.task('dev', sequence(
   'dev-server',
+  'init-pouchdb',
   'pouchdb-server'
-]);
+));
 
 gulp.task('default', [
   'server'
