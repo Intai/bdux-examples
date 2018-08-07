@@ -8,7 +8,6 @@ var gulp = require('gulp'),
     PluginError = require('plugin-error'),
     log = require('fancy-log'),
     fs = require('fs'),
-    rename = require('gulp-rename'),
     sequence = require('gulp-sequence'),
     spawn = require('child_process').spawn,
     port = process.env.PORT || 8080;
@@ -52,9 +51,8 @@ gulp.task('prod-server', function() {
 
 gulp.task('init-pouchdb', function() {
   if (!fs.existsSync('pouchdb')) {
-    return gulp.src('pouchdb_init')
-      .pipe(rename('pouchdb'))
-      .pipe(gulp.dest('.'));
+    return gulp.src('pouchdb_init/**/*')
+      .pipe(gulp.dest('pouchdb'));
   }
 })
 
