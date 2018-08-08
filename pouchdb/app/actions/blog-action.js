@@ -17,16 +17,16 @@ const createSelector = R.pipe(
 )
 
 const sortIndices = R.sortBy(
-  R.flip(R.indexOf)(['year', 'month', 'day', 'slug', 'createdAt'])
+  R.flip(R.indexOf)(['createdAt', 'year', 'month', 'day', 'slug'])
 )
 
 export const load = ({ props: { match: { params }}}) => {
   const selector = createSelector(params)
   const indices = sortIndices(R.keys(selector))
 
-  PouchDBAction.replicate({
-    src: 'http://localhost:5984/blog',
-    target: 'blog',
+  PouchDBAction.sync({
+    src: 'blog',
+    target: 'http://localhost:5984/blog',
     options: {
       auth: {
         username: 'guest',

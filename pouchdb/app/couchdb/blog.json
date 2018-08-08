@@ -18,12 +18,13 @@
     require('slug');
   }",
   "views": {
-    
+
   },
   "filters": {
     "filter_entries": "function filter_entries(doc, req) {
       return (
-        (!req.query.year || doc.year === req.query.year)
+        doc._id === '_design/blog'
+        || (!req.query.year || doc.year === req.query.year)
           && (!req.query.month || doc.month === req.query.month)
           && (!req.query.day || doc.day === req.query.day)
           && (!req.query.slug || doc.slug === req.query.slug))
