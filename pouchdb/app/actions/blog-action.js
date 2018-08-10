@@ -24,9 +24,9 @@ export const load = ({ props: { match: { params }}}) => {
   const selector = createSelector(params)
   const indices = sortIndices(R.keys(selector))
 
-  PouchDBAction.sync({
-    src: 'blog',
-    target: 'http://localhost:5984/blog',
+  PouchDBAction.replicate({
+    src: 'http://localhost:5984/blog',
+    target: 'blog',
     options: {
       auth: {
         username: 'guest',

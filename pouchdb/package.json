@@ -31,6 +31,7 @@
     "pouchdb-server": "^4.0.1",
     "ramda": "^0.25.0",
     "react": "^16.4.1",
+    "react-ace": "^6.1.4",
     "react-dom": "^16.4.1",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",

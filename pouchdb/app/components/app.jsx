@@ -6,6 +6,7 @@ import * as StartupAction from '../actions/startup-action'
 import { pureRender } from './decorators/pure-render'
 import { Router, Switch, Route, createLocationHistory } from 'bdux-react-router'
 import { LocationAction, LocationStore } from 'bdux-react-router'
+import { PouchDBAction, PouchDBAdminConsole } from 'bdux-pouchdb'
 import { UniversalStates } from 'bdux-universal'
 import { createComponent } from 'bdux'
 
@@ -29,6 +30,7 @@ const renderRouter = (location) => (
 export const App = ({ location }) => (
   <React.Fragment>
     {renderRouter(location)}
+    <PouchDBAdminConsole />
     <UniversalStates />
   </React.Fragment>
 )
@@ -41,6 +43,8 @@ const decorate = R.pipe(
     },
     // start listening to browser history.
     LocationAction.listen,
+    // start listening to pouchdb updates for admin.
+    PouchDBAction.startAdmin,
     // synchronise states from pouchdb.
     StartupAction.syncPouchDB
   )
