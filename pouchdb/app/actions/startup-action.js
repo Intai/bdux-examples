@@ -1,6 +1,6 @@
 import { PouchDBAction } from 'bdux-pouchdb'
 
-export const syncPouchDB = () => {
+export const syncPouchDB = () => (
   PouchDBAction.sync({
     src: 'states',
     target: 'http://localhost:5984/states',
@@ -10,4 +10,4 @@ export const syncPouchDB = () => {
     }
   })
   .create()
-}
+)

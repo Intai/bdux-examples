@@ -24,7 +24,7 @@ export const load = ({ props: { match: { params }}}) => {
   const selector = createSelector(params)
   const indices = sortIndices(R.keys(selector))
 
-  PouchDBAction.replicate({
+  return PouchDBAction.replicate({
     src: 'http://localhost:5984/blog',
     target: 'blog',
     options: {
