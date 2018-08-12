@@ -24,6 +24,7 @@
     "bdux-react-router": "^16.4.0",
     "bdux-timetravel": "^16.4.1",
     "bdux-universal": "^16.4.0",
+    "brace": "^0.11.1",
     "ejs": "^2.6.1",
     "express": "^4.16.3",
     "pouchdb": "^7.0.0",
