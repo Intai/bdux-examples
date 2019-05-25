@@ -2,7 +2,7 @@
   "_id": "_design/blog",
   "validate_doc_update": "function(newDoc, oldDoc, userCtx) {
     if (userCtx.roles.indexOf('admin') < 0) {
-      throw({ unauthorized : 'You are not authorized to update this db.' });
+      throw({ unauthorized : 'You are not authorized to update this database.' });
     }
 
     function require(field, message) {
