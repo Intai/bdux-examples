@@ -21,6 +21,10 @@ function dev() {
   });
 }
 
+gulp.task('dev', gulp.series(
+  dev
+));
+
 gulp.task('default', gulp.series(
   dev
 ));
