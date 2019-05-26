@@ -6,12 +6,12 @@ import { TimeTravel } from 'bdux-timetravel'
 import { createComponent } from 'bdux'
 
 export const App = () => (
-  <React.Fragment>
+  <>
     <CountDown />
     <MathChallenge />
     <MathResult />
     <TimeTravel />
-  </React.Fragment>
+  </>
 )
 
 export default createComponent(App)
