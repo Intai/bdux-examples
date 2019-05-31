@@ -12,12 +12,18 @@
     "es6": true
   },
   "plugins": [
-    "react"
+    "react",
+    "react-hooks"
   ],
   "extends": [
     "eslint:recommended",
     "plugin:react/all"
   ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   "rules": {
     "no-console": 0,
     "quotes": [2, "single"],
@@ -29,6 +35,7 @@
     "react/jsx-indent": [1, 2],
     "react/jsx-indent-props": [1, 2],
     "react/jsx-handler-names": 0,
+    "react/jsx-props-no-spreading": 0,
     "react/forbid-component-props": 0,
     "react/no-multi-comp": [2, {
       "ignoreStateless": true

@@ -45,10 +45,14 @@ module.exports = {
         loader: 'babel-loader',
         exclude: /node_modules/,
         options: {
-          presets: ['env', 'react'],
+          presets: [
+            '@babel/env',
+            '@babel/react'
+          ],
           plugins: [
-            'syntax-object-rest-spread',
-            'transform-object-rest-spread'
+            '@babel/plugin-syntax-object-rest-spread',
+            '@babel/plugin-proposal-object-rest-spread',
+            '@babel/plugin-proposal-class-properties'
           ]
         }
       },
@@ -76,7 +80,7 @@ module.exports = {
           {
             loader: 'sass-loader',
             options: {
-              importer: jsonImporter,
+              importer: jsonImporter(),
             }
           }
         ]

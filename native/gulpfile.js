@@ -24,12 +24,12 @@ var isNotPartial = function(file) {
   return !/\/_[^/]*$/.test(file.relative);
 };
 
-var replaceDir  = function(file) {
+var replaceDir = function(file) {
   file.base = file.base.replace(/app\/.*$/, 'app/');
   return file;
 };
 
-var replaceDest  = function(file) {
+var replaceDest = function(file) {
   file.path = file.path.replace(/([^/]*)$/, 'generated/$1');
   return file;
 };
@@ -37,10 +37,6 @@ var replaceDest  = function(file) {
 gulp.task('image', function() {
   return gulp.src('./images/**/*.{jpg,png}')
     .pipe(gulp.dest('dist/images'));
-});
-
-gulp.task('clean', function () {
-  require('del').sync('dist');
 });
 
 gulp.task('sass', function() {
@@ -59,7 +55,7 @@ gulp.task('sass-watch', function(){
   gulp.watch(nativeStyles, ['sass']);
 });
 
-gulp.task('packager', function(callback) {
+function packager(callback) {
   var cmd = spawn('node', [
     'node_modules/react-native/local-cli/cli.js',
     'start'
@@ -68,9 +64,9 @@ gulp.task('packager', function(callback) {
   });
 
   cmd.on('close', callback);
-});
+}
 
-gulp.task('dev-server', function(_callback) {
+function dev() {
   new WebpackDevServer(webpack(webpackConfig), {
     disableHostCheck: true,
     historyApiFallback: true,
@@ -81,21 +77,22 @@ gulp.task('dev-server', function(_callback) {
     if (err) throw new PluginError('webpack-dev-server', err);
     log('[webpack-dev-server]', 'http://localhost:' + port + '\n');
   });
-});
+}
 
-gulp.task('dev-native', [
-  'packager'
-]);
+gulp.task('dev-web', gulp.series(
+  dev
+));
 
-gulp.task('dev-web', [
-  'dev-server'
-]);
+gulp.task('dev-native', gulp.series(
+  packager
+));
 
-gulp.task('dev', [
-  'dev-web',
-  'dev-native'
-]);
+gulp.task('dev', gulp.series(
+  dev,
+  packager
+));
 
-gulp.task('default', [
-  'dev'
-]);
+gulp.task('default', gulp.series(
+  dev,
+  packager
+));
