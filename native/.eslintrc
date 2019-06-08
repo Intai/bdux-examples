@@ -37,6 +37,9 @@
     "react/jsx-handler-names": 0,
     "react/jsx-props-no-spreading": 0,
     "react/forbid-component-props": 0,
+    "react/jsx-sort-props": [2, {
+      "ignoreCase": true
+    }],
     "react/no-multi-comp": [2, {
       "ignoreStateless": true
     }],

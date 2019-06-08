@@ -42,14 +42,17 @@ const isCleared = R.converge(
   ]
 )
 
-const renderLapButton = ({ bindToDispatch, props }) => (
-  <Button
-    disabled={isCleared(props)}
-    onClick={bindToDispatch(StopwatchAction.lap)}
-  >
-    {'Lap'}
-  </Button>
-)
+const renderLapButton = (props) => {
+  const { bindToDispatch } = props
+  return (
+    <Button
+      disabled={isCleared(props)}
+      onClick={bindToDispatch(StopwatchAction.lap)}
+    >
+      {'Lap'}
+    </Button>
+  )
+}
 
 const renderResetButton = ({ bindToDispatch }) => (
   <Button onClick={bindToDispatch(StopwatchAction.reset)}>

@@ -22,7 +22,8 @@
     "ramda": "^0.26.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-native": "^0.59.8"
+    "react-native": "^0.60.0-rc.0",
+    "scheduler": "^0.14.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",

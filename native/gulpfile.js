@@ -34,11 +34,6 @@ var replaceDest = function(file) {
   return file;
 };
 
-gulp.task('image', function() {
-  return gulp.src('./images/**/*.{jpg,png}')
-    .pipe(gulp.dest('dist/images'));
-});
-
 gulp.task('sass', function() {
   return gulp.src(nativeStyles)
     .pipe($.cached('sass'))
@@ -79,20 +74,16 @@ function dev() {
   });
 }
 
-gulp.task('dev-web', gulp.series(
-  dev
-));
+gulp.task('dev-web', dev);
 
-gulp.task('dev-native', gulp.series(
-  packager
-));
+gulp.task('dev-native', packager);
 
-gulp.task('dev', gulp.series(
+gulp.task('dev', gulp.parallel(
   dev,
   packager
 ));
 
-gulp.task('default', gulp.series(
+gulp.task('default', gulp.parallel(
   dev,
   packager
 ));

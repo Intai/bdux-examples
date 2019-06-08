@@ -1,7 +1,7 @@
 import * as R from 'ramda'
 import React from 'react'
 import Common from '../utils/common-util'
-import { ListView, View, Text } from 'react-native'
+import { FlatList, View, Text } from 'react-native'
 import StopwatchStore from '../stores/stopwatch-store'
 import styles from './laps-style'
 import { createComponent } from 'bdux'
@@ -14,20 +14,6 @@ const getLaps = R.propOr(
   [], 'laps'
 )
 
-const updateDataSource = (dataSource, intervals) => (
-  dataSource.cloneWithRows(intervals,
-    R.reverse(R.range(0, intervals.length)))
-)
-
-const createDataSource = (() => {
-  let dataSource = new ListView.DataSource({
-    rowHasChanged: R.complement(R.identical) })
-
-  return (intervals) => (
-    dataSource = updateDataSource(dataSource, intervals)
-  )
-})()
-
 const accumLapInterval = (timeFrom, timeTo) => (
   [timeTo, timeTo - timeFrom]
 )
@@ -38,42 +24,37 @@ const accumLapIntervals = R.pipe(
       getTimeFrom,
       getLaps
     ]
-  ), R.nth(1)
+  ),
+  R.nth(1),
+  R.reverse
 )
 
-const plusOne = (num) => (
-  parseInt(num, 10) + 1
+const keyExtractor = (interval, index) => (
+  index.toString()
 )
 
-const renderLap = (interval, sectionId, rowId) => (
-  <View
-    key={sectionId + rowId}
-    style={styles.item}
-  >
+const renderLap = R.curry((stopwatch, { item: interval, index }) => (
+  <View style={styles.item}>
     <Text style={styles.index}>
-      {`Lap ${plusOne(rowId)}`}
+      {`Lap ${getLaps(stopwatch).length - index}`}
     </Text>
     <Text style={styles.interval}>
       {Common.formatTimeInterval(interval)}
     </Text>
   </View>
-)
+))
 
-const renderSeparator = (sectionId, rowId) => (
-  <View
-    key={sectionId + rowId}
-    style={styles.separator}
-  />
+const renderSeparator = () => (
+  <View style={styles.separator} />
 )
 
 export const Laps = ({ stopwatch }) => (
   <View style={styles.wrap}>
-    <ListView
-      dataSource={createDataSource(accumLapIntervals(stopwatch))}
-      enableEmptySections
-      renderRow={renderLap}
-      renderSeparator={renderSeparator}
-      showsVerticalScrollIndicator={false}
+    <FlatList
+      data={accumLapIntervals(stopwatch)}
+      ItemSeparatorComponent={renderSeparator}
+      keyExtractor={keyExtractor}
+      renderItem={renderLap(stopwatch)}
       style={styles.list}
     />
   </View>
