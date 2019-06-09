@@ -8,16 +8,7 @@ var gulp = require('gulp'),
     webpackConfig = require('./webpack.config.js'),
     port = process.env.PORT || 8080;
 
-gulp.task('image', function() {
-  return gulp.src('./images/**/*.{jpg,png}')
-    .pipe(gulp.dest('dist/images'));
-});
-
-gulp.task('clean', function () {
-  require('del').sync('dist');
-});
-
-gulp.task('dev-server', function(_callback) {
+function dev() {
   new WebpackDevServer(webpack(webpackConfig), {
     disableHostCheck: true,
     historyApiFallback: true,
@@ -28,12 +19,12 @@ gulp.task('dev-server', function(_callback) {
     if (err) throw new PluginError('webpack-dev-server', err);
     log('[webpack-dev-server]', 'http://localhost:' + port);
   });
-});
+}
 
-gulp.task('dev', [
-  'dev-server'
-]);
+gulp.task('dev', gulp.series(
+  dev
+));
 
-gulp.task('default', [
-  'dev-server'
-]);
+gulp.task('default', gulp.series(
+  dev
+));
