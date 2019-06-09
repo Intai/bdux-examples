@@ -16,7 +16,7 @@
     "baconjs": "^2.0.13",
     "bdux": "^16.8.8",
     "bdux-logger": "^16.2.4",
-    "bdux-timetravel": "file:../../bdux-timetravel/bdux-timetravel-16.8.0.tgz",
+    "bdux-timetravel": "^16.8.0",
     "classnames": "^2.2.6",
     "ejs": "^2.6.1",
     "ramda": "^0.26.1",
