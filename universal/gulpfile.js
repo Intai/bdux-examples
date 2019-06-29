@@ -1,23 +1,14 @@
 /* eslint-env node */
 
 var gulp = require('gulp'),
+    log = require('fancy-log'),
     gls = require('gulp-live-server'),
     webpack = require('webpack'),
     webpackStream = require('webpack-stream'),
     WebpackDevServer = require('webpack-dev-server'),
-    $ = require('gulp-load-plugins')(),
     port = process.env.PORT || 8080;
 
-gulp.task('image', function() {
-  return gulp.src('./images/**/*.{jpg,png}')
-    .pipe(gulp.dest('dist/images'));
-});
-
-gulp.task('clean', function () {
-  require('del').sync('dist');
-});
-
-gulp.task('dev-server', function(_callback) {
+function dev() {
   new WebpackDevServer(webpack(require('./webpack/dev.config.js')), {
     disableHostCheck: true,
     historyApiFallback: true,
@@ -25,46 +16,40 @@ gulp.task('dev-server', function(_callback) {
     hot: true
   })
   .listen(port, '0.0.0.0', function(err) {
-    if (err) throw new $.util.PluginError('webpack-dev-server', err);
-    $.util.log('[webpack-dev-server]', 'http://localhost:' + port);
+    if (err) throw new PluginError('webpack-dev-server', err);
+    log('[webpack-dev-server]', 'http://localhost:' + port);
   });
-});
+}
 
-gulp.task('build-client', function() {
+function buildClient() {
   return gulp.src('app/index.jsx')
     .pipe(webpackStream(require('./webpack/client.config.js'), webpack))
     .pipe(gulp.dest('dist'));
-});
+}
 
-gulp.task('build-server', function() {
+function buildServer() {
   return gulp.src('app/server.js')
     .pipe(webpackStream(require('./webpack/server.config.js'), webpack))
     .pipe(gulp.dest('dist'));
-});
+}
 
-gulp.task('prod-server', function(_callback) {
+function prod() {
   var server = gls('dist/server.js', {
     env: process.env
   }, false);
 
   server.start();
-  $.util.log('[express] http://localhost:' + port);
-});
+  log('[express]', 'http://localhost:' + port);
+}
 
-gulp.task('build', [
-  'build-client',
-  'build-server'
-]);
+const server = gulp.series(
+  buildClient,
+  buildServer,
+  prod
+)
 
-gulp.task('server', $.sequence(
-  'build',
-  'prod-server'
-));
+gulp.task('server', server);
 
-gulp.task('dev', [
-  'dev-server'
-]);
+gulp.task('dev', dev);
 
-gulp.task('default', [
-  'server'
-]);
+gulp.task('default', server);
