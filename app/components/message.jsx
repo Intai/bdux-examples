@@ -2,7 +2,7 @@ import React from 'react';
 import MessageStore from '../stores/message-store';
 import classNames from 'classnames/bind';
 import styles from './message.scss';
-import { createComponent } from 'bdux'
+import { createUseBdux } from 'bdux'
 
 const cssModule = classNames.bind(styles);
 
@@ -12,12 +12,17 @@ const getMessageClass = () => (
   })
 )
 
-export const Message = ({ message }) => (
-  <div className={getMessageClass()}>
-    { message }
-  </div>
-);
-
-export default createComponent(Message, {
+const useBdux = createUseBdux({
   message: MessageStore
-});
+})
+
+export const Message = (props) => {
+  const { state } = useBdux(props)
+  return (
+    <div className={getMessageClass()}>
+      {state.message}
+    </div>
+  )
+}
+
+export default Message

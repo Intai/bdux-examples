@@ -77,11 +77,12 @@ module.exports = {
         test: /\.scss$/,
         use: [
           {
-            loader: 'css-loader/locals',
+            loader: 'css-loader',
             options: {
               modules: true,
               importLoaders: 2,
-              localIdentName: '[name]__[local]___[hash:base64:5]'
+              localIdentName: '[name]__[local]___[hash:base64:5]',
+              exportOnlyLocals: true
             }
           },
           {
