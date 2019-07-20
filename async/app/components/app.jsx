@@ -5,17 +5,20 @@ import CityName from './city-name'
 import CountryCodes from './country-codes'
 import { UniversalStates } from 'bdux-universal'
 import { TimeTravel } from 'bdux-timetravel'
-import { createComponent } from 'bdux'
+import { useBdux } from 'bdux'
 
-export const App = () => (
-  <React.Fragment>
-    <Loading />
-    <CountryCodes />
-    <CityName />
-    <Weather />
-    <UniversalStates />
-    <TimeTravel />
-  </React.Fragment>
-)
+export const App = (props) => {
+  useBdux(props)
+  return (
+    <>
+      <Loading />
+      <CountryCodes />
+      <CityName />
+      <Weather />
+      <UniversalStates />
+      <TimeTravel />
+    </>
+  )
+}
 
-export default createComponent(App)
+export default App

@@ -2,6 +2,7 @@
 
 var gulp = require('gulp'),
     log = require('fancy-log'),
+    PluginError = require('plugin-error'),
     gls = require('gulp-live-server'),
     webpack = require('webpack'),
     webpackStream = require('webpack-stream'),

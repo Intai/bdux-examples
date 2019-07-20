@@ -5,7 +5,7 @@ import * as CountryCodesAction from '../actions/country-codes-action'
 import * as WeatherAction from '../actions/weather-action'
 import classNames from 'classnames/bind'
 import styles from './country-codes.scss'
-import { createComponent } from 'bdux'
+import { createUseBdux } from 'bdux'
 
 const cssModule = classNames.bind(styles)
 
@@ -43,7 +43,7 @@ const getWrapClass = (country) => (
   })
 )
 
-const renderCountryCodes = ({ country, dispatch }) => (
+const renderCountryCodes = (country, dispatch) => (
   <div className={getWrapClass(country)}>
     <label className={styles.label}>
       {'Country'}
@@ -58,16 +58,21 @@ const renderCountryCodes = ({ country, dispatch }) => (
   </div>
 )
 
-export const CountryCodes = ({ country, ...props }) => (
-  renderCountryCodes({
-    ...props,
-    country: isNotEmpty(country) ? country : {}
-  })
-)
-
-export default createComponent(CountryCodes, {
+const useBdux = createUseBdux({
   country: CountryCodesStore
 },
 // initialise country codes,
 // select new zealand by default.
 CountryCodesAction.init)
+
+export const CountryCodes = (props) => {
+  const { state, dispatch } = useBdux(props)
+  return (
+    renderCountryCodes(
+      isNotEmpty(state.country) ? state.country : {},
+      dispatch
+    )
+  )
+}
+
+export default CountryCodes

@@ -5,7 +5,7 @@ import WeatherStore from '../stores/weather-store'
 import * as WeatherAction from '../actions/weather-action'
 import classNames from 'classnames/bind'
 import styles from './weather.scss'
-import { createComponent } from 'bdux'
+import { createUseBdux } from 'bdux'
 
 const cssModule = classNames.bind(styles)
 
@@ -99,7 +99,7 @@ const getUnitsClass = (selected, units) => (
 )
 
 const renderTemperatureUnit = ({ units }, dispatch) => (
-  <React.Fragment>
+  <>
     <a
       className={getUnitsClass('metric', units)}
       onClick={switchToMetric(dispatch)}
@@ -115,7 +115,7 @@ const renderTemperatureUnit = ({ units }, dispatch) => (
     >
       {'°F'}
     </a>
-  </React.Fragment>
+  </>
 )
 
 const renderCloudiness = R.pipe(
@@ -161,7 +161,7 @@ const getWeatherClass = (weather) => (
   })
 )
 
-const renderWeather = ({ weather, dispatch }) => (
+const renderWeather = (weather, dispatch) => (
   hasCurrent(weather) && (
     <div className={getWeatherClass(weather)}>
       <div className={styles.temperature}>
@@ -177,21 +177,24 @@ const renderWeather = ({ weather, dispatch }) => (
   )
 )
 
-export const Weather = (props) => {
-  const { weather } = props
-  return (
-    <div className={styles.wrap}>
-      <span className={styles.city}>
-        {getTitle(weather)}
-      </span>
-      {renderWeather(props)}
-    </div>
-  )
-}
-
-export default createComponent(Weather, {
+const useBdux = createUseBdux({
   country: CountryCodesStore,
   weather: WeatherStore
 },
 // auckland by default.
 WeatherAction.init)
+
+export const Weather = (props) => {
+  const { state, dispatch } = useBdux(props)
+  const { weather } = state
+  return (
+    <div className={styles.wrap}>
+      <span className={styles.city}>
+        {getTitle(weather)}
+      </span>
+      {renderWeather(weather, dispatch)}
+    </div>
+  )
+}
+
+export default Weather
