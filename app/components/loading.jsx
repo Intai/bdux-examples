@@ -2,11 +2,11 @@ import React from 'react'
 import LoadingStore from '../stores/loading-store'
 import classNames from 'classnames/bind'
 import styles from './loading.scss'
-import { createComponent } from 'bdux'
+import { createUseBdux } from 'bdux'
 
 const cssModule = classNames.bind(styles)
 
-const getSpinnerClass = ({ loading }) => (
+const getSpinnerClass = (loading) => (
   cssModule({
     loading,
     spinner: true,
@@ -14,12 +14,17 @@ const getSpinnerClass = ({ loading }) => (
   })
 )
 
-export const Loading = (props) => (
-  <div className={styles.wrap}>
-    <div className={getSpinnerClass(props)} />
-  </div>
-)
-
-export default createComponent(Loading, {
+const useBdux = createUseBdux({
   loading: LoadingStore
 })
+
+export const Loading = (props) => {
+  const { state } = useBdux(props)
+  return (
+    <div className={styles.wrap}>
+      <div className={getSpinnerClass(state.loading)} />
+    </div>
+  )
+}
+
+export default Loading

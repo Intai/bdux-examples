@@ -4,17 +4,17 @@ import CountryCodesStore from '../stores/country-codes-store'
 import WeatherStore from '../stores/weather-store'
 import * as WeatherAction from '../actions/weather-action'
 import styles from './city-name.scss'
-import { createComponent } from 'bdux'
+import { createUseBdux } from 'bdux'
 
-const handleChange = ({ dispatch }) => (event) => {
+const handleChange = (dispatch) => (event) => {
   dispatch(WeatherAction.setCity(event.target.value))
 }
 
-const handleFocus = ({ dispatch }) => () => {
+const handleFocus = (dispatch) => () => {
   dispatch(WeatherAction.setFocus(false))
 }
 
-const handleBlur = ({ dispatch }) => () => {
+const handleBlur = (dispatch) => () => {
   dispatch(WeatherAction.setFocus(true))
 }
 
@@ -23,12 +23,12 @@ const hasCountryAndWeather = ({ country, weather }) => (
   weather && weather.city
 )
 
-const onSearch = (props) => (event) => {
-  if (hasCountryAndWeather(props)) {
-    props.dispatch(
+const onSearch = (state, dispatch) => (event) => {
+  if (hasCountryAndWeather(state)) {
+    dispatch(
       WeatherAction.searchWeather(
-        props.country.selected,
-        props.weather.city
+        state.country.selected,
+        state.weather.city
       )
     )
   }
@@ -40,32 +40,37 @@ const getCity = R.pathOr(
   '', ['weather', 'city']
 )
 
-export const CityName = (props) => (
-  <form
-    className={styles.wrap}
-    onSubmit={onSearch(props)}
-  >
-    <label className={styles.label}>
-      {'City'}
-    </label>
-    <input
-      className={styles.input}
-      onBlur={handleBlur(props)}
-      onChange={handleChange(props)}
-      onFocus={handleFocus(props)}
-      type="text"
-      value={getCity(props)}
-    />
-    <button
-      className={styles.button}
-      type="submit"
-    >
-      {'Go'}
-    </button>
-  </form>
-)
-
-export default createComponent(CityName, {
+const useBdux = createUseBdux({
   country: CountryCodesStore,
   weather: WeatherStore
 })
+
+export const CityName = (props) => {
+  const { state, dispatch } = useBdux(props)
+  return (
+    <form
+      className={styles.wrap}
+      onSubmit={onSearch(state, dispatch)}
+    >
+      <label className={styles.label}>
+        {'City'}
+      </label>
+      <input
+        className={styles.input}
+        onBlur={handleBlur(dispatch)}
+        onChange={handleChange(dispatch)}
+        onFocus={handleFocus(dispatch)}
+        type="text"
+        value={getCity(state)}
+      />
+      <button
+        className={styles.button}
+        type="submit"
+      >
+        {'Go'}
+      </button>
+    </form>
+  )
+}
+
+export default CityName

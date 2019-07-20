@@ -7,24 +7,14 @@ var gulp = require('gulp'),
     webpack = require('webpack'),
     webpackStream = require('webpack-stream'),
     WebpackDevServer = require('webpack-dev-server'),
-    $ = require('gulp-load-plugins')(),
     port = process.env.PORT || 8080;
 
-gulp.task('image', function() {
-  return gulp.src('./images/**/*.{jpg,png}')
-    .pipe(gulp.dest('dist/images'));
-});
-
-gulp.task('font', function() {
+function font () {
   return gulp.src('./fonts/**/*.{eot,otf,svg,ttf,woff,woff2,css}')
     .pipe(gulp.dest('dist/fonts'));
-});
+}
 
-gulp.task('clean', function () {
-  require('del').sync('dist');
-});
-
-gulp.task('dev-server', function(_callback) {
+function dev() {
   new WebpackDevServer(webpack(require('./webpack/dev.config.js')), {
     disableHostCheck: true,
     historyApiFallback: true,
@@ -35,46 +25,41 @@ gulp.task('dev-server', function(_callback) {
     if (err) throw new PluginError('webpack-dev-server', err);
     log('[webpack-dev-server]', 'http://localhost:' + port);
   });
-});
+}
 
-gulp.task('build-client', function() {
+function buildClient() {
   return gulp.src('app/index.jsx')
-    .pipe(webpackStream(require('./webpack/client.config.js')))
+    .pipe(webpackStream(require('./webpack/client.config.js'), webpack))
     .pipe(gulp.dest('dist'));
-});
+}
 
-gulp.task('build-server', function() {
+function buildServer() {
   return gulp.src('app/server.js')
-    .pipe(webpackStream(require('./webpack/server.config.js')))
+    .pipe(webpackStream(require('./webpack/server.config.js'), webpack))
     .pipe(gulp.dest('dist'));
-});
+}
 
-gulp.task('prod-server', function(_callback) {
+function prod() {
   var server = gls('dist/server.js', {
     env: process.env
   }, false);
 
   server.start();
-  log('[express] http://localhost:' + port);
-});
+  log('[express]', 'http://localhost:' + port);
+}
 
-gulp.task('build', $.sequence(
-  'font', [
-    'build-client',
-    'build-server'
-  ]
+const server = gulp.series(
+  font,
+  buildClient,
+  buildServer,
+  prod
+)
+
+gulp.task('server', server);
+
+gulp.task('dev', gulp.series(
+  font,
+  dev
 ));
 
-gulp.task('server', $.sequence(
-  'build',
-  'prod-server'
-));
-
-gulp.task('dev', $.sequence(
-  'font',
-  'dev-server'
-));
-
-gulp.task('default', [
-  'server'
-]);
+gulp.task('default', server);
