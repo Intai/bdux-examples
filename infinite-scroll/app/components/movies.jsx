@@ -5,9 +5,8 @@ import MoviesStore from '../stores/movies-store'
 import styled from 'styled-components'
 import { textGrey } from './color'
 import { fontSans } from './typography'
-import { pureRender } from './decorators/pure-render'
-import { scrollInfinite } from './decorators/scroll-infinite'
-import { createComponent } from 'bdux'
+import { useScrollInfinite } from './decorators/scroll-infinite'
+import { createUseBdux } from 'bdux'
 
 const Container = styled.div`
   ${fontSans}
@@ -44,16 +43,16 @@ const getTop = R.propOr(
   0, 'top'
 )
 
-const renderMovie = R.curry((refItems, index, offset) => (
+const renderMovie = R.curry((refItems, index) => (
   <Movie
     index={index}
     key={index}
-    refItems={refItems(offset)}
+    refItem={refItems(index)}
   />
 ))
 
 const renderMoviesByIndices = (indices, refItems) => (
-  R.addIndex(R.map)(renderMovie(refItems), indices)
+  R.map(renderMovie(refItems), indices)
 )
 
 const renderMovies = R.useWith(
@@ -63,25 +62,26 @@ const renderMovies = R.useWith(
   ]
 )
 
-export const Movies = ({ movies, refList, refItems }) => (
-  <Container
-    data-scroll-id={getScrollId(movies)}
-    data-scroll-top={getScrollTop(movies)}
-    innerRef={refList}
-  >
-    <Padding top={getTop(movies)} />
-    <List>
-      {renderMovies(movies, refItems)}
-    </List>
-  </Container>
-)
+const useBdux = createUseBdux({
+  movies: MoviesStore,
+})
 
-const decorate = R.pipe(
-  scrollInfinite,
-  pureRender,
-  createComponent({
-    movies: MoviesStore
-  })
-)
+export const Movies = (props) => {
+  const { state } = useBdux(props)
+  const { refList, refItems } = useScrollInfinite(props)
+  const { movies } = state
+  return (
+    <Container
+      data-scroll-id={getScrollId(movies)}
+      data-scroll-top={getScrollTop(movies)}
+      ref={refList}
+    >
+      <Padding top={getTop(movies)} />
+      <List>
+        {renderMovies(movies, refItems)}
+      </List>
+    </Container>
+  )
+}
 
-export default decorate(Movies)
+export default React.memo(Movies)

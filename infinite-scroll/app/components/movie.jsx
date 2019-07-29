@@ -7,8 +7,7 @@ import Multiline from './multiline'
 import styled from 'styled-components'
 import { textOffGrey, backgroundOffWhite } from './color'
 import { fontSmall } from './typography'
-import { pureRender } from './decorators/pure-render'
-import { createComponent } from 'bdux'
+import { createUseBdux } from 'bdux'
 
 const Item = styled.li`
   padding-top: 10px;
@@ -21,8 +20,10 @@ const ItemInner = styled.div`
 `
 
 const Image = styled.img`
+  width: 66px;
   height: 100%;
   float: left;
+  object-fit: cover;
 `
 
 const Details = styled.div`
@@ -87,8 +88,8 @@ const hasBaseUrl = R.pathOr(
   false, ['images', 'secure_base_url']
 )
 
-const hasImage = (movie) => (
-  !!movie.poster_path
+const hasImage = R.propOr(
+  false, 'poster_path'
 )
 
 const renderImage = (config, movie) => (
@@ -140,27 +141,25 @@ const renderDetails = (movie) => (
   </Details>
 )
 
-export const Movie = ({ refItems, config, movie }) => (
-  R.is(Object, movie) && (
-    <Item innerRef={refItems}>
+const useBdux = createUseBdux({
+  config: ConfigStore,
+  movie: MovieStore,
+},
+// load the movie details.
+MovieAction.load)
+
+export const Movie = (props) => {
+  const { state } = useBdux(props)
+  const { config, movie } = state
+  const { refItem } = props
+  return (
+    <Item ref={refItem}>
       <ItemInner>
         {renderImage(config, movie)}
-        {renderDetails(movie)}
+        {renderDetails(movie || {})}
       </ItemInner>
     </Item>
   )
-)
+}
 
-const decorate = R.pipe(
-  pureRender,
-  createComponent(
-    {
-      config: ConfigStore,
-      movie: MovieStore
-    },
-    // load the movie details.
-    MovieAction.load
-  )
-)
-
-export default decorate(Movie)
+export default React.memo(Movie)

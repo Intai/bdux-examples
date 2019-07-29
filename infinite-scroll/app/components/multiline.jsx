@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { createComponent } from 'bdux'
+import { useBdux } from 'bdux'
 
 const Lines = styled.div`
   max-height: ${({ rows }) => rows * 1.2}em;
@@ -30,10 +30,14 @@ const Lines = styled.div`
   }
 `
 
-export const Multiline = ({ rows, children }) => (
-  <Lines rows={rows}>
-    {children}
-  </Lines>
-)
+export const Multiline = (props) => {
+  useBdux(props)
+  const { rows, children } = props
+  return (
+    <Lines rows={rows}>
+      {children}
+    </Lines>
+  )
+}
 
-export default createComponent(Multiline)
+export default Multiline

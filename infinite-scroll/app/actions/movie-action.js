@@ -29,7 +29,7 @@ const createMovie = R.curry((index, offset, data) => ({
   index
 }))
 
-const createPageStream = R.memoize((page) => {
+const createPageStream = R.memoizeWith(R.identity, (page) => {
   const params = {
     page,
     sort_by: 'popularity.desc',
@@ -50,6 +50,7 @@ const createPageStream = R.memoize((page) => {
 const createMovieStreamByPage = (index, page, offset) => (
   createPageStream(page)
     .map(createMovie(index, offset))
+    .toEventStream()
     .first()
 )
 
