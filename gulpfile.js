@@ -8,7 +8,7 @@ var gulp = require('gulp'),
     webpackConfig = require('./webpack.config.js'),
     port = process.env.PORT || 8080;
 
-gulp.task('dev-server', function(_callback) {
+function dev() {
   new WebpackDevServer(webpack(webpackConfig), {
     disableHostCheck: true,
     historyApiFallback: true,
@@ -19,12 +19,8 @@ gulp.task('dev-server', function(_callback) {
     if (err) throw new PluginError('webpack-dev-server', err);
     log('[webpack-dev-server]', 'http://localhost:' + port);
   });
-});
+}
 
-gulp.task('dev', [
-  'dev-server'
-]);
+gulp.task('dev', dev);
 
-gulp.task('default', [
-  'dev-server'
-]);
+gulp.task('default', dev);

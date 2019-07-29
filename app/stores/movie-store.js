@@ -26,8 +26,13 @@ const isIndexMatch = R.converge(
   ]
 )
 
+const isStateEmpty = R.propSatisfies(
+  R.either(R.isNil, R.isEmpty), 'state'
+)
+
 const isMovieLoad = R.allPass([
   isAction(ActionTypes.MOVIE_LOAD),
+  isStateEmpty,
   isIndexMatch,
 ])
 

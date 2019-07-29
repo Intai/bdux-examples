@@ -1,12 +1,8 @@
 import * as R from 'ramda'
-import React from 'react'
-
-const getDisplayName = (Component) => (
-  Component.displayName || Component.name || 'Component'
-)
+import { useMemo, useEffect } from 'react'
 
 const whenReady = requestAnimationFrame
-  || (func => setTimeout(func, 0));
+  || (func => setTimeout(func, 0))
 
 const hasOnUpdate = R.propIs(
   Function, 'onUpdate'
@@ -49,7 +45,7 @@ const setItem = R.ifElse(
 const memoizeProp = (propName, func) => {
   const propArray = []
   return (args) => {
-    const prop = args[propName];
+    const prop = args[propName]
     if (propArray.indexOf(prop) < 0) {
       propArray.push(prop)
       func(args)
@@ -57,9 +53,8 @@ const memoizeProp = (propName, func) => {
   }
 }
 
-const bindScrollEventOnList = memoizeProp('list', (component) => {
-  component.list.addEventListener('scroll',
-    R.bind(component.scrollToItems, component))
+const bindScrollEventOnList = memoizeProp('list', ({ list, scrollToCurrItems }) => {
+  list.addEventListener('scroll', scrollToCurrItems)
 })
 
 const mergeProp = (func) => R.converge(
@@ -228,52 +223,51 @@ const scrollToItems = throttle(R.when(
   )
 ))
 
-export const scrollInfinite = (Component = R.F) => (
-  class extends React.Component {
-    static displayName = getDisplayName(Component)
-    static defaultProps = {}
-    state = {}
-
-    componentDidMount() {
-      this.scrollToItems()
+export const useScrollInfinite = (props) => {
+  const refs = useMemo(() => {
+    const current = {
+      list: null,
+      items: [],
     }
 
-    skipDuplicates = createSkipDuplicates()
-    scrollToDataAttrs = createScrollToDataAttrs()
-    items = []
-
-    scrollToItems(e) {
-      scrollToItems(
-        R.mergeAll([
-          R.objOf('scrollEvent', e),
-          R.pick(['list', 'items', 'skipDuplicates', 'scrollToDataAttrs'], this),
-          R.pick(['onUpdate'], this.props)
-        ])
-      )
+    const skipDuplicates = createSkipDuplicates()
+    const scrollToDataAttrs = createScrollToDataAttrs()
+    const scrollToCurrItems = (e) => {
+      scrollToItems({
+        skipDuplicates,
+        scrollToDataAttrs,
+        scrollEvent: e,
+        list: current.list,
+        items: current.items,
+        onUpdate: props.onUpdate,
+      })
     }
 
-    setList(node) {
-      this.list = node
-      if (node) {
-        whenReady(this.scrollToItems.bind(this, null))
-        bindScrollEventOnList(this)
-      }
+    return {
+      current,
+      scrollToCurrItems,
+      refList: node => {
+        current.list = node
+        if (node) {
+          whenReady(() => scrollToCurrItems())
+          bindScrollEventOnList({
+            list: node,
+            scrollToCurrItems,
+          })
+        }
+      },
+      refItems: R.memoizeWith(R.identity, index => node => {
+        current.items = setItem(index, node, current.items)
+        if (node) {
+          whenReady(() => scrollToCurrItems())
+        }
+      }),
     }
+  }, [])
 
-    setItem(index, node) {
-      this.items = setItem(index, node, this.items)
-      if (node) {
-        whenReady(this.scrollToItems.bind(this, null))
-      }
-    }
+  useEffect(() => {
+    refs.scrollToCurrItems()
+  }, [])
 
-    render() {
-      return React.createElement(
-        Component, R.merge(this.props, {
-          refList: node => this.setList(node),
-          refItems: index => node => this.setItem(index, node)
-        })
-      )
-    }
-  }
-)
+  return refs
+}
