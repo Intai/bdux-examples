@@ -60,10 +60,11 @@ const renderCountryCodes = (country, dispatch) => (
 
 const useBdux = createUseBdux({
   country: CountryCodesStore
-},
-// initialise country codes,
-// select new zealand by default.
-CountryCodesAction.init)
+}, [
+  // initialise country codes,
+  // select new zealand by default.
+  CountryCodesAction.init
+])
 
 export const CountryCodes = (props) => {
   const { state, dispatch } = useBdux(props)

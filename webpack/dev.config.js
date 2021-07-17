@@ -61,10 +61,11 @@ module.exports = {
           {
             loader: 'postcss-loader',
             options: {
-              ident: 'postcss',
-              plugins: [
-                autoprefixer
-              ]
+              postcssOptions: {
+                plugins: [
+                  autoprefixer
+                ]
+              }
             }
           },
           'sass-loader'

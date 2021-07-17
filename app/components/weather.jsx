@@ -180,9 +180,10 @@ const renderWeather = (weather, dispatch) => (
 const useBdux = createUseBdux({
   country: CountryCodesStore,
   weather: WeatherStore
-},
-// auckland by default.
-WeatherAction.init)
+}, [
+  // auckland by default.
+  WeatherAction.init
+])
 
 export const Weather = (props) => {
   const { state, dispatch } = useBdux(props)

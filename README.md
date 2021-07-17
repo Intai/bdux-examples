@@ -12,7 +12,7 @@ gulp server
 open http://localhost:8080
 ```
 
-[![Deploy to Docker Cloud](https://files.cloud.docker.com/images/deploy-to-dockercloud.svg)](https://hub.docker.com/r/intai/bdux-example-async/)
+[![Run on Google Cloud](https://deploy.cloud.run/button.svg)](https://deploy.cloud.run?git_repo=https://github.com/Intai/bdux-examples&dir=async)
 
 ```
 git clone https://github.com/Intai/bdux-examples.git
