@@ -80,19 +80,20 @@ module.exports = {
             loader: 'css-loader',
             options: {
               modules: {
-                localIdentName: '[name]__[local]___[hash:base64:5]'
+                localIdentName: '[name]__[local]___[hash:base64:5]',
+                exportOnlyLocals: true
               },
-              importLoaders: 2,
-              onlyLocals: true
+              importLoaders: 2
             }
           },
           {
             loader: 'postcss-loader',
             options: {
-              ident: 'postcss',
-              plugins: [
-                autoprefixer
-              ]
+              postcssOptions: {
+                plugins: [
+                  autoprefixer
+                ]
+              }
             }
           },
           'sass-loader'

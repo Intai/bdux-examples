@@ -1,5 +1,5 @@
 import * as R from 'ramda'
-import Bacon from 'baconjs'
+import * as Bacon from 'baconjs'
 import fetch from 'isomorphic-fetch'
 import uriTemplates from 'uri-templates'
 import Common from '../utils/common-util'
@@ -125,7 +125,7 @@ const hasCurrent = R.pipe(
 const shouldInit = R.complement(R.allPass([
   isDefaultCountry,
   isDefaultCity,
-  hasCurrent
+  hasCurrent,
 ]))
 
 const setDefaultCity = R.partial(

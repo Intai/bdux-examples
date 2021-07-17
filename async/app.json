@@ -1,5 +1,5 @@
 {
-  "name": "Bdux Example - Async",
+  "name": "bdux-example-async",
   "description": "Development",
   "repository": "https://github.com/Intai/bdux-examples/tree/async",
   "env": {

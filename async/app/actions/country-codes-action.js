@@ -1,5 +1,5 @@
 import * as R from 'ramda'
-import Bacon from 'baconjs'
+import * as Bacon from 'baconjs'
 import fetch from 'isomorphic-fetch'
 import ActionTypes from './action-types'
 

@@ -1,6 +1,6 @@
 import * as R from 'ramda'
 import React from 'react'
-import Bacon from 'baconjs'
+import * as Bacon from 'baconjs'
 import App from '../components/app'
 import * as WeatherAction from '../actions/weather-action'
 import WeatherStore from '../stores/weather-store'
