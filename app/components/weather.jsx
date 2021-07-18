@@ -188,8 +188,8 @@ const useBdux = createUseBdux({
 export const Weather = (props) => {
   const { state, dispatch } = useBdux(props)
   const { weather } = state
-  const handleMetricClick = useMemo(() => switchToMetric(dispatch), [])
-  const handleImperialClick = useMemo(() => switchToImperial(dispatch), [])
+  const handleMetricClick = useMemo(() => switchToMetric(dispatch), [dispatch])
+  const handleImperialClick = useMemo(() => switchToImperial(dispatch), [dispatch])
 
   return (
     <div className={styles.wrap}>

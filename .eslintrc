@@ -19,6 +19,7 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
     "plugin:jsx-a11y/recommended"
   ],
   "settings": {
@@ -33,14 +34,18 @@
       "argsIgnorePattern": "^_"
     }],
     "jsx-quotes": 1,
+    "jsx-a11y/no-onchange": 0,
     "react/prop-types": 0,
+    "react/no-multi-comp": [1, {
+      "ignoreStateless": true
+    }],
     "react/jsx-indent": [2, 2],
     "react/jsx-indent-props": [2, 2],
     "react/jsx-sort-props": [1, {
       "callbacksLast": true
     }],
-    "react/no-multi-comp": [1, {
-      "ignoreStateless": true
+    "react-hooks/exhaustive-deps": [1, {
+      "enableDangerousAutofixThisMayCauseInfiniteLoops": true
     }]
   }
 }
