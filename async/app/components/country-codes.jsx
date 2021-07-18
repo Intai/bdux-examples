@@ -1,5 +1,5 @@
 import * as R from 'ramda'
-import React from 'react'
+import React, { useMemo } from 'react'
 import CountryCodesStore from '../stores/country-codes-store'
 import * as CountryCodesAction from '../actions/country-codes-action'
 import * as WeatherAction from '../actions/weather-action'
@@ -43,21 +43,6 @@ const getWrapClass = (country) => (
   })
 )
 
-const renderCountryCodes = (country, dispatch) => (
-  <div className={getWrapClass(country)}>
-    <label className={styles.label}>
-      {'Country'}
-    </label>
-    <select
-      className={styles.select}
-      onChange={handleChange(dispatch)}
-      value={country.selected}
-    >
-      {renderOptions(country.codes)}
-    </select>
-  </div>
-)
-
 const useBdux = createUseBdux({
   country: CountryCodesStore
 }, [
@@ -68,11 +53,22 @@ const useBdux = createUseBdux({
 
 export const CountryCodes = (props) => {
   const { state, dispatch } = useBdux(props)
+  const country = isNotEmpty(state.country) ? state.country : {}
+  const handleChangeCb = useMemo(() => handleChange(dispatch), [])
+
   return (
-    renderCountryCodes(
-      isNotEmpty(state.country) ? state.country : {},
-      dispatch
-    )
+    <div className={getWrapClass(country)}>
+      <label className={styles.label}>
+        {'Country'}
+      </label>
+      <select
+        className={styles.select}
+        value={country.selected}
+        onBlur={handleChangeCb}
+      >
+        {renderOptions(country.codes)}
+      </select>
+    </div>
   )
 }
 
