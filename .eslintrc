@@ -18,7 +18,8 @@
   ],
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "plugin:jsx-a11y/recommended"
   ],
   "settings": {
     "react": {
@@ -35,6 +36,9 @@
     "react/prop-types": 0,
     "react/jsx-indent": [2, 2],
     "react/jsx-indent-props": [2, 2],
+    "react/jsx-sort-props": [1, {
+      "callbacksLast": true
+    }],
     "react/no-multi-comp": [1, {
       "ignoreStateless": true
     }]

@@ -1,5 +1,5 @@
 import * as R from 'ramda'
-import React from 'react'
+import React, { useMemo } from 'react'
 import CountryCodesStore from '../stores/country-codes-store'
 import WeatherStore from '../stores/weather-store'
 import * as WeatherAction from '../actions/weather-action'
@@ -18,21 +18,16 @@ const handleBlur = (dispatch) => () => {
   dispatch(WeatherAction.setFocus(true))
 }
 
-const hasCountryAndWeather = ({ country, weather }) => (
-  country && country.selected &&
-  weather && weather.city
-)
-
-const onSearch = (state, dispatch) => (event) => {
-  if (hasCountryAndWeather(state)) {
+const handleSearch = (country, weather, dispatch) => (event) => {
+  if (country && weather
+    && country.selected && weather.city) {
     dispatch(
       WeatherAction.searchWeather(
-        state.country.selected,
-        state.weather.city
+        country.selected,
+        weather.city
       )
     )
   }
-
   event.preventDefault()
 }
 
@@ -45,23 +40,29 @@ const useBdux = createUseBdux({
   weather: WeatherStore
 })
 
-export const CityName = (props) => {
+export function CityName(props) {
   const { state, dispatch } = useBdux(props)
+  const { country, weather } = state
+  const handleSearchCb = useMemo(() => handleSearch(country, weather, dispatch), [])
+  const handleBlurCb = useMemo(() => handleBlur(dispatch), [])
+  const handleChangeCb = useMemo(() => handleChange(dispatch), [])
+  const handleFocusCb = useMemo(() => handleFocus(dispatch), [])
+
   return (
     <form
       className={styles.wrap}
-      onSubmit={onSearch(state, dispatch)}
+      onSubmit={handleSearchCb}
     >
       <label className={styles.label}>
         {'City'}
       </label>
       <input
         className={styles.input}
-        onBlur={handleBlur(dispatch)}
-        onChange={handleChange(dispatch)}
-        onFocus={handleFocus(dispatch)}
         type="text"
         value={getCity(state)}
+        onBlur={handleBlurCb}
+        onChange={handleChangeCb}
+        onFocus={handleFocusCb}
       />
       <button
         className={styles.button}

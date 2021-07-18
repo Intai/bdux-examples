@@ -20,9 +20,11 @@ const useBdux = createUseBdux({
 
 export const Loading = (props) => {
   const { state } = useBdux(props)
+  const { loading } = state
+
   return (
     <div className={styles.wrap}>
-      <div className={getSpinnerClass(state.loading)} />
+      <div className={getSpinnerClass(loading)} />
     </div>
   )
 }

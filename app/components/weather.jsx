@@ -1,5 +1,5 @@
 import * as R from 'ramda'
-import React from 'react'
+import React, { useMemo } from 'react'
 import CountryCodesStore from '../stores/country-codes-store'
 import WeatherStore from '../stores/weather-store'
 import * as WeatherAction from '../actions/weather-action'
@@ -98,23 +98,23 @@ const getUnitsClass = (selected, units) => (
   })
 )
 
-const renderTemperatureUnit = ({ units }, dispatch) => (
+const renderTemperatureUnit = ({ units }, handleMetricClick, handleImperialClick) => (
   <>
-    <a
+    <button
       className={getUnitsClass('metric', units)}
-      onClick={switchToMetric(dispatch)}
+      onClick={handleMetricClick}
     >
       {'°C'}
-    </a>
+    </button>
     <span className={styles.separator}>
       {'|'}
     </span>
-    <a
+    <button
       className={getUnitsClass('imperial', units)}
-      onClick={switchToImperial(dispatch)}
+      onClick={handleImperialClick}
     >
       {'°F'}
-    </a>
+    </button>
   </>
 )
 
@@ -161,12 +161,12 @@ const getWeatherClass = (weather) => (
   })
 )
 
-const renderWeather = (weather, dispatch) => (
+const renderWeather = (weather, handleMetricClick, handleImperialClick) => (
   hasCurrent(weather) && (
     <div className={getWeatherClass(weather)}>
       <div className={styles.temperature}>
         {renderTemperature(weather)}
-        {renderTemperatureUnit(weather, dispatch)}
+        {renderTemperatureUnit(weather, handleMetricClick, handleImperialClick)}
       </div>
       <div className={styles.details}>
         {renderCloudiness(weather)}
@@ -188,12 +188,15 @@ const useBdux = createUseBdux({
 export const Weather = (props) => {
   const { state, dispatch } = useBdux(props)
   const { weather } = state
+  const handleMetricClick = useMemo(() => switchToMetric(dispatch), [])
+  const handleImperialClick = useMemo(() => switchToImperial(dispatch), [])
+
   return (
     <div className={styles.wrap}>
       <span className={styles.city}>
         {getTitle(weather)}
       </span>
-      {renderWeather(weather, dispatch)}
+      {renderWeather(weather, handleMetricClick, handleImperialClick)}
     </div>
   )
 }
