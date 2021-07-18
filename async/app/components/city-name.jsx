@@ -43,10 +43,10 @@ const useBdux = createUseBdux({
 export function CityName(props) {
   const { state, dispatch } = useBdux(props)
   const { country, weather } = state
-  const handleSearchCb = useMemo(() => handleSearch(country, weather, dispatch), [])
-  const handleBlurCb = useMemo(() => handleBlur(dispatch), [])
-  const handleChangeCb = useMemo(() => handleChange(dispatch), [])
-  const handleFocusCb = useMemo(() => handleFocus(dispatch), [])
+  const handleSearchCb = useMemo(() => handleSearch(country, weather, dispatch), [country, dispatch, weather])
+  const handleBlurCb = useMemo(() => handleBlur(dispatch), [dispatch])
+  const handleChangeCb = useMemo(() => handleChange(dispatch), [dispatch])
+  const handleFocusCb = useMemo(() => handleFocus(dispatch), [dispatch])
 
   return (
     <form

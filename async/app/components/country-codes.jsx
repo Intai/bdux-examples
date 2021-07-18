@@ -54,7 +54,7 @@ const useBdux = createUseBdux({
 export const CountryCodes = (props) => {
   const { state, dispatch } = useBdux(props)
   const country = isNotEmpty(state.country) ? state.country : {}
-  const handleChangeCb = useMemo(() => handleChange(dispatch), [])
+  const handleChangeCb = useMemo(() => handleChange(dispatch), [dispatch])
 
   return (
     <div className={getWrapClass(country)}>
@@ -64,7 +64,7 @@ export const CountryCodes = (props) => {
       <select
         className={styles.select}
         value={country.selected}
-        onBlur={handleChangeCb}
+        onChange={handleChangeCb}
       >
         {renderOptions(country.codes)}
       </select>
