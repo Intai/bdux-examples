@@ -1,4 +1,4 @@
-import * as R from 'ramda'
+import { reduce } from 'ramda'
 
 const PREFIX = 'CD'
 
@@ -15,7 +15,7 @@ export default {
 
   // map an array of strings to
   // object keys and prefixed values.
-  createObjOfConsts: R.reduce(
+  createObjOfConsts: reduce(
     mapToKeyValue, {}
   )
 }

@@ -1,5 +1,5 @@
 {
-  "name": "Bdux Example - Countdown",
+  "name": "bdux-example-countdown",
   "description": "Development",
   "repository": "https://github.com/Intai/bdux-examples/tree/countdown",
   "env": {
@@ -8,9 +8,6 @@
     },
     "NODE_ENV": {
       "value": "development"
-    },
-    "PORT": {
-      "value": "8080"
     }
   }
 }

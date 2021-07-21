@@ -1,10 +1,9 @@
-import * as R from 'ramda'
-import React from 'react'
+import React, { useRef, useMemo, useEffect } from 'react'
 import * as MathAction from '../actions/math-challenge-action'
 import ChallengeStore from '../stores/math-challenge-store'
 import classNames from 'classnames/bind'
 import styles from './math-answer.scss'
-import { createComponent } from 'bdux'
+import { createUseBdux } from 'bdux'
 
 const cssModule = classNames.bind(styles)
 
@@ -28,30 +27,38 @@ const getFormClass = (challenge) => (
   })
 )
 
-const renderAnswer = ({ challenge, dispatch }) => (
-  <form
-    className={getFormClass(challenge)}
-    onSubmit={handleSubmit(dispatch, challenge.pass)}
-  >
-    <input
-      autoFocus
-      className={styles.input}
-      onChange={handleChange(dispatch)}
-      type="text"
-      value={challenge.answer}
-    />
-  </form>
-)
-
-export const MathAnswer = R.ifElse(
-  // if it's an object.
-  R.propIs(Object, 'challenge'),
-  // render the answer field.
-  renderAnswer,
-  // otherwise, render nothing.
-  R.F
-)
-
-export default createComponent(MathAnswer, {
-  challenge: ChallengeStore
+const useBdux = createUseBdux({
+  challenge: ChallengeStore,
 })
+
+const MathAnswer = (props) => {
+  const { state, dispatch } = useBdux(props)
+  const { challenge } = state
+  const inputRef = useRef()
+  const handleSubmitCb = useMemo(() => handleSubmit(dispatch, challenge.pass), [challenge.pass, dispatch])
+  const handleChangeCb = useMemo(() => handleChange(dispatch), [dispatch])
+
+  useEffect(() => {
+    const { current: input } = inputRef
+    if (input) {
+      input.focus()
+    }
+  }, [])
+
+  return challenge && (
+    <form
+      className={getFormClass(challenge)}
+      onSubmit={handleSubmitCb}
+    >
+      <input
+        className={styles.input}
+        ref={inputRef}
+        type="text"
+        value={challenge.answer}
+        onChange={handleChangeCb}
+      />
+    </form>
+  )
+}
+
+export default React.memo(MathAnswer)

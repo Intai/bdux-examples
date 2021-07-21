@@ -1,4 +1,4 @@
-import * as R from 'ramda'
+import { converge, join } from 'ramda'
 import ActionTypes from './action-types'
 
 const OPERATORS = ['+', '-', '*']
@@ -13,10 +13,10 @@ const createOperator = () => (
 )
 
 const joinArgs = (...args) => (
-  R.join('', args)
+  join('', args)
 )
 
-const createOperation = R.converge(
+const createOperation = converge(
   joinArgs, [
     createOperand,
     createOperator,

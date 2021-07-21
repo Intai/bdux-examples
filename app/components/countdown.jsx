@@ -1,9 +1,9 @@
-import * as R from 'ramda'
+import { is } from 'ramda'
 import React from 'react'
 import * as CountDownAction from '../actions/countdown-action'
 import CountDownStore from '../stores/countdown-store'
 import styles from './countdown.scss'
-import { createComponent } from 'bdux'
+import { createUseBdux } from 'bdux'
 
 const twoDigits = (number) => (
   // add a leading zero.
@@ -16,23 +16,22 @@ const format = (seconds) => (
     + twoDigits(seconds % 60)
 )
 
-const renderCountDown = ({ countdown }) => (
-  <span className={styles.time}>
-    {format(countdown)}
-  </span>
-)
+const useBdux = createUseBdux({
+  countdown: CountDownStore,
+}, [
+  // start counting down.
+  CountDownAction.countdown,
+])
 
-export const CountDown = R.ifElse(
-  // if it's a number.
-  R.propIs(Number, 'countdown'),
-  // render the countdown.
-  renderCountDown,
-  // otherwise, render nothing.
-  R.F
-)
+const CountDown = (props) => {
+  const { state } = useBdux(props)
+  const { countdown } = state
 
-export default createComponent(CountDown, {
-  countdown: CountDownStore
-},
-// start counting down.
-CountDownAction.countdown)
+  return is(Number, countdown) && (
+    <span className={styles.time}>
+      {format(countdown)}
+    </span>
+  )
+}
+
+export default CountDown

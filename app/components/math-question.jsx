@@ -1,20 +1,15 @@
-import * as R from 'ramda'
+import React from 'react'
 import ChallengeStore from '../stores/math-challenge-store'
-import { createComponent } from 'bdux'
+import { createUseBdux } from 'bdux'
 
-const renderQuestion = ({ challenge }) => (
-  `${challenge.question}=`
-)
-
-export const MathQuestion = R.ifElse(
-  // if it's an object.
-  R.propIs(Object, 'challenge'),
-  // render the math question.
-  renderQuestion,
-  // otherwise, render nothing.
-  R.F
-)
-
-export default createComponent(MathQuestion, {
-  challenge: ChallengeStore
+const useBdux = createUseBdux({
+  challenge: ChallengeStore,
 })
+
+const MathQuestion = (props) => {
+  const { state } = useBdux(props)
+  const { challenge } = state
+  return challenge && `${challenge.question}=`
+}
+
+export default React.memo(MathQuestion)

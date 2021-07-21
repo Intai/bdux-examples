@@ -6,7 +6,7 @@ var gulp = require('gulp'),
     webpack = require('webpack'),
     WebpackDevServer = require('webpack-dev-server'),
     webpackConfig = require('./webpack.config.js'),
-    port = process.env.PORT || 8080;
+    port = process.env.PORT || 8080
 
 function dev() {
   new WebpackDevServer(webpack(webpackConfig), {
@@ -16,15 +16,15 @@ function dev() {
     hot: true
   })
   .listen(port, '0.0.0.0', function(err) {
-    if (err) throw new PluginError('webpack-dev-server', err);
-    log('[webpack-dev-server]', 'http://localhost:' + port);
-  });
+    if (err) throw new PluginError('webpack-dev-server', err)
+    log('[webpack-dev-server]', 'http://localhost:' + port)
+  })
 }
 
 gulp.task('dev', gulp.series(
   dev
-));
+))
 
 gulp.task('default', gulp.series(
   dev
-));
+))
