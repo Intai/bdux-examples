@@ -1,5 +1,5 @@
 import * as R from 'ramda'
-import Bacon from 'baconjs'
+import * as Bacon from 'baconjs'
 import ActionTypes from '../actions/action-types'
 import StoreNames from '../stores/store-names'
 import { createStore } from 'bdux'
@@ -8,13 +8,10 @@ const isAction = R.pathEq(
   ['action', 'type']
 )
 
-const mergeState = (func) => (
-  R.converge(R.merge, [
+const updateState = func => (
+  R.converge(R.assoc('state'), [
+    func,
     R.identity,
-    R.pipe(
-      func,
-      R.objOf('state')
-    )
   ])
 )
 
@@ -34,14 +31,14 @@ const whenStartTick = R.when(
     isAction(ActionTypes.COUNTDOWN_TICK)
   ),
   // calculate the countdown in seconds.
-  mergeState(calcCountDownFromTick)
+  updateState(calcCountDownFromTick)
 )
 
 const whenStop = R.when(
   // if stopping the countdown.
   isAction(ActionTypes.COUNTDOWN_STOP),
   // zero at the end of countdown.
-  mergeState(R.always(0))
+  updateState(R.always(0))
 )
 
 const getOutputStream = (reducerStream) => (

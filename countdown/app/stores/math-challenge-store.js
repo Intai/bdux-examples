@@ -1,5 +1,5 @@
 import * as R from 'ramda'
-import Bacon from 'baconjs'
+import * as Bacon from 'baconjs'
 import ActionTypes from '../actions/action-types'
 import StoreNames from '../stores/store-names'
 import { createStore } from 'bdux'
@@ -20,14 +20,10 @@ const isMathConfirm = isAction(
   ActionTypes.MATH_CONFIRM
 )
 
-const mergeState = (name, func) => (
-  R.converge(R.mergeWith(R.merge), [
+const updateState = (name, func) => (
+  R.converge(R.assocPath(['state', name]), [
+    func,
     R.identity,
-    R.pipe(
-      func,
-      R.objOf(name),
-      R.objOf('state')
-    )
   ])
 )
 
@@ -35,7 +31,7 @@ const setQuestion = R.when(
   // if creating a new math challenge.
   isMathChallenge,
   // merge the question into state.
-  mergeState('question',
+  updateState('question',
     // get the math operation.
     R.path(['action', 'operation']))
 )
@@ -44,7 +40,7 @@ const clearAnswer = R.when(
   // if creating a new math challenge.
   isMathChallenge,
   // clear the answer from state.
-  mergeState('answer',
+  updateState('answer',
     // empty answer.
     R.always(''))
 )
@@ -53,7 +49,7 @@ const setAnswer = R.when(
   // if answering the current math challenge.
   isMathAnswer,
   // merge the answer into state.
-  mergeState('answer',
+  updateState('answer',
     // get the answer.
     R.path(['action', 'answer']))
 )
@@ -69,7 +65,7 @@ const clearPass = R.when(
   // if creating a new math challenge.
   isMathChallenge,
   // clear the pass from state.
-  mergeState('pass',
+  updateState('pass',
     // reset to not passing.
     R.F)
 )
@@ -78,7 +74,7 @@ const setPass = R.when(
   // if answering the current math challenge.
   isMathAnswer,
   // merge the pass into state.
-  mergeState('pass',
+  updateState('pass',
     // whether the answer is correct.
     checkMathAnswer)
 )
@@ -87,7 +83,7 @@ const clearConfirm = R.when(
   // if creating or answering a math challenge.
   R.either(isMathChallenge, isMathAnswer),
   // clear the confirm from state.
-  mergeState('confirm',
+  updateState('confirm',
     // hasn't been confirmed
     R.F)
 )
@@ -96,7 +92,7 @@ const setConfirm = R.when(
   // if confirming the current answer.
   isMathConfirm,
   // merge the confirm into state.
-  mergeState('confirm',
+  updateState('confirm',
     // confirmed.
     R.T)
 )
@@ -112,9 +108,7 @@ const isMathPassConfirm = R.both(
 )
 
 const defaultCount = R.pipe(
-  R.prop('state'),
-  R.defaultTo({}),
-  R.prop('count'),
+  R.path(['state', 'count']),
   R.defaultTo(0)
 )
 
@@ -127,7 +121,7 @@ const clearCount = R.when(
   // if creating a new math challenge.
   isMathChallenge,
   // clear the count from state.
-  mergeState('count',
+  updateState('count',
     // default count to zero.
     defaultCount)
 )
@@ -136,7 +130,7 @@ const setCount = R.when(
   // if confirming the current correct answer.
   isMathPassConfirm,
   // merge the count into state.
-  mergeState('count',
+  updateState('count',
     // increment the number of correct answers.
     incrementCount)
 )

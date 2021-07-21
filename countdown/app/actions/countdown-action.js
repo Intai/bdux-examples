@@ -1,5 +1,5 @@
 import * as R from 'ramda'
-import Bacon from 'baconjs'
+import * as Bacon from 'baconjs'
 import Common from '../utils/common-util'
 import ActionTypes from './action-types'
 
@@ -37,12 +37,6 @@ const isTicking = R.converge(
   ]
 )
 
-const handleTickEnd = function(event) {
-  return isTicking(event.value)
-    ? this.push(event)
-    : this.push(new Bacon.End())
-}
-
 const whenOnEnd = (stream) => {
   let isEnd = true
 
@@ -65,10 +59,10 @@ export const countdown = whenOnEnd(
     // ticking.
     Bacon.fromPoll(TIME_TICK, createTickForPoll)
   )
-  .scan({}, R.merge)
-  .filter(R.complement(R.isEmpty))
+  .scan(null, R.merge)
+  .filter(R.identity)
   // determine when to end.
-  .withHandler(handleTickEnd)
+  .takeWhile(isTicking)
   // stop the countdown.
   .mapEnd(createStop)
 )

@@ -1,4 +1,0 @@
-web:
-  image: intai/bdux-example-countdown
-  ports:
-    - "80:8080"

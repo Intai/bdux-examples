@@ -42,18 +42,20 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
-              modules: true,
-              importLoaders: 2,
-              localIdentName: '[name]__[local]___[hash:base64:5]'
+              modules: {
+                localIdentName: '[name]__[local]___[hash:base64:5]'
+              },
+              importLoaders: 2
             }
           },
           {
             loader: 'postcss-loader',
             options: {
-              ident: 'postcss',
-              plugins: [
-                autoprefixer
-              ]
+              postcssOptions: {
+                plugins: [
+                  autoprefixer
+                ]
+              }
             }
           },
           'sass-loader'
