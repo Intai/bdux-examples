@@ -21,10 +21,6 @@ function dev() {
   })
 }
 
-gulp.task('dev', gulp.series(
-  dev
-))
+gulp.task('dev', dev)
 
-gulp.task('default', gulp.series(
-  dev
-))
+gulp.task('default', dev)
