@@ -1,0 +1,18 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr-public get-login-password --region us-west-2 | docker login --username AWS --password-stdin public.ecr.aws/m4o9w2x4
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker image...
+      - docker build -t bdux-example-async .
+      - docker tag bdux-example-async:latest public.ecr.aws/m4o9w2x4/bdux-example-async:latest
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker image...
+      - docker push public.ecr.aws/m4o9w2x4/bdux-example-async:latest
