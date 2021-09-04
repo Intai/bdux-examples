@@ -1,4 +1,4 @@
-FROM node:14
+FROM node:public.ecr.aws/lambda/nodejs:14
 
 ENV NPM_CONFIG_PRODUCTION=false
 ENV NODE_ENV=development
