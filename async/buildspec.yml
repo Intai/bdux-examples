@@ -4,7 +4,7 @@ phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
-      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 501045672667.dkr.ecr.us-west-2.amazonaws.com
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 501045672667.dkr.ecr.us-east-1.amazonaws.com
       - IMAGE_TAG="$(echo $CODEBUILD_WEBHOOK_TRIGGER | tr / -)-$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | head -c 7)"
   build:
     commands:
