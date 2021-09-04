@@ -10,11 +10,11 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - docker build -t bdux-example-async .
+      - docker build -t bdux-example-async:latest .
       - docker tag bdux-example-async:latest public.ecr.aws/m4o9w2x4/bdux-example-async:$IMAGE_TAG
   post_build:
     commands:
       - echo Build completed on `date`
-      - echo Pushing the Docker image...
+      - echo Pushing the Docker images...
       - docker push public.ecr.aws/m4o9w2x4/bdux-example-async:latest
       - docker push public.ecr.aws/m4o9w2x4/bdux-example-async:$IMAGE_TAG
