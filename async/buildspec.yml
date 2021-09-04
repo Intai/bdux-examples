@@ -16,4 +16,5 @@ phases:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
+      - docker push public.ecr.aws/m4o9w2x4/bdux-example-async:latest
       - docker push public.ecr.aws/m4o9w2x4/bdux-example-async:$IMAGE_TAG
