@@ -11,10 +11,10 @@ phases:
       - echo Build started on `date`
       - echo Building the Docker image...
       - docker build -t bdux-example-async .
-      - docker tag bdux-example-async:latest 501045672667.dkr.ecr.us-west-2.amazonaws.com/bdux-example-async:latest
-      - docker tag bdux-example-async:latest 501045672667.dkr.ecr.us-west-2.amazonaws.com/bdux-example-async:$IMAGE_TAG
+      - docker tag bdux-example-async:latest 501045672667.dkr.ecr.us-east-2.amazonaws.com/bdux-example-async:latest
+      - docker tag bdux-example-async:latest 501045672667.dkr.ecr.us-east-2.amazonaws.com/bdux-example-async:$IMAGE_TAG
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
-      - docker push 501045672667.dkr.ecr.us-west-2.amazonaws.com/bdux-example-async
+      - docker push 501045672667.dkr.ecr.us-east-2.amazonaws.com/bdux-example-async
