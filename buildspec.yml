@@ -4,17 +4,17 @@ phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
-      - aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/m4o9w2x4
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 501045672667.dkr.ecr.us-west-2.amazonaws.com
       - IMAGE_TAG="$(echo $CODEBUILD_WEBHOOK_TRIGGER | tr / -)-$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | head -c 7)"
   build:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
       - docker build -t bdux-example-async .
-      - docker tag bdux-example-async:latest public.ecr.aws/m4o9w2x4/bdux-example-async:latest
-      - docker tag bdux-example-async:latest public.ecr.aws/m4o9w2x4/bdux-example-async:$IMAGE_TAG
+      - docker tag bdux-example-async:latest 501045672667.dkr.ecr.us-west-2.amazonaws.com/bdux-example-async:latest
+      - docker tag bdux-example-async:latest 501045672667.dkr.ecr.us-west-2.amazonaws.com/bdux-example-async:$IMAGE_TAG
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
-      - docker push public.ecr.aws/m4o9w2x4/bdux-example-async
+      - docker push 501045672667.dkr.ecr.us-west-2.amazonaws.com/bdux-example-async
