@@ -1,0 +1,10 @@
+version: 0.0
+
+Resources:
+  - TargetService:
+      Type: AWS::ECS::Service
+      Properties:
+        TaskDefinition: "arn:aws:ecs:us-west-2:501045672667:task-definition/bdux-example-async:4"
+        LoadBalancerInfo:
+          ContainerName: "bdux-example-async"
+          ContainerPort: 8080
