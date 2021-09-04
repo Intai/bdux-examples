@@ -1,9 +1,6 @@
 version: 0.2
 
 phases:
-  install:
-    runtime-versions:
-      docker: 19
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
@@ -20,4 +17,4 @@ phases:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
-      - docker push --all-tags public.ecr.aws/m4o9w2x4/bdux-example-async
+      - docker push public.ecr.aws/m4o9w2x4/bdux-example-async
