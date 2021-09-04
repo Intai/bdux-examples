@@ -5,14 +5,15 @@ phases:
     commands:
       - echo Logging in to Amazon ECR...
       - aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/m4o9w2x4
+      - IMAGE_TAG=${CODEBUILD_SOURCE_VERSION:=latest}
   build:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
       - docker build -t bdux-example-async .
-      - docker tag bdux-example-async:latest public.ecr.aws/m4o9w2x4/bdux-example-async:latest
+      - docker tag bdux-example-async:latest public.ecr.aws/m4o9w2x4/bdux-example-async:$IMAGE_TAG
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
-      - docker push public.ecr.aws/m4o9w2x4/bdux-example-async:latest
+      - docker push public.ecr.aws/m4o9w2x4/bdux-example-async:$IMAGE_TAG
