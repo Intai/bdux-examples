@@ -10,15 +10,14 @@ phases:
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $REGISTRY_URI
       - IMAGE_TAG_TYPE="$(echo $CODEBUILD_WEBHOOK_TRIGGER | cut -d'/' -f 1)"
       - IMAGE_TAG_NAME="$(echo $CODEBUILD_WEBHOOK_TRIGGER | cut -d'/' -f 2 | tr / -)"
-      - if [[ $IMAGE_TAG_TYPE == "tag" && $IMAGE_TAG_NAME == "release"* ]]; then
-          IMAGE_TAG_TYPE=release; fi
+      - if [ $IMAGE_TAG_TYPE = "tag" ] && [ $IMAGE_TAG_NAME = "release"* ]; then IMAGE_TAG_TYPE=release; fi
       - REPO_URI="${REGISTRY_URI}/bdux-example-async"
   build:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
       - docker build -t bdux-example-async .
-      - if [[ $IMAGE_TAG_TYPE != "branch" ]]; then
+      - if [ $IMAGE_TAG_TYPE != "branch" ]; then
           docker tag bdux-example-async:latest $REPO_URI:$IMAGE_TAG_TYPE; fi
       - docker tag bdux-example-async:latest $REPO_URI:$IMAGE_TAG_NAME
       - docker tag bdux-example-async:latest $REPO_URI:$CODEBUILD_RESOLVED_SOURCE_VERSION
