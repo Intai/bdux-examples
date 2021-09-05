@@ -1,4 +1,4 @@
-FROM node:14
+FROM public.ecr.aws/bitnami/node:14
 
 ENV NPM_CONFIG_PRODUCTION=false
 ENV NODE_ENV=development
