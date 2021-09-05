@@ -16,12 +16,12 @@ phases:
       - echo Build started on `date`
       - echo Building the Docker image...
       - docker build -t bdux-example-async .
-      - docker tag bdux-example-async:latest REPO_URI:latest
-      - docker tag bdux-example-async:latest REPO_URI:$IMAGE_TAG_TYPE
-      - docker tag bdux-example-async:latest REPO_URI:$IMAGE_TAG_BRANCH
-      - docker tag bdux-example-async:latest REPO_URI:$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - docker tag bdux-example-async:latest $REPO_URI:latest
+      - docker tag bdux-example-async:latest $REPO_URI:$IMAGE_TAG_TYPE
+      - docker tag bdux-example-async:latest $REPO_URI:$IMAGE_TAG_BRANCH
+      - docker tag bdux-example-async:latest $REPO_URI:$CODEBUILD_RESOLVED_SOURCE_VERSION
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
-      - docker push REPO_URI
+      - docker push $REPO_URI
