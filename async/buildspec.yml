@@ -1,20 +1,27 @@
 version: 0.2
 
+env:
+  variables:
+    REGISTRY_URI: "501045672667.dkr.ecr.us-east-1.amazonaws.com"
+    REPO_URI: "${REGISTRY_URI}/bdux-example-async"
 phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
-      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 501045672667.dkr.ecr.us-east-1.amazonaws.com
-      - IMAGE_TAG="$(echo $CODEBUILD_WEBHOOK_TRIGGER | tr / -)-$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | head -c 7)"
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $REGISTRY_URI
+      - IMAGE_TAG_TYPE="$(echo $CODEBUILD_WEBHOOK_TRIGGER | cut -d'/' -f 1)"
+      - IMAGE_TAG_BRANCH="$(echo $CODEBUILD_WEBHOOK_TRIGGER | cut -d'/' -f 2)"
   build:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
       - docker build -t bdux-example-async .
-      - docker tag bdux-example-async:latest 501045672667.dkr.ecr.us-east-1.amazonaws.com/bdux-example-async:latest
-      - docker tag bdux-example-async:latest 501045672667.dkr.ecr.us-east-1.amazonaws.com/bdux-example-async:$IMAGE_TAG
+      - docker tag bdux-example-async:latest REPO_URI:latest
+      - docker tag bdux-example-async:latest REPO_URI:$IMAGE_TAG_TYPE
+      - docker tag bdux-example-async:latest REPO_URI:$IMAGE_TAG_BRANCH
+      - docker tag bdux-example-async:latest REPO_URI:$CODEBUILD_RESOLVED_SOURCE_VERSION
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
-      - docker push 501045672667.dkr.ecr.us-east-1.amazonaws.com/bdux-example-async
+      - docker push REPO_URI
