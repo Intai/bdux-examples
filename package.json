@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "description": "",
   "scripts": {
-    "start": "gulp server"
+    "build": "gulp build",
+    "start": "node dist/server"
   },
   "repository": {
     "type": "git",
@@ -19,7 +20,6 @@
     "baconjs": "^3.0.17",
     "bdux": "^16.13.0",
     "bdux-logger": "^16.13.0",
-    "bdux-react-router": "^16.13.1",
     "bdux-timetravel": "^16.13.1",
     "bdux-universal": "^16.13.0",
     "classnames": "^2.3.1",

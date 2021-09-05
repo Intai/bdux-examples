@@ -50,18 +50,20 @@ function prod(cb) {
   cmd.on('close', cb)
 }
 
-const server = gulp.series(
-  font,
-  buildClient,
-  buildServer,
-  prod
-)
-
 gulp.task('dev', gulp.series(
   font,
   dev
 ))
 
-gulp.task('server', server)
+gulp.task('build', gulp.series(
+  font,
+  buildClient,
+  buildServer
+))
 
-gulp.task('default', server)
+gulp.task('default', gulp.series(
+  font,
+  buildClient,
+  buildServer,
+  prod
+))
