@@ -2,7 +2,7 @@
   "executionRoleArn": "arn:aws:iam::501045672667:role/ecsTaskExecutionRole",
   "containerDefinitions": [
     {
-      "name": "bdux-example-async"
+      "name": "bdux-example-async",
       "image": "<CONTAINER_IMAGE>",
       "essential": true,
       "portMappings": [
