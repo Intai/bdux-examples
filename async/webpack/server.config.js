@@ -27,7 +27,6 @@ var getExternals = function() {
 };
 
 module.exports = {
-  mode: 'development',
   target: 'node',
   externals: getExternals(),
   context: path.join(__dirname, '../app'),

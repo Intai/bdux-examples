@@ -6,7 +6,6 @@ var path = require('path'),
     MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-  mode: 'development',
   context: path.join(__dirname, '../app'),
   entry: [
     './index'
