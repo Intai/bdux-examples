@@ -10,7 +10,7 @@ phases:
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $REGISTRY_URI
       - IMAGE_TAG_TYPE="$(echo $CODEBUILD_WEBHOOK_TRIGGER | cut -d'/' -f 1)"
       - IMAGE_TAG_NAME="$(echo $CODEBUILD_WEBHOOK_TRIGGER | cut -d'/' -f 2 | tr / -)"
-      - if [ $IMAGE_TAG_TYPE = "tag" ] && [ $IMAGE_TAG_NAME = "release"* ]; then IMAGE_TAG_TYPE=release; fi
+      - if [ $IMAGE_TAG_TYPE = "tag" ] && [ $IMAGE_TAG_NAME != "${IMAGE_TAG_NAME#release}" ]; then IMAGE_TAG_TYPE=release; fi
       - REPO_URI="${REGISTRY_URI}/bdux-example-async"
   build:
     commands:
