@@ -59,7 +59,7 @@ export const countdown = whenOnEnd(
     // ticking.
     Bacon.fromPoll(TIME_TICK, createTickForPoll)
   )
-  .scan(null, R.merge)
+  .scan(null, R.mergeRight)
   .filter(R.identity)
   // determine when to end.
   .takeWhile(isTicking)
