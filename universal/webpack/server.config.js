@@ -60,15 +60,6 @@ module.exports = {
   module: {
     rules: [
       {
-        enforce: 'pre',
-        test: /\.jsx?$/,
-        loader: 'eslint-loader',
-        exclude: /node_modules/,
-        options: {
-          configFile: '.eslintrc'
-        }
-      },
-      {
         test: /\.jsx?$/,
         loader: 'babel-loader',
         exclude: /node_modules/
@@ -79,19 +70,21 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
-              modules: true,
               importLoaders: 2,
-              localIdentName: '[name]__[local]___[hash:base64:5]',
-              exportOnlyLocals: true
+              modules: {
+                exportOnlyLocals: true,
+                localIdentName: '[name]__[local]___[hash:base64:5]'
+              }
             }
           },
           {
             loader: 'postcss-loader',
             options: {
-              ident: 'postcss',
-              plugins: [
-                autoprefixer
-              ]
+              postcssOptions: {
+                plugins: [
+                  autoprefixer
+                ]
+              }
             }
           },
           'sass-loader'

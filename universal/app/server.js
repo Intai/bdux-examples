@@ -3,6 +3,7 @@
 import './settings'
 import fs from 'fs'
 import * as R from 'ramda'
+import Stream from 'stream'
 import Express from 'express'
 import DefaultRoot from './roots/default-root'
 
@@ -28,9 +29,12 @@ const renderApp = R.curry((root, req, res) => {
 
     const [head, tail] = file.split('<%- app %>')
     res.write(head)
-    const stream = root.renderToNodeStream(req, res)
-    stream.pipe(res, { end: false })
-    stream.on('end', () => {
+    const pipeable = root.renderToPipeableStream(req, res)
+    const writable = new Stream.Writable({
+      write: res.write.bind(res),
+    })
+    pipeable.pipe(writable)
+    writable.on('finish', () => {
       res.write(tail)
       res.end()
     })

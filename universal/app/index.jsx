@@ -1,8 +1,8 @@
 import './settings'
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot, hydrateRoot } from 'react-dom/client'
 import { BduxContext, createDispatcher } from 'bdux'
-import { hasUniversalStates } from 'bdux-universal'
+import { hasUniversalStates } from 'bdux-universal/has-universal-states'
 import App from './components/app'
 
 const bduxContext = {
@@ -10,17 +10,17 @@ const bduxContext = {
   stores: new WeakMap()
 }
 
-const ReactDOMRender = hasUniversalStates()
-  ? ReactDOM.hydrate
-  : ReactDOM.render
-
 const renderApp = () => (
   <BduxContext.Provider value={bduxContext}>
     <App />
   </BduxContext.Provider>
 )
 
-ReactDOMRender(
-  renderApp(),
-  document.getElementById('app')
-)
+const container = document.getElementById('app')
+const element = renderApp()
+
+if (hasUniversalStates()) {
+  hydrateRoot(container, element)
+} else {
+  createRoot(container).render(element)
+}
