@@ -3,23 +3,24 @@
 var gulp = require('gulp'),
     log = require('fancy-log'),
     PluginError = require('plugin-error'),
-    gls = require('gulp-live-server'),
+    spawn = require('child_process').spawn,
     webpack = require('webpack'),
     webpackStream = require('webpack-stream'),
-    WebpackDevServer = require('webpack-dev-server'),
-    port = process.env.PORT || 8080;
+    WebpackDevServer = require('webpack-dev-server');
 
 function dev() {
-  new WebpackDevServer(webpack(require('./webpack/dev.config.js')), {
-    disableHostCheck: true,
+  const port = process.env.PORT || 80
+  const compiler = webpack(require('./webpack/dev.config.js'))
+
+  new WebpackDevServer({
+    port,
+    host: '0.0.0.0',
     historyApiFallback: true,
-    noInfo: true,
-    hot: true
-  })
-  .listen(port, '0.0.0.0', function(err) {
-    if (err) throw new PluginError('webpack-dev-server', err);
-    log('[webpack-dev-server]', 'http://localhost:' + port);
-  });
+  }, compiler)
+    .startCallback(err => {
+      if (err) throw new PluginError('webpack-dev-server', err)
+      log('[webpack-dev-server]', 'http://localhost:' + port)
+    })
 }
 
 function buildClient() {
@@ -34,13 +35,16 @@ function buildServer() {
     .pipe(gulp.dest('dist'));
 }
 
-function prod() {
-  var server = gls('dist/server.js', {
-    env: process.env
-  }, false);
+function prod(cb) {
+  const port = process.env.PORT || 8080
+  const cmd = spawn('node', [
+    'dist/server.js',
+  ], {
+    stdio: 'inherit',
+  })
 
-  server.start();
-  log('[express]', 'http://localhost:' + port);
+  log('[express]', 'http://localhost:' + port)
+  cmd.on('close', cb)
 }
 
 const server = gulp.series(

@@ -1,25 +1,32 @@
 import React from 'react'
 import Page from './page'
-import { Router, Route, createLocationHistory } from 'bdux-react-router'
+import { Router, Routes, Route } from 'bdux-react-router'
 import { LocationAction, LocationStore } from 'bdux-react-router'
-import { UniversalStates } from 'bdux-universal'
+import { UniversalStates } from 'bdux-universal/states'
 import { TimeTravel } from 'bdux-timetravel'
 import { createUseBdux } from 'bdux'
 
 const renderRouter = (location) => (
-  <Router history={createLocationHistory(location)}>
-    <Route
-      component={Page}
-      path="/:id?"
-    />
+  <Router location={location || ''}>
+    <Routes>
+      <Route
+        element={<Page />}
+        path="/:id"
+      />
+      <Route
+        element={<Page />}
+        index
+      />
+    </Routes>
   </Router>
 )
 
 const useBdux = createUseBdux({
   location: LocationStore
-},
-// start listening to browser history.
-LocationAction.listen)
+}, [
+  // start listening to browser history.
+  LocationAction.listen
+])
 
 export const App = (props) => {
   const { state } = useBdux(props)

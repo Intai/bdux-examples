@@ -3,6 +3,7 @@ import Message from './message'
 import classNames from 'classnames/bind'
 import styles from './page.scss'
 import { Link } from 'bdux-react-router'
+import { useParams } from 'react-router'
 
 const cssModule = classNames.bind(styles)
 
@@ -29,6 +30,7 @@ const getPageClass = (page, id) => (
 
 const renderPage = (page, id) => (
   <Link
+    as="a"
     className={getPageClass(page, id)}
     to={getPagePath(page)}
   >
@@ -36,15 +38,18 @@ const renderPage = (page, id) => (
   </Link>
 )
 
-export const Page = ({ match: { params }}) => (
-  <>
-    <div className={getContainerClass()}>
-      {renderPage('1', params.id)}
-      {renderPage('2', params.id)}
-      {renderPage('3', params.id)}
-    </div>
-    <Message />
-  </>
-)
+export const Page = () => {
+  const params = useParams();
+  return (
+    <>
+      <div className={getContainerClass()}>
+        {renderPage('1', params.id)}
+        {renderPage('2', params.id)}
+        {renderPage('3', params.id)}
+      </div>
+      <Message />
+    </>
+  )
+}
 
 export default Page

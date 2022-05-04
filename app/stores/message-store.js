@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import Bacon from 'baconjs';
+import { Bus } from 'baconjs';
 import ActionTypes from '../actions/action-types';
 import StoreNames from './store-names';
 import { createStore } from 'bdux';
@@ -20,7 +20,7 @@ const getOutputStream = (reducerStream) => (
 );
 
 export const getReducer = () => {
-  let reducerStream = new Bacon.Bus();
+  let reducerStream = new Bus();
 
   return {
     input: reducerStream,
