@@ -3,6 +3,7 @@
 var gulp = require('gulp'),
     log = require('fancy-log'),
     PluginError = require('plugin-error'),
+    path = require('path'),
     spawn = require('child_process').spawn,
     webpack = require('webpack'),
     webpackStream = require('webpack-stream'),
@@ -15,16 +16,22 @@ function font () {
 }
 
 function dev() {
-  new WebpackDevServer(webpack(require('./webpack/dev.config.js')), {
-    disableHostCheck: true,
+  const port = process.env.PORT || 80
+  const compiler = webpack(require('./webpack/dev.config.js'))
+
+  new WebpackDevServer({
+    port,
+    host: '0.0.0.0',
     historyApiFallback: true,
-    noInfo: true,
-    hot: true
-  })
-  .listen(port, '0.0.0.0', function(err) {
-    if (err) throw new PluginError('webpack-dev-server', err)
-    log('[webpack-dev-server]', 'http://localhost:' + port)
-  })
+    static: [{
+      directory: path.join(__dirname, './fonts'),
+      publicPath: '/fonts'
+    }]
+  }, compiler)
+    .startCallback(err => {
+      if (err) throw new PluginError('webpack-dev-server', err)
+      log('[webpack-dev-server]', 'http://localhost:' + port)
+    })
 }
 
 function buildClient() {

@@ -4,13 +4,14 @@ import './settings'
 import fs from 'fs'
 import * as R from 'ramda'
 import * as Bacon from 'baconjs'
+import Stream from 'stream'
 import Express from 'express'
 import DefaultRoot from './roots/default-root'
 
 const app = Express()
 const port = process.env.PORT || 8080
 
-const renderHtml = res => stream => {
+const renderHtml = res => pipeable => {
   fs.readFile('./dist/server.ejs', 'utf8', (err, file) => {
     if (err) {
       throw err
@@ -18,8 +19,11 @@ const renderHtml = res => stream => {
 
     const [head, tail] = file.split('<%- app %>')
     res.write(head)
-    stream.pipe(res, { end: false })
-    stream.on('end', () => {
+    const writable = new Stream.Writable({
+      write: res.write.bind(res),
+    })
+    pipeable.pipe(writable)
+    writable.on('finish', () => {
       res.write(tail)
       res.end()
     })
@@ -27,7 +31,7 @@ const renderHtml = res => stream => {
 }
 
 const renderApp = root => (req, res) => {
-  root.renderToNodeStream(req, res)
+  root.renderToPipeableStream(req, res)
     .map(renderHtml(res))
     .subscribe(R.always(Bacon.noMore))
 }

@@ -6,6 +6,7 @@ var path = require('path'),
     MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
+  mode: 'production',
   context: path.join(__dirname, '../app'),
   entry: [
     './index'
@@ -22,15 +23,6 @@ module.exports = {
   module: {
     rules: [
       {
-        enforce: 'pre',
-        test: /\.jsx?$/,
-        loader: 'eslint-loader',
-        exclude: /node_modules/,
-        options: {
-          configFile: '.eslintrc'
-        }
-      },
-      {
         test: /\.jsx?$/,
         loader: 'babel-loader',
         exclude: /node_modules/
@@ -42,10 +34,10 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
+              importLoaders: 2,
               modules: {
                 localIdentName: '[name]__[local]___[hash:base64:5]'
-              },
-              importLoaders: 2
+              }
             }
           },
           {

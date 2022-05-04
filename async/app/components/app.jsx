@@ -3,7 +3,7 @@ import Loading from './loading'
 import Weather from './weather'
 import CityName from './city-name'
 import CountryCodes from './country-codes'
-import { UniversalStates } from 'bdux-universal'
+import { UniversalStates } from 'bdux-universal/states'
 import { TimeTravel } from 'bdux-timetravel'
 
 export const App = () => (

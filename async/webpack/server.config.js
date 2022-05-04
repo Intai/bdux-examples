@@ -27,6 +27,7 @@ var getExternals = function() {
 };
 
 module.exports = {
+  mode: 'production',
   target: 'node',
   externals: getExternals(),
   context: path.join(__dirname, '../app'),
@@ -59,15 +60,6 @@ module.exports = {
   module: {
     rules: [
       {
-        enforce: 'pre',
-        test: /\.jsx?$/,
-        loader: 'eslint-loader',
-        exclude: /node_modules/,
-        options: {
-          configFile: '.eslintrc'
-        }
-      },
-      {
         test: /\.jsx?$/,
         loader: 'babel-loader',
         exclude: /node_modules/
@@ -78,11 +70,11 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
+              importLoaders: 2,
               modules: {
                 localIdentName: '[name]__[local]___[hash:base64:5]',
                 exportOnlyLocals: true
-              },
-              importLoaders: 2
+              }
             }
           },
           {
