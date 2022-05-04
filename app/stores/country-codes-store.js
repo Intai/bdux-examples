@@ -17,7 +17,7 @@ const isSelect =  isAction(
 )
 
 const mergeState = (name, func) => (
-  R.converge(R.mergeWith(R.merge), [
+  R.converge(R.mergeWith(R.mergeRight), [
     R.identity,
     R.pipe(
       func,

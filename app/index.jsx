@@ -2,7 +2,7 @@ import './settings'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { BduxContext, createDispatcher } from 'bdux'
-import { hasUniversalStates } from 'bdux-universal'
+import { hasUniversalStates } from 'bdux-universal/has-universal-states'
 import App from './components/app'
 
 const bduxContext = {

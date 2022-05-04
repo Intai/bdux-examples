@@ -2,6 +2,7 @@ import * as R from 'ramda'
 import * as Bacon from 'baconjs'
 import fetch from 'isomorphic-fetch'
 import ActionTypes from './action-types'
+import countryList from '../data/country-list.json'
 
 const DEFAULT_COUNTRY = 'NZ'
 const URI_COUNTRIES = 'https://datahub.io/core/country-list/r/data.json'
@@ -14,11 +15,11 @@ const createCodesStream = () => (
   Bacon.fromPromise(
     fetch(URI_COUNTRIES, {
       method: 'GET',
-      timeout: 5000
+      timeout: 3000
     })
   )
   .flatMap(createJsonStream)
-  .mapError(R.always([]))
+  .mapError(R.always(countryList))
 )
 
 const createLoad = (codes) => ({
