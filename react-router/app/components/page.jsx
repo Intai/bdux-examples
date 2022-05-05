@@ -2,6 +2,7 @@ import React from 'react'
 import classNames from 'classnames/bind'
 import styles from './page.scss'
 import { Link } from 'bdux-react-router'
+import { useParams } from 'react-router'
 
 const cssModule = classNames.bind(styles)
 
@@ -22,6 +23,7 @@ const getPageClass = (page, id) => (
 
 const renderPage = (page, id) => (
   <Link
+    as="a"
     className={getPageClass(page, id)}
     to={getPagePath(page)}
   >
@@ -29,12 +31,15 @@ const renderPage = (page, id) => (
   </Link>
 )
 
-export const Page = ({ match: { params }}) => (
-  <div className={styles['page-numbers']}>
-    {renderPage('1', params.id)}
-    {renderPage('2', params.id)}
-    {renderPage('3', params.id)}
-  </div>
-)
+export const Page = () => {
+  const params = useParams()
+  return (
+    <div className={styles['page-numbers']}>
+      {renderPage('1', params.id)}
+      {renderPage('2', params.id)}
+      {renderPage('3', params.id)}
+    </div>
+  )
+}
 
 export default Page
