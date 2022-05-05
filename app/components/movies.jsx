@@ -31,6 +31,10 @@ const List = styled.ul`
   width: 100%;
 `
 
+const getIndices = R.propOr(
+  [], 'indices'
+)
+
 const getScrollId = R.propOr(
   0, 'scrollId'
 )
@@ -43,25 +47,6 @@ const getTop = R.propOr(
   0, 'top'
 )
 
-const renderMovie = R.curry((refItems, index) => (
-  <Movie
-    index={index}
-    key={index}
-    refItem={refItems(index)}
-  />
-))
-
-const renderMoviesByIndices = (indices, refItems) => (
-  R.map(renderMovie(refItems), indices)
-)
-
-const renderMovies = R.useWith(
-  renderMoviesByIndices, [
-    R.propOr([], 'indices'),
-    R.identity
-  ]
-)
-
 const useBdux = createUseBdux({
   movies: MoviesStore,
 })
@@ -70,6 +55,7 @@ export const Movies = (props) => {
   const { state } = useBdux(props)
   const { refList, refItems } = useScrollInfinite(props)
   const { movies } = state
+
   return (
     <Container
       data-scroll-id={getScrollId(movies)}
@@ -78,7 +64,13 @@ export const Movies = (props) => {
     >
       <Padding top={getTop(movies)} />
       <List>
-        {renderMovies(movies, refItems)}
+        {getIndices(movies).map(index => (
+          <Movie
+            index={index}
+            key={index}
+            refItem={refItems(index)}
+          />
+        ))}
       </List>
     </Container>
   )

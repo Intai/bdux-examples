@@ -2,19 +2,22 @@
 
 var path = require('path'),
     webpack = require('webpack'),
+    HtmlWebpackPlugin = require('html-webpack-plugin'),
     isEnvProd = (process.env.NODE_ENV === 'production');
 
 module.exports = {
   mode: 'development',
   context: path.join(__dirname, 'app'),
   entry: [
-    'webpack-dev-server/client?http://localhost:8080',
-    'webpack/hot/dev-server',
     'index'
   ],
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin(),
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: './index.html',
+      inject: false
+    })
   ],
   resolve: {
     extensions: ['.js', '.jsx'],
@@ -25,15 +28,6 @@ module.exports = {
   },
   module: {
     rules: [
-      {
-        enforce: 'pre',
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        loader: 'eslint-loader',
-        options: {
-          configFile: '.eslintrc'
-        }
-      },
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,

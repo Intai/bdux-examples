@@ -1,7 +1,12 @@
 # Bdux Example - Infinite Scroll
 
+## Deploy to Heroku
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/Intai/bdux-examples/tree/infinite-scroll)
 
+## Deploy to Google Cloud Run
+[![Run on Google Cloud](https://deploy.cloud.run/button.svg)](https://deploy.cloud.run?git_repo=https://github.com/Intai/bdux-examples&dir=infinite-scroll)
+
+## Deploy your own
 ```
 git clone https://github.com/Intai/bdux-examples.git
 cd bdux-examples/infinite-scroll
@@ -11,8 +16,6 @@ gulp dev
 
 open http://localhost:8080
 ```
-
-[![Deploy to Docker Cloud](https://files.cloud.docker.com/images/deploy-to-dockercloud.svg)](https://hub.docker.com/r/intai/bdux-example-infinite-scroll/)
 
 ```
 git clone https://github.com/Intai/bdux-examples.git

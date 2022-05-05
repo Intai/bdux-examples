@@ -1,5 +1,5 @@
 {
-  "name": "Bdux Example - Infinite Scroll",
+  "name": "bdux-example-infinite-scroll",
   "description": "Development",
   "repository": "https://github.com/Intai/bdux-examples/tree/infinite-scroll",
   "env": {
@@ -8,9 +8,6 @@
     },
     "NODE_ENV": {
       "value": "production"
-    },
-    "PORT": {
-      "value": "8080"
     }
   }
 }

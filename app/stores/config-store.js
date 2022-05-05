@@ -1,5 +1,5 @@
 import * as R from 'ramda'
-import Bacon from 'baconjs'
+import * as Bacon from 'baconjs'
 import ActionTypes from '../actions/action-types'
 import StoreNames from '../stores/store-names'
 import { createStore } from 'bdux'

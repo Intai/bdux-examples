@@ -1,9 +1,6 @@
 import * as R from 'ramda'
 import { useMemo, useEffect } from 'react'
 
-const whenReady = requestAnimationFrame
-  || (func => setTimeout(func, 0))
-
 const hasOnUpdate = R.propIs(
   Function, 'onUpdate'
 )
@@ -17,32 +14,24 @@ const isListVisible = ({ list }) => (
     && list.tagName !== 'NOSCRIPT'
 )
 
-const shouldUpdateScroll = R.anyPass([
+const shouldUpdateScroll = R.either(
   R.prop('itemHeight'),
   R.propSatisfies(R.isEmpty, 'items')
-])
+)
 
-const setItemByIndex = (index, item, items) => {
+const setItemByIndex = (index, node) => (items) => {
   const clone = items.slice(0)
-  clone[index] = item
+  clone[index] = node
   return clone
 }
 
-const removeItem = R.converge(
-  R.remove, [
-    R.identity,
-    R.always(1),
-    R.nthArg(2)
-  ]
+const setItem = (index, node) => (
+  node
+    ? setItemByIndex(index, node)
+    : R.remove(index, 1)
 )
 
-const setItem = R.ifElse(
-  R.nthArg(1),
-  setItemByIndex,
-  removeItem
-)
-
-const memoizeProp = (propName, func) => {
+const onceForProp = (propName, func) => {
   const propArray = []
   return (args) => {
     const prop = args[propName]
@@ -53,12 +42,12 @@ const memoizeProp = (propName, func) => {
   }
 }
 
-const bindScrollEventOnList = memoizeProp('list', ({ list, scrollToCurrItems }) => {
+const bindScrollEventOnList = onceForProp('list', ({ list, scrollToCurrItems }) => {
   list.addEventListener('scroll', scrollToCurrItems)
 })
 
 const mergeProp = (func) => R.converge(
-  R.merge, [
+  R.mergeRight, [
     R.identity,
     func
   ]
@@ -67,7 +56,6 @@ const mergeProp = (func) => R.converge(
 const calcAvgItemHeight = mergeProp(({ items }) => (
   R.pipe(
     R.defaultTo([]),
-    R.values,
     R.pluck('offsetHeight'),
     R.filter(R.identity),
     R.mean,
@@ -78,7 +66,7 @@ const calcAvgItemHeight = mergeProp(({ items }) => (
 
 const getListDimension = mergeProp(({ list }) => ({
   scrollTop: list.scrollTop,
-  listHeight: list.offsetHeight
+  listHeight: list.offsetHeight,
 }))
 
 const calcItemsRangeFrom = mergeProp(({ scrollTop, listHeight, itemHeight }) => ({
@@ -98,18 +86,18 @@ const calcItemsTop = mergeProp(({ itemHeight, itemsRangeFrom }) => ({
 }))
 
 const getListDataAttrs = mergeProp(({ list }) => ({
-  dataScrollId: list.getAttribute('data-scroll-id'),
-  dataScrollTop: list.getAttribute('data-scroll-top')
+  dataScrollId: list.dataset.scrollId,
+  dataScrollTop: list.dataset.scrollTop,
 }))
 
-const createScrollToDataAttrs = (() => {
+const createScrollToDataAttrs = () => {
   let prevScrollId = 0
   return ({ list, scrollEvent, dataScrollId, dataScrollTop }) => {
     (!scrollEvent && dataScrollId <= prevScrollId)
       ? list.scrollTop = dataScrollTop
       : prevScrollId = dataScrollId
   }
-})
+}
 
 const callScrollToDataAttrs = R.converge(
   R.call, [
@@ -118,62 +106,23 @@ const callScrollToDataAttrs = R.converge(
   ]
 )
 
-const findPrevCallIndex = R.useWith(
-  R.findIndex, [
-    R.propEq(0),
-    R.identity
-  ]
-)
-
-const getUpdateArgs = R.ifElse(
-  R.is(Array),
-  R.nth(1),
-  R.always({})
-)
-
-const isUpdateArgsEqual = R.uncurryN(2, (current) => R.where({
+const isUpdateArgsEqual = (current) => R.where({
   itemsTop: R.equals(current.itemsTop),
   itemsRangeFrom: R.equals(current.itemsRangeFrom),
   itemsRangeCount: R.lte(current.itemsRangeCount)
-}))
-
-const isUpdateCallEqual = R.useWith(
-  isUpdateArgsEqual, [
-    getUpdateArgs,
-    getUpdateArgs
-  ]
-)
-
-const callIfNotDupe = (index, currentCall, prevCalls) => {
-  const prevCall = R.nth(index, prevCalls)
-  if (!isUpdateCallEqual(currentCall, prevCall)) {
-    R.apply(R.call, currentCall)
-  }
-}
-
-const tailArgs = (func) => (first, ...rest) => (
-  func.apply(func, rest)
-)
-
-const updateOrAppend = R.ifElse(
-  R.lte(0),
-  R.update,
-  tailArgs(R.append)
-)
-
-const callThenUpdate = R.pipe(
-  R.juxt([
-    callIfNotDupe,
-    updateOrAppend
-  ]),
-  R.last
-)
+})
 
 const createSkipDuplicates = (() => {
-  let prevCalls = []
+  const prevCalls = new Map()
   return (func, args) => {
-    const index = findPrevCallIndex(func, prevCalls)
-    prevCalls = callThenUpdate(index, [func, args], prevCalls)
+    const prevArgs = prevCalls.get(func)
+
+    // remember the arguments to skip repeated calls.
+    prevCalls.set(func, args)
+    // if the function call is different.
+    if (!prevArgs || !isUpdateArgsEqual(args)(prevArgs)) {
+      func(args)
+    }
   }
 })
 
@@ -223,7 +172,7 @@ const scrollToItems = throttle(R.when(
   )
 ))
 
-export const useScrollInfinite = (props) => {
+export const useScrollInfinite = ({ onUpdate }) => {
   const refs = useMemo(() => {
     const current = {
       list: null,
@@ -239,7 +188,7 @@ export const useScrollInfinite = (props) => {
         scrollEvent: e,
         list: current.list,
         items: current.items,
-        onUpdate: props.onUpdate,
+        onUpdate,
       })
     }
 
@@ -249,7 +198,7 @@ export const useScrollInfinite = (props) => {
       refList: node => {
         current.list = node
         if (node) {
-          whenReady(() => scrollToCurrItems())
+          requestAnimationFrame(() => scrollToCurrItems())
           bindScrollEventOnList({
             list: node,
             scrollToCurrItems,
@@ -257,16 +206,18 @@ export const useScrollInfinite = (props) => {
         }
       },
       refItems: R.memoizeWith(R.identity, index => node => {
-        current.items = setItem(index, node, current.items)
+        current.items = setItem(index, node)(current.items)
         if (node) {
-          whenReady(() => scrollToCurrItems())
+          requestAnimationFrame(() => scrollToCurrItems())
         }
       }),
     }
-  }, [])
+  }, [onUpdate])
 
   useEffect(() => {
     refs.scrollToCurrItems()
+  // only when didMount
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return refs

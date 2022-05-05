@@ -1,6 +1,5 @@
 import * as R from 'ramda'
-import Bacon from 'baconjs'
-import fetch from 'isomorphic-fetch'
+import * as Bacon from 'baconjs'
 import uriTemplates from 'uri-templates'
 import ActionTypes from './action-types'
 
