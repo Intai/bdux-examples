@@ -1,12 +1,12 @@
 import React from 'react'
 import { Router, Routes, Route } from 'bdux-react-router'
-import { LocationAction, LocationStore } from 'bdux-react-router'
+import { LocationAction, LocationStore, updateRouterLocation } from 'bdux-react-router'
 import { TimeTravel } from 'bdux-timetravel'
 import { createUseBdux } from 'bdux'
 import Page from './page'
 
 const renderRouter = (location) => !!location && (
-  <Router location={location}>
+  <Router location={updateRouterLocation(location)}>
     <Routes>
       <Route
         element={<Page />}
