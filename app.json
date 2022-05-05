@@ -1,5 +1,5 @@
 {
-  "name": "Bdux Example - Router",
+  "name": "bdux-example-router",
   "description": "Development",
   "repository": "https://github.com/Intai/bdux-examples/tree/react-router",
   "env": {
