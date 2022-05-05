@@ -1,4 +1,0 @@
-web:
-  image: intai/bdux-example-router
-  ports:
-    - "80:8080"
