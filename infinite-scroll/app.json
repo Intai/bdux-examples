@@ -8,9 +8,6 @@
     },
     "NODE_ENV": {
       "value": "production"
-    },
-    "PORT": {
-      "value": "8080"
     }
   }
 }

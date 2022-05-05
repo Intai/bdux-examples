@@ -13,6 +13,7 @@ function dev() {
   new WebpackDevServer({
     port,
     host: '0.0.0.0',
+    allowedHosts: 'all',
     historyApiFallback: true,
   }, compiler)
     .startCallback(err => {
