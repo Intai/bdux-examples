@@ -4,23 +4,23 @@ var gulp = require('gulp'),
     log = require('fancy-log'),
     PluginError = require('plugin-error'),
     webpack = require('webpack'),
-    WebpackDevServer = require('webpack-dev-server'),
-    webpackConfig = require('./webpack.config.js'),
-    port = process.env.PORT || 8080;
+    WebpackDevServer = require('webpack-dev-server')
 
 function dev() {
-  new WebpackDevServer(webpack(webpackConfig), {
-    disableHostCheck: true,
+  const port = process.env.PORT || 8080
+  const compiler = webpack(require('./webpack.config.js'))
+
+  new WebpackDevServer({
+    port,
+    host: '0.0.0.0',
     historyApiFallback: true,
-    noInfo: true,
-    hot: true
-  })
-  .listen(port, '0.0.0.0', function(err) {
-    if (err) throw new PluginError('webpack-dev-server', err);
-    log('[webpack-dev-server]', 'http://localhost:' + port);
-  });
+  }, compiler)
+    .startCallback(err => {
+      if (err) throw new PluginError('webpack-dev-server', err)
+      log('[webpack-dev-server]', 'http://localhost:' + port)
+    })
 }
 
-gulp.task('dev', dev);
+gulp.task('dev', dev)
 
-gulp.task('default', dev);
+gulp.task('default', dev)

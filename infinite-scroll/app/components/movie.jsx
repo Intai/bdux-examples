@@ -144,9 +144,10 @@ const renderDetails = (movie) => (
 const useBdux = createUseBdux({
   config: ConfigStore,
   movie: MovieStore,
-},
-// load the movie details.
-MovieAction.load)
+}, [
+  // load the movie details.
+  MovieAction.load,
+])
 
 export const Movie = (props) => {
   const { state } = useBdux(props)

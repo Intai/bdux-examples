@@ -7,7 +7,7 @@ import ConfigStore from '../stores/config-store'
 import { createUseBdux } from 'bdux'
 
 const update = ({ itemsTop, itemsRangeFrom, itemsRangeCount, ...args }) => (
-  DiscoverAction.update(R.merge(
+  DiscoverAction.update(R.mergeRight(
     args, {
       top: itemsTop,
       from: itemsRangeFrom,
@@ -18,9 +18,10 @@ const update = ({ itemsTop, itemsRangeFrom, itemsRangeCount, ...args }) => (
 
 const useBdux = createUseBdux({
   config: ConfigStore,
-},
-// load image base url and sizes.
-MovieAction.config)
+}, [
+  // load image base url and sizes.
+  MovieAction.config,
+])
 
 export const Discover = (props) => {
   const { bindToDispatch } = useBdux(props)

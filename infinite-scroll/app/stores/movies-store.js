@@ -1,5 +1,5 @@
 import * as R from 'ramda'
-import Bacon from 'baconjs'
+import * as Bacon from 'baconjs'
 import Common from '../utils/common-util'
 import ActionTypes from '../actions/action-types'
 import StoreNames from '../stores/store-names'
@@ -60,7 +60,7 @@ const calcIndices = R.pipe(
 )
 
 const updateScrollTop = R.converge(
-  R.mergeWith(R.merge), [
+  R.mergeWith(R.mergeRight), [
     R.identity,
     R.pipe(
       R.prop('action'),

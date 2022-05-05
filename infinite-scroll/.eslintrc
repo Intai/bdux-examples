@@ -1,5 +1,4 @@
 {
-  "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": 9,
     "sourceType": "module",
@@ -18,7 +17,9 @@
   ],
   "extends": [
     "eslint:recommended",
-    "plugin:react/all"
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:jsx-a11y/recommended"
   ],
   "settings": {
     "react": {
@@ -32,11 +33,18 @@
       "argsIgnorePattern": "^_"
     }],
     "jsx-quotes": 1,
-    "react/jsx-indent": [1, 2],
-    "react/jsx-indent-props": [1, 2],
+    "jsx-a11y/no-onchange": 0,
     "react/prop-types": 0,
     "react/no-multi-comp": [2, {
       "ignoreStateless": true
+    }],
+    "react/jsx-indent": [1, 2],
+    "react/jsx-indent-props": [1, 2],
+    "react/jsx-sort-props": [1, {
+      "callbacksLast": true
+    }],
+    "react-hooks/exhaustive-deps": [1, {
+      "enableDangerousAutofixThisMayCauseInfiniteLoops": true
     }]
   },
   "globals": {
