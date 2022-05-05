@@ -1,5 +1,5 @@
 {
-  "name": "Bdux Example - Universal",
+  "name": "bdux-example-universal",
   "description": "Development",
   "repository": "https://github.com/Intai/bdux-examples/tree/universal",
   "env": {
