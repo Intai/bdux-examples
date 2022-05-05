@@ -1,13 +1,13 @@
 import React from 'react'
 import Page from './page'
 import { Router, Routes, Route } from 'bdux-react-router'
-import { LocationAction, LocationStore } from 'bdux-react-router'
+import { LocationAction, LocationStore, updateRouterLocation } from 'bdux-react-router'
 import { UniversalStates } from 'bdux-universal/states'
 import { TimeTravel } from 'bdux-timetravel'
 import { createUseBdux } from 'bdux'
 
 const renderRouter = (location) => (
-  <Router location={location || ''}>
+  <Router location={updateRouterLocation(location)}>
     <Routes>
       <Route
         element={<Page />}

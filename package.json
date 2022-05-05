@@ -19,7 +19,7 @@
     "baconjs": "^3.0.17",
     "bdux": "^18.0.4",
     "bdux-logger": "^18.0.0",
-    "bdux-react-router": "^18.0.2",
+    "bdux-react-router": "^18.0.3",
     "bdux-timetravel": "^18.0.0",
     "bdux-universal": "^18.0.0",
     "classnames": "^2.2.6",
