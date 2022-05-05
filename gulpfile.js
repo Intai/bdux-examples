@@ -7,7 +7,7 @@ var gulp = require('gulp'),
     WebpackDevServer = require('webpack-dev-server')
 
 function dev() {
-  const port = process.env.PORT || 80
+  const port = process.env.PORT || 8080
   const compiler = webpack(require('./webpack.config.js'))
 
   new WebpackDevServer({
